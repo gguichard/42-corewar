@@ -1,33 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   corewar.h                                          :+:      :+:    :+:   */
+/*   champion.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/13 04:35:43 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/13 22:48:04 by gguichar         ###   ########.fr       */
+/*   Created: 2019/02/13 21:32:41 by gguichar          #+#    #+#             */
+/*   Updated: 2019/02/13 22:56:28 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COREWAR_H
-# define COREWAR_H
+#ifndef CHAMPION_H
+# define CHAMPION_H
 
-# include "libft.h"
 # include "op.h"
-# include "process.h"
 
-typedef struct s_env	t_env;
-
-struct	s_env
+typedef struct	s_champ
 {
-	t_list			*champ_lst;
-	t_list			*process_lst;
-	unsigned char	arena[MEM_SIZE];
-	int				cur_cycle;
-	int				dump_cycles;
-	int				cycle_to_die;
-	int				cycle_before_die;
-};
+	t_header		header;
+	char			*prog;
+}				t_champ;
 
 #endif

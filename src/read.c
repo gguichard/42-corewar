@@ -6,10 +6,16 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:23:27 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/13 22:34:17 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/13 22:56:43 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <unistd.h>
+#include "libft.h"
+#include "champion.h"
 #include "parsing.h"
 
 static int	read_magic(int fd, t_champ *champ)
@@ -25,7 +31,7 @@ static int	read_magic(int fd, t_champ *champ)
 	ret = read(fd, buf, 4);
 	if (ret != 4 || *((int *)buf) != *((int *)magic))
 	{
-		ft_dprintf(2, "corewar: error: No magic number.\n");
+		ft_dprintf(2, "corewar: error: No magic number\n");
 		return (0);
 	}
 	champ->header.magic = 0x00EA83F3;
@@ -84,8 +90,7 @@ static int	read_prog(int fd, t_champ *champ)
 			return (0);
 		}
 	}
-	champ->code = buf;
-	champ->len = size;
+	champ->prog = buf;
 	champ->header.prog_size = size;
 	return (1);
 }
