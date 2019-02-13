@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:25:14 by wta               #+#    #+#             */
-/*   Updated: 2019/02/13 08:06:45 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/14 00:31:47 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef enum	s_error
 
 typedef struct	s_data
 {
-	char	buf[BUFF_SIZE + 1];
 	char	name[PROG_NAME_LENGTH];
 	char	comment[COMMENT_LENGTH];
 }				t_data;
