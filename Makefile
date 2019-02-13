@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/13 04:33:29 by gguichar         ###   ########.fr        #
+#    Updated: 2019/02/13 06:20:31 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME	=	corewar
 
 SRC_DIR	=	src
 SRC		=		\
-main.c
+main.c			\
+read.c
 
 OBJ_DIR	=	.obj
 OBJ		=	$(SRC:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:03 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/13 07:34:08 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/13 08:07:53 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft.h"
 #include "op.h"
 #include "corewar.h"
+#include "parsing.h"
 
 static int	parse_opts(t_env *env, char **argv)
 {
@@ -42,14 +43,17 @@ static int	parse_opts(t_env *env, char **argv)
 int			main(int argc, char **argv)
 {
 	t_env	env;
+	t_champ	*champ;
 
 	(void)argc;
+	champ = malloc(sizeof(t_champ));
 	ft_memset(&env, 0, sizeof(t_env));
 	env.cycle_to_die = CYCLE_TO_DIE;
 	env.cycle_before_die = env.cycle_to_die;
 	env.dump_cycles = -1;
 	if (parse_opts(&env, argv))
 	{
+		read_file(argv[1], champ);
 		return (0);
 	}
 	return (1);
