@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:03 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/13 22:55:10 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/14 00:39:11 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ int			main(int argc, char **argv)
 			ft_printf("Champion \"%s\" (%d bytes) has been loaded\n"
 					, ((t_champ *)cur_champ->content)->header.prog_name
 					, ((t_champ *)cur_champ->content)->header.prog_size);
+			parsing_inst((unsigned char *)((t_champ *)cur_champ->content)->prog, NULL, NULL);
 			cur_champ = cur_champ->next;
 		}
 		return (0);
