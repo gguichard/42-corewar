@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:23:27 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/13 08:28:48 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/13 22:34:17 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,18 @@ static int	read_prog(int fd, t_champ *champ)
 	char			buf[CHAMP_MAX_SIZE];
 
 	ret = read(fd, buf, CHAMP_MAX_SIZE);
+	if (ret <= 0)
+	{
+		ft_dprintf(2, "corewar: error: Bad champ code reading\n");
+		return (0);
+	}
 	size = ret;
 	if (ret == CHAMP_MAX_SIZE)
 	{
 		ret = read(fd, buf, 1);
-		if (ret <= 0)
+		if (ret > 0)
 		{
-			ft_dprintf(2, "corewar: error: Bad champ code\n");
+			ft_dprintf(2, "corewar: error: Champ size must be 682 bytes\n");
 			return (0);
 		}
 	}
