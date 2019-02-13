@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:23:27 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/13 08:07:51 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/13 08:28:48 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ static int	read_prog(int fd, t_champ *champ)
 int			read_file(char *fn, t_champ *champ)
 {
 	int		fd;
+	int		ret;
 
 	fd = open(fn, O_RDONLY);
 	if (fd < 0)
@@ -95,11 +96,12 @@ int			read_file(char *fn, t_champ *champ)
 		ft_dprintf(2, "corewar: error: %s\n", strerror(errno));
 		return (0);
 	}
+	ret = 1;
 	if (!read_magic(fd, champ)
 		|| !read_name(fd, champ)
 		|| !read_comment(fd, champ)
 		|| !read_prog(fd, champ))
-		return (0);
+		ret = 0;
 	close(fd);
-	return (1);
+	return (ret);
 }
