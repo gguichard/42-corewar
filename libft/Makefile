@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/29 17:35:18 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/13 04:33:55 by gguichar         ###   ########.fr        #
+#    Updated: 2019/02/13 04:56:02 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,16 +48,17 @@ CFLAGS	=	-Wall -Wextra -Werror -I includes
 all: $(NAME)
 
 $(NAME): $(PF_LIB) $(addprefix $(OBJ_DIR)/,$(OBJ))
-	libtool -static -o $(NAME) $^
+	@libtool -static -o $(NAME) $^
 
 $(PF_LIB):
-	$(MAKE) -C $(PF_DIR)
+	@$(MAKE) -C $(PF_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -o $@ -c $<
+	@$(CC) $(CFLAGS) -o $@ -c $<
+	@/bin/echo -n "="
 
 $(OBJ_DIR):
-	/bin/mkdir $@
+	@/bin/mkdir $@
 
 clean:
 	$(MAKE) -C $(PF_DIR) clean

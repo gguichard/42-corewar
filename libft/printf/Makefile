@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 09:21:09 by gguichar          #+#    #+#              #
-#    Updated: 2018/12/10 14:06:29 by gguichar         ###   ########.fr        #
+#    Updated: 2019/02/13 04:57:55 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,13 +26,13 @@ CFLAGS	= 	-Wall -Wextra -Werror -O2 -I ../includes
 all: $(NAME)
 
 $(NAME): $(addprefix $(OBJ_DIR)/,$(OBJ))
-	ar rcs $@ $^
+	@ar rcs $@ $^
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c includes/printf.h  | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR):
-	/bin/mkdir $@
+	@/bin/mkdir $@
 
 clean:
 	/bin/rm -rf $(OBJ_DIR)
