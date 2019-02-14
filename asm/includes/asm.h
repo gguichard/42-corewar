@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:25:14 by wta               #+#    #+#             */
-/*   Updated: 2019/02/14 06:51:53 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/14 22:08:01 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,6 @@ typedef struct	s_data
 t_error			read_file(char *file, t_data *data);
 void			set_op_tab(t_op op_tab[]);
 t_error			create_cor(t_data *data, char *str);
+char			**split_by_str(char *str, char *delim);
 
 #endif

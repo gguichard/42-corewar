@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:10 by wta               #+#    #+#             */
-/*   Updated: 2019/02/14 20:09:01 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/14 22:12:39 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,11 +235,6 @@ t_error	get_post_header(int fd, char **line, char **inst)
 	return (err_id);
 }
 
-t_error	manage_token(t_data *data, char **inst)
-{
-
-}
-
 t_error	read_file(char *file, t_data *data)
 {
 	t_error	err_id;
@@ -261,7 +256,6 @@ t_error	read_file(char *file, t_data *data)
 		if ((err_id = get_comment(data, fd, &line)) != ERR_NOERROR)
 			return (err_id);
 		err_id = get_post_header(fd, &line, &inst);
-		err_id = manage_token(data, *inst);
 	}
 	close(fd);
 	return (err_id);
