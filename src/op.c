@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 00:39:37 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/14 06:03:20 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/14 06:27:04 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,10 @@ void	live(t_env *env, t_process *cur_process, unsigned char *str)
 		champ = champ->next;
 	}
 	//cur_process->lives += 1;
+	if ((arena + MEM_SIZE) - pc < 5)
+		pc = arena + (5 - ((arena + MEM_SIZE) - pc));
+	else
+		pc += 5;
 	(void)cur_process;
 }
 
