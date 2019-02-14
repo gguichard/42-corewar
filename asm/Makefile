@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/14 04:08:40 by rvalenti         ###   ########.fr        #
+#    Updated: 2019/02/14 23:40:05 by wta              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRC_DIR	=	src
 SRC		=		\
 get_file_cor.c	\
 read_file.c		\
+utils.c			\
 main.c
 
 OBJ_DIR	=	.obj

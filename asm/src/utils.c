@@ -6,10 +6,11 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:09:15 by wta               #+#    #+#             */
-/*   Updated: 2019/02/14 22:07:48 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/14 23:41:52 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "libft.h"
 
 void	delim_str(char *str, char *delim)
@@ -97,4 +98,49 @@ char	**split_by_str(char *str, char *delim)
 	if ((dup_in_split(str, split, len)) == 0)
 		return (ft_strtab_free(split));
 	return (split);
+}
+
+int		strcnt(char *str, char c)
+{
+	int	count;
+	int	idx;
+
+	count = 0;
+	idx = 0;
+	while (str[idx] != '\0')
+	{
+		if (str[idx] == c)
+			count += 1;
+		idx += 1;
+	}
+	return (count);
+}
+
+char	*expand_label(char *str, char c1, char c2)
+{
+	char	*new;
+	int		idx;
+	int		jdx;
+	int		len;
+
+	if ((len = strcnt(str, c1)) == 0)
+		return (str);
+	len += ft_strlen(str);
+	if ((new = ft_strnew(len)) == NULL)
+		return (NULL);
+	idx = 0;
+	jdx = 0;
+	while (idx < len)
+	{
+		new[idx] = str[jdx];
+		if (str[jdx] == c1)
+		{
+			idx += 1;
+			new[idx] = c2;
+		}
+		jdx += 1;
+		idx += 1;
+	}
+	free(str);
+	return (new);
 }

@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:10 by wta               #+#    #+#             */
-/*   Updated: 2019/02/14 22:12:39 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/14 23:39:55 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,7 @@ t_error	get_post_header(int fd, char **line, char **inst)
 {
 	t_error	err_id;
 	char	*tmp;
+	int		ret;
 
 	err_id = ERR_NOERROR;
 	*line = NULL;
@@ -221,8 +222,10 @@ t_error	get_post_header(int fd, char **line, char **inst)
 	while ((ret = get_next_line(fd, line)) > 0)
 	{
 		if (*inst == NULL)
+		{
 			if ((*inst = ft_strdup(*line)) == NULL)
 				err_id = ERR_MALLOC;
+		}
 		else
 		{
 			tmp = *inst;
@@ -232,12 +235,25 @@ t_error	get_post_header(int fd, char **line, char **inst)
 		}
 		free(*line);
 	}
+	if (ret == -1)
+		err_id = ERR_BADFMT;
 	return (err_id);
+}
+
+t_error	split_input(t_data *data, char *inst, char ***split)
+{
+	(void)data;
+	if ((inst = expand_label(inst, ':', ' ')) == NULL)
+		return (ERR_MALLOC);
+	if ((*split = split_by_str(inst, " \t,")) == NULL)
+		return (ERR_MALLOC);
+	return (ERR_NOERROR);
 }
 
 t_error	read_file(char *file, t_data *data)
 {
 	t_error	err_id;
+	char	**split;
 	char	*line;
 	char	*inst;
 	int		fd;
@@ -256,6 +272,8 @@ t_error	read_file(char *file, t_data *data)
 		if ((err_id = get_comment(data, fd, &line)) != ERR_NOERROR)
 			return (err_id);
 		err_id = get_post_header(fd, &line, &inst);
+		err_id = split_input(data, inst, &split);
+		free(inst);
 	}
 	close(fd);
 	return (err_id);
