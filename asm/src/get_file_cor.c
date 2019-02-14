@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 00:55:22 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/14 03:30:48 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/14 04:20:35 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*get_file_name(char *str)
 		len--;
 	if (len == 0)
 		len = ft_strlen(str);
-	if(!(file_name = (char*)malloc(sizeof(char) * (len + 5))))
+	if(!(file_name = ft_strnew(len + 5)))
 		return (NULL);
 	ft_memcpy(file_name, str, len);
 	ft_strcat(file_name, ".cor");
@@ -36,22 +36,18 @@ static char	*get_file_name(char *str)
 
 static void fill_cor(t_data *data, int fd)
 {
-	char 	name[128];
-	char 	comment[2048];
-	char 	*inst;
-	int		magic;
+	t_header header;
 
-	magic = 0x00f383ea;
-	ft_memset(name, 0, 128);
-	ft_memset(comment, 0, 2048);
+	header = data->header;
+	header.magic = 0x00f383ea;
 	write(fd, "\0", 1);
-	write(fd, &magic, 4);
-	write(fd, name, 128);
-	write(fd, comment, 2048);
+	write(fd, &header.magic, 4);
+	write(fd, header.prog_name, 128);
+	write(fd, header.comment, 2048);
 }
 
 
-static t_error		create_cor(t_data *data, char *str)
+t_error		create_cor(t_data *data, char *str)
 {
 	(void)data;
 	t_error err_id;
@@ -66,9 +62,4 @@ static t_error		create_cor(t_data *data, char *str)
 	fill_cor(data, fd);
 	close(fd);
 	return (err_id);
-}
-
-int		main(int ac,char **av)
-{
-	create_cor(NULL,av[1]);
 }

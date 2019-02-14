@@ -1,1 +1,0 @@
-gcc get_file_cor.c -I../includes -I../../libft/includes ../../libft/libft.a
