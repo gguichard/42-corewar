@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/13 08:27:12 by wta              ###   ########.fr        #
+#    Updated: 2019/02/14 02:46:11 by wta              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,8 @@ NAME	=	asm
 
 SRC_DIR	=	src
 SRC		=		\
-error_handler.c	\
-main.c			\
-read_file.c
+read_file.c		\
+main.c
 
 OBJ_DIR	=	.obj
 OBJ		=	$(SRC:.c=.o)
@@ -24,15 +23,18 @@ DEP		=	$(OBJ:.o=.d)
 
 INC_DIR	=	includes
 
-CC		=	gcc
+CC		=	gcc -g -fsanitize=address
 CFLAGS	=	-Wall -Wextra -Werror -I ../libft/includes -I $(INC_DIR)
 
 LIBFT	=	../libft/libft.a
 
 all: $(NAME)
 
-$(NAME): $(addprefix $(OBJ_DIR)/,$(OBJ))
-	$(CC) -o $@ -c $<
+$(NAME): $(LIBFT) $(addprefix $(OBJ_DIR)/,$(OBJ))
+	$(CC) -o $@ $^
+
+$(LIBFT):
+	$(MAKE) -C ../libft
 
 -include $(addprefix $(OBJ_DIR)/,$(DEP))
 
@@ -43,9 +45,11 @@ $(OBJ_DIR):
 	/bin/mkdir $@
 
 clean:
+	$(MAKE) -C ../libft clean
 	/bin/rm -rf $(OBJ_DIR)
 
 fclean: clean
+	$(MAKE) -C ../libft fclean
 	/bin/rm -f $(NAME)
 
 re: fclean all
