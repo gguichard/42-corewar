@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 23:20:11 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/14 04:24:45 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/14 05:47:34 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int		parsing_inst(unsigned char *str, t_process *cur_process, t_env *env)
 
 	op_idx = str[0];
 	printf("%c\n", op_idx + 48);
+	g_op[0](env, cur_process, str);
 	if (op_idx > 0 && op_idx < 2)
 		g_op[op_idx - 1](env, cur_process, str);
 	return (0);
