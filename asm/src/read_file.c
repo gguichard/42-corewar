@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:10 by wta               #+#    #+#             */
-/*   Updated: 2019/02/14 06:53:25 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/14 20:09:01 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,61 +210,41 @@ void	set_op_tab(t_op op_tab[])
 	op_tab[15] = (t_op){"aff", 1, {T_REG, 0, 0}, 16, 2, "aff", 1, 0};
 }
 
-int		is_op(t_op op_tab[], char *str)
+t_error	get_post_header(int fd, char **line, char **inst)
 {
 	t_error	err_id;
-	int		i;
+	char	*tmp;
 
 	err_id = ERR_NOERROR;
-	i = 0;
-	while (i < 16)
+	*line = NULL;
+	*inst = NULL;
+	while ((ret = get_next_line(fd, line)) > 0)
 	{
-		if (ft_strnequ(op_tab[i].op, str, ft_strlen(op_tab[i].op)) == 1)
-			return (1);
-		i += 1;
+		if (*inst == NULL)
+			if ((*inst = ft_strdup(*line)) == NULL)
+				err_id = ERR_MALLOC;
+		else
+		{
+			tmp = *inst;
+			if ((*inst = ft_strjoin(*inst, *line)) == NULL)
+				err_id = ERR_MALLOC;
+			free(tmp);
+		}
+		free(*line);
 	}
-	return (0);
-}
-
-int		is_label(char *str)
-{
-	(void)str;
-	return (1);
-}
-
-t_error	manage_op(char *str)
-{
-	(void)str;
-	return (ERR_NOERROR);
-}
-
-t_error	manage_label(char *str)
-{
-	(void)str;
-	return (ERR_NOERROR);
-}
-
-t_error	manage_inst(t_data *data, int fd, char **line)
-{
-	t_error	err_id;
-	char	*str;
-	(void)fd;
-	err_id = ERR_NOERROR;
-	if ((str = skip_tab_n_space(*line)) == NULL)
-		return (ERR_BADFMT);
-	if (is_op(data->op_tab, str) == 1)
-		err_id = manage_op(str);
-	else if (is_label(str) == 1)
-		err_id = manage_label(str);
-	else
-		err_id = ERR_BADFMT;
 	return (err_id);
+}
+
+t_error	manage_token(t_data *data, char **inst)
+{
+
 }
 
 t_error	read_file(char *file, t_data *data)
 {
 	t_error	err_id;
 	char	*line;
+	char	*inst;
 	int		fd;
 
 	if ((fd = open(file, O_RDONLY)) == -1)
@@ -280,9 +260,8 @@ t_error	read_file(char *file, t_data *data)
 			return (err_id);
 		if ((err_id = get_comment(data, fd, &line)) != ERR_NOERROR)
 			return (err_id);
-		if ((err_id = skip_useless(fd, &line)) != ERR_NOERROR)
-			return (err_id);
-		err_id = manage_inst(data, fd, &line);
+		err_id = get_post_header(fd, &line, &inst);
+		err_id = manage_token(data, *inst);
 	}
 	close(fd);
 	return (err_id);
