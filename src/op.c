@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 00:39:37 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/14 06:00:58 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/14 06:03:20 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 	{0, 0, {0}, 0, 0, 0, 0, 0}
 };*/
 
-static unsigned char	*inst_loop(t_env *env, int size, unsigned char *str)
+static unsigned char	*get_op(t_env *env, int size, unsigned char *str)
 {
 	unsigned char	*ret;
 	int				offset;
@@ -66,7 +66,7 @@ void	live(t_env *env, t_process *cur_process, unsigned char *str)
 	unsigned int	champ_id;
 	t_list			*champ;
 
-	tmp = inst_loop(env, 5, str);
+	tmp = get_op(env, 5, str);
 	champ_id = *((int *)(str + 1));
 	printf("champ_id = %d\n", champ_id);
 	champ = env->champ_lst;
