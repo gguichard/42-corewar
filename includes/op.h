@@ -6,7 +6,7 @@
 /*   By: zaz <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2019/02/14 00:50:16 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/14 02:42:23 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,20 +63,4 @@ typedef struct		s_header
 	char			comment[COMMENT_LENGTH + 1];
 }					t_header;
 
-void	live(void);
-void	ld(void);
-void	st(void);
-void	add(void);
-void	sub(void);
-void	ft_and(void);
-void	ft_or(void);
-void	ft_xor(void);
-void	zjump(void);
-void	ldi(void);
-void	sti(void);
-void	ft_fork(void);
-void	lld(void);
-void	lldi(void);
-void	lfork(void);
-void	aff(void);
 #endif

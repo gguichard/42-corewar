@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 21:32:41 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/13 23:59:49 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/14 03:30:40 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 typedef struct	s_champ
 {
 	t_header		header;
-	char			*prog;
+	unsigned char	prog[CHAMP_MAX_SIZE];
 }				t_champ;
 
 #endif

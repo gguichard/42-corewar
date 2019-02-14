@@ -6,14 +6,14 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:23:27 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/13 22:58:37 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/14 03:40:10 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <fcntl.h>
 #include <errno.h>
 #include <unistd.h>
+#include <stdio.h>
 #include "libft.h"
 #include "champion.h"
 #include "parsing.h"
@@ -50,6 +50,7 @@ static int	read_name(int fd, t_champ *champ)
 		return (0);
 	}
 	ft_memmove(champ->header.prog_name, buf, PROG_NAME_LENGTH);
+	lseek(fd, 8, SEEK_CUR);
 	return (1);
 }
 
@@ -65,6 +66,8 @@ static int	read_comment(int fd, t_champ *champ)
 		return (0);
 	}
 	ft_memmove(champ->header.comment, buf, COMMENT_LENGTH);
+	champ->header.comment[ret] = '\0';
+	lseek(fd, 4, SEEK_CUR);
 	return (1);
 }
 
@@ -72,7 +75,7 @@ static int	read_prog(int fd, t_champ *champ)
 {
 	int				ret;
 	unsigned int	size;
-	char			buf[CHAMP_MAX_SIZE];
+	unsigned char	buf[CHAMP_MAX_SIZE];
 
 	ret = read(fd, buf, CHAMP_MAX_SIZE);
 	if (ret <= 0)
@@ -90,7 +93,7 @@ static int	read_prog(int fd, t_champ *champ)
 			return (0);
 		}
 	}
-	champ->prog = buf;
+	ft_memcpy(champ->prog, buf, size);
 	champ->header.prog_size = size;
 	return (1);
 }

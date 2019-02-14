@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 00:39:37 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/14 00:45:54 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/14 04:19:20 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,14 @@
 	{0, 0, {0}, 0, 0, 0, 0, 0}
 };*/
 
-void	live(void)
+void	live(t_env *env, t_process *cur_process, unsigned char *str)
 {
-	ft_printf("live\n");
+	ft_printf("live|%d|\n", *((int*)str + 1));
+	(void)env;
+	(void)cur_process;
 }
 
-void	ld(void)
+/*void	ld(void)
 {
 	ft_printf("ld\n");
 }
@@ -118,4 +120,4 @@ void	lfork(void)
 void	aff(void)
 {
 	ft_printf("aff\n");
-}
+}*/

@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/14 02:06:21 by gguichar         ###   ########.fr        #
+#    Updated: 2019/02/14 04:23:42 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ read.c			\
 process.c		\
 cycles.c		\
 errors.c		\
-parsing_inst.c	\
+exec_inst.c		\
 op.c
 
 OBJ_DIR	=	.obj
@@ -28,7 +28,7 @@ DEP		=	$(OBJ:.o=.d)
 
 INC_DIR	=	includes
 
-CC		=	gcc
+CC		=	gcc -g -fsanitize=address
 CFLAGS	=	-Wall -Wextra -Werror -I libft/includes -I $(INC_DIR)
 
 LIBFT	=	libft/libft.a

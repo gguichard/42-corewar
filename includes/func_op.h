@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   func_op.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/13 05:57:40 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/14 04:24:45 by vifonne          ###   ########.fr       */
+/*   Created: 2019/02/14 01:13:03 by vifonne           #+#    #+#             */
+/*   Updated: 2019/02/14 01:13:25 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-
-# define PARSING_H
-# define BUFF_SIZE 4096
-
-# include "champion.h"
-# include "process.h"
+#ifndef FUNC_OP_H
+# define FUNC_OP_H
 # include "corewar.h"
+# include "process.h"
 
-int	read_file(char *fn, t_champ *champ);
-int	parsing_inst(unsigned char *str, t_process *proc, t_env *data);
-
+void	live(t_env *env, t_process *cur_process, unsigned char *str);
+void	ld(void);
+void	st(void);
+void	add(void);
+void	sub(void);
+void	ft_and(void);
+void	ft_or(void);
+void	ft_xor(void);
+void	zjump(void);
+void	ldi(void);
+void	sti(void);
+void	ft_fork(void);
+void	lld(void);
+void	lldi(void);
+void	lfork(void);
+void	aff(void);
 #endif
