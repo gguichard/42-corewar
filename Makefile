@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/14 01:52:32 by gguichar         ###   ########.fr        #
+#    Updated: 2019/02/14 02:06:21 by gguichar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,10 @@ NAME	=	corewar
 SRC_DIR	=	src
 SRC		=		\
 main.c			\
-process.c		\
-errors.c		\
 read.c			\
+process.c		\
+cycles.c		\
+errors.c		\
 parsing_inst.c	\
 op.c
 

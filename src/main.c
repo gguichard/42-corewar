@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:03 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/14 01:56:24 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/14 02:05:51 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ static void		run_vm(t_env *env)
 				, ((t_champ *)cur_champ->content)->header.prog_size);
 		cur_champ = cur_champ->next;
 	}
+	run_cycles_loop(env);
 }
 
 int				main(int argc, char **argv)

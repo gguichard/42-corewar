@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:43 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/14 01:54:39 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/14 02:05:40 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ struct		s_env
 };
 
 t_error		create_def_process(t_env *env, char **argv, int argc, int cur_arg);
+
+void		run_cycles_loop(t_env *env);
+
 const char	*str_to_error(t_error err_id);
 
 #endif
