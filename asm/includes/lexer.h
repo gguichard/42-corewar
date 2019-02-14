@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:44:00 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/14 20:53:47 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/14 23:49:55 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,14 @@ typedef enum 	s_lexer
 	INDIR,
 	LABEL,
 	COMMENT,
-	REG
+	REG,
+	ERROR
 }				t_lexer
 
+typedef struct 	s_filter
+{
+	char	*name;
+	t_lexer	label;
+}				t_filter;
 
 #endif
