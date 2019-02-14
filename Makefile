@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/14 04:23:42 by vifonne          ###   ########.fr        #
+#    Updated: 2019/02/14 20:36:57 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,9 @@ process.c		\
 cycles.c		\
 errors.c		\
 exec_inst.c		\
-op.c
+op/live.c		\
+op/get.c		\
+op/ld.c
 
 OBJ_DIR	=	.obj
 OBJ		=	$(SRC:.c=.o)
@@ -48,6 +50,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 
 $(OBJ_DIR):
 	/bin/mkdir $@
+	/bin/mkdir $@/op
 
 clean:
 	$(MAKE) -C libft clean
