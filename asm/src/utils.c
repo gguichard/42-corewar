@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:09:15 by wta               #+#    #+#             */
-/*   Updated: 2019/02/14 23:41:52 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/15 00:53:55 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char	**split_by_str(char *str, char *delim)
 	return (split);
 }
 
-int		strcnt(char *str, char c)
+int		strcntchar(char *str, char c)
 {
 	int	count;
 	int	idx;
@@ -123,7 +123,7 @@ char	*expand_label(char *str, char c1, char c2)
 	int		jdx;
 	int		len;
 
-	if ((len = strcnt(str, c1)) == 0)
+	if ((len = strcntchar(str, c1)) == 0)
 		return (str);
 	len += ft_strlen(str);
 	if ((new = ft_strnew(len)) == NULL)
