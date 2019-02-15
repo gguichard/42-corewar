@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:10 by wta               #+#    #+#             */
-/*   Updated: 2019/02/15 01:50:57 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/15 02:02:09 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,6 +250,21 @@ t_error	split_input(t_data *data, char *inst, char ***split)
 	return (ERR_NOERROR);
 }
 
+t_error	get_first_part(t_data *data, int fd, char **line)
+{
+	t_error	err_id;
+
+	if ((err_id = check_first_line(fd)) != ERR_NOERROR)
+		return (err_id);
+	if ((err_id = skip_useless(fd, line)) != ERR_NOERROR)
+		return (err_id);
+	if ((err_id = get_name(data, fd, line)) != ERR_NOERROR)
+		return (err_id);
+	if ((err_id = skip_useless(fd, line)) != ERR_NOERROR)
+		return (err_id);
+	return (get_comment(data, fd, line));
+}
+
 t_error	read_file(char *file, t_data *data)
 {
 	t_error	err_id;
@@ -260,27 +275,14 @@ t_error	read_file(char *file, t_data *data)
 
 	if ((fd = open(file, O_RDONLY)) == -1)
 		return (ERR_ERRNO);
-	err_id = check_first_line(fd);
-	if (err_id == ERR_NOERROR)
-	{
-		if ((err_id = skip_useless(fd, &line)) != ERR_NOERROR)
-			return (err_id);
-		if ((err_id = get_name(data, fd, &line)) != ERR_NOERROR)
-			return (err_id);
-		if ((err_id = skip_useless(fd, &line)) != ERR_NOERROR)
-			return (err_id);
-		if ((err_id = get_comment(data, fd, &line)) != ERR_NOERROR)
-			return (err_id);
-		err_id = get_post_header(fd, &line, &inst);
-		err_id = split_input(data, inst, &split);
-		err_id = lexer_parser(data, split);
-/*		for (int i = 0; i < data->f_size; i++)
-		{
-			ft_printf("i = %d\n", i);
-			ft_printf("%s\n", data->filter[i].name);
-		}
-*/
-	}
+	if ((err_id = get_first_part(data, fd, &line)) != ERR_NOERROR)
+		return (err_id);
+	if ((err_id = get_post_header(fd, &line, &inst)) !=	ERR_NOERROR)
+		return (err_id);
+	if ((err_id = split_input(data, inst, &split)) != ERR_NOERROR)
+		return (err_id);
+	if ((err_id = lexer_parser(data, split)) != ERR_NOERROR)
+		return (err_id);
 	close(fd);
 	return (err_id);
 }
