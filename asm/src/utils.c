@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:09:15 by wta               #+#    #+#             */
-/*   Updated: 2019/02/15 00:53:55 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/15 01:10:01 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int		count_words(char *str, int len)
 			in_wd = 0;
 		idx += 1;
 	}
-	return (idx);
+	return (count);
 }
 
 int		dup_in_split(char *str, char **split, int len)
