@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:10 by wta               #+#    #+#             */
-/*   Updated: 2019/02/15 05:17:52 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/15 05:49:15 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,15 +262,18 @@ t_error	get_first_part(t_data *data, int fd, char **line)
 {
 	t_error	err_id;
 
-	if ((err_id = check_first_line(fd)) != ERR_NOERROR)
-		return (err_id);
-	if ((err_id = skip_useless(fd, line)) != ERR_NOERROR)
-		return (err_id);
-	if ((err_id = get_name(data, fd, line)) != ERR_NOERROR)
-		return (err_id);
-	if ((err_id = skip_useless(fd, line)) != ERR_NOERROR)
-		return (err_id);
-	return (get_comment(data, fd, line));
+	err_id = ERR_NOERROR;
+	if (err_id == ERR_NOERROR)
+		err_id = check_first_line(fd);
+	if (err_id == ERR_NOERROR)
+		err_id = skip_useless(fd, line);
+	if (err_id == ERR_NOERROR)
+		err_id = get_name(data, fd, line);
+	if (err_id == ERR_NOERROR)
+		err_id = skip_useless(fd, line);
+	if (err_id == ERR_NOERROR)
+		return (get_comment(data, fd, line));
+	return (err_id);
 }
 
 t_error	read_file(char *file, t_data *data)
