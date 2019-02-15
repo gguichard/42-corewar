@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/15 10:42:13 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/15 21:03:39 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	kill_old_process(t_env *env)
 	t_list		*prev;
 	t_list		*cur;
 	t_process	*process;
-	int			idx;
+//	int			idx;
 
 	prev = NULL;
 	cur = env->process_lst;
@@ -37,14 +37,17 @@ static void	kill_old_process(t_env *env)
 			process->lives = 0;
 		else
 		{
-			idx = 0;
+			/*idx = 0;
 			while (idx < 16)
 			{
 				ft_printf("REG[%d]=%d\n", idx, *((int *)process->reg[idx]));
 				idx++;
+<<<<<<< Updated upstream
 			}
 			ft_printf("Process from champ %d killed at cycle %d\n"
 					, process->champ_id, env->cur_cycle);
+=======
+			}*/
 			if (prev == NULL)
 				env->process_lst = cur->next;
 			else

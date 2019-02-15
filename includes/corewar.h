@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:43 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/15 06:56:21 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/15 20:55:07 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,5 @@ t_error			create_def_process(t_env *env, char **argv, int argc
 void			run_cycles_loop(t_env *env);
 
 const char		*str_to_error(t_error err_id);
-
+void			print_arena(unsigned char *str, int size);
 #endif
