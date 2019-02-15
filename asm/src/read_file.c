@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:10 by wta               #+#    #+#             */
-/*   Updated: 2019/02/15 02:02:09 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/15 03:15:11 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,7 +243,7 @@ t_error	get_post_header(int fd, char **line, char **inst)
 t_error	split_input(t_data *data, char *inst, char ***split)
 {
 	(void)data;
-	if ((inst = expand_label(inst, ':', ' ')) == NULL)
+	if ((inst = expand_label(inst)) == NULL)
 		return (ERR_MALLOC);
 	if ((*split = split_by_str(inst, " \t,")) == NULL)
 		return (ERR_MALLOC);
@@ -283,6 +283,8 @@ t_error	read_file(char *file, t_data *data)
 		return (err_id);
 	if ((err_id = lexer_parser(data, split)) != ERR_NOERROR)
 		return (err_id);
+	for (int i = 0; i < data->f_size; i++)
+		ft_printf("%s\n", data->filter[i].name);
 	close(fd);
 	return (err_id);
 }

@@ -6,11 +6,12 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:09:15 by wta               #+#    #+#             */
-/*   Updated: 2019/02/15 01:49:21 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/15 03:32:53 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include "op.h"
 #include "libft.h"
 
 void	delim_str(char *str, char *delim)
@@ -100,47 +101,102 @@ char	**split_by_str(char *str, char *delim)
 	return (split);
 }
 
-int		strcntchar(char *str, char c)
+int		cnt_space_to_add(char *str)
 {
 	int	count;
 	int	idx;
+	int	jdx;
 
 	count = 0;
-	idx = 0;
-	while (str[idx] != '\0')
+	idx = -1;
+	while (str[++idx] != '\0')
 	{
-		if (str[idx] == c)
-			count += 1;
-		idx += 1;
+		jdx = -1;
+		if ((str[idx] == ':' || str[idx] == '%') && idx == 0)
+			return (-1);
+		else if (idx > 0 && (str[idx] == ':' || str[idx] == '%'))
+		{
+			while (LABEL_CHARS[++jdx] != '\0')
+			{
+				if (str[idx - 1] == LABEL_CHARS[jdx] && (count += 1) > 0)
+					break ;
+			}
+		}
 	}
 	return (count);
 }
 
-char	*expand_label(char *str, char c1, char c2)
+int		replace_mod(char *str, char *new)
 {
-	char	*new;
+	int	idx;
+
+	idx = 0;
+	while (LABEL_CHARS[idx] != '\0')
+	{
+		if (str[-1] == LABEL_CHARS[idx])
+		{
+			new[0] = ' ';
+			new[1] = '%';
+			return (1);
+		}
+		idx += 1;
+	}
+	new[0] = str[0];
+	return (0);
+}
+
+int		replace_colon(char *str, char *new)
+{
+	int	idx;
+
+	idx = 0;
+	while (LABEL_CHARS[idx] != '\0')
+	{
+		if (str[-1] == LABEL_CHARS[idx])
+		{
+			new[0] = ':';
+			new[1] = ' ';
+			return (1);
+		}
+		idx += 1;
+	}
+	new[0] = str[0];
+	return (0);
+}
+
+void	expand_space(char *str, char *new, int len)
+{
 	int		idx;
 	int		jdx;
+
+	idx = 0;
+	jdx = 0;
+	while (jdx < len)
+	{
+		if (idx > 0 && str[idx] == '%')
+			jdx += replace_mod(&str[idx], &new[jdx]);
+		else if (idx > 0 && str[idx] == ':')
+			jdx += replace_colon(&str[idx], &new[jdx]);
+		else
+			new[jdx] = str[idx];
+		idx += 1;
+		jdx += 1;
+	}
+}
+
+char	*expand_label(char *str)
+{
+	char	*new;
 	int		len;
 
-	if ((len = strcntchar(str, c1)) == 0)
+	if ((len = cnt_space_to_add(str)) == -1)
+		return (NULL);
+	else if (len == 0)
 		return (str);
 	len += ft_strlen(str);
 	if ((new = ft_strnew(len)) == NULL)
 		return (NULL);
-	idx = 0;
-	jdx = 0;
-	while (idx < len)
-	{
-		new[idx] = str[jdx];
-		if (str[jdx] == c1)
-		{
-			idx += 1;
-			new[idx] = c2;
-		}
-		jdx += 1;
-		idx += 1;
-	}
+	expand_space(str, new, len);
 	free(str);
 	return (new);
 }

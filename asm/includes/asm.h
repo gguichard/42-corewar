@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:25:14 by wta               #+#    #+#             */
-/*   Updated: 2019/02/15 01:47:56 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/15 03:11:38 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_error			read_file(char *file, t_data *data);
 void			set_op_tab(t_op op_tab[]);
 t_error			create_cor(t_data *data, char *str);
 char			**split_by_str(char *str, char *delim);
-char			*expand_label(char *str, char c1, char c2);
+char			*expand_label(char *str);
 char			**split_by_str(char *str, char *delim);
 char			*strjoin_add_c(char const *s1, char const *s2, char c);
 
