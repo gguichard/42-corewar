@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:03 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/15 04:52:24 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/15 06:56:19 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,22 @@ static t_error	parse_opts(t_env *env, char **argv, int *cur_arg)
 static void		run_vm(t_env *env)
 {
 	t_list	*cur_champ;
+	size_t	nb_champ;
+	size_t	i;
 
+	i = 0;
+	nb_champ = ft_lstsize(env->champ_lst);
 	cur_champ = env->champ_lst;
 	while (cur_champ != NULL)
 	{
 		ft_printf("Champion \"%s\" (%d bytes) has been loaded\n"
 				, ((t_champ *)cur_champ->content)->header.prog_name
 				, ((t_champ *)cur_champ->content)->header.prog_size);
-		ft_memcpy(env->arena, ((t_champ *)cur_champ->content)->prog
+		ft_memcpy(env->arena + (MEM_SIZE / nb_champ) * i
+				, ((t_champ *)cur_champ->content)->prog
 				, ((t_champ *)cur_champ->content)->header.prog_size);
 		cur_champ = cur_champ->next;
+		i++;
 	}
 	run_cycles_loop(env);
 }
