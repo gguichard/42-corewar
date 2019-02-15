@@ -6,39 +6,37 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:39:09 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/15 01:08:56 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/15 01:44:22 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
 #include <stdlib.h>
+#include "lexer.h"
+#include "asm.h"
 
 void	init_inst(t_data *data)
 {
-	char **inst;
-
-	inst = data->tab;
-	inst[0] = "live";
-	inst[1] = "ld";
-	inst[2] = "st";
-	inst[3] = "add";
-	inst[4] = "sub";
-	inst[5] = "and";
-	inst[6] = "or";
-	inst[7] = "xor";
-	inst[8] = "zjmp";
-	inst[9] = "ldi";
-	inst[10] = "sti";
-	inst[11] = "fork";
-	inst[12] = "lld";
-	inst[13] = "lldi";
-	inst[14] = "lfork";
-	inst[15] = "aff";
-	inst[16] = "r";
-	inst[17] = "%";
-	inst[18] = "%:";
-	inst[19] = "#";
-	inst[20] = NULL;
+	data->tab[0] = "live";
+	data->tab[1] = "ld";
+	data->tab[2] = "st";
+	data->tab[3] = "add";
+	data->tab[4] = "sub";
+	data->tab[5] = "and";
+	data->tab[6] = "or";
+	data->tab[7] = "xor";
+	data->tab[8] = "zjmp";
+	data->tab[9] = "ldi";
+	data->tab[10] = "sti";
+	data->tab[11] = "fork";
+	data->tab[12] = "lld";
+	data->tab[13] = "lldi";
+	data->tab[14] = "lfork";
+	data->tab[15] = "aff";
+	data->tab[16] = "r";
+	data->tab[17] = "%";
+	data->tab[18] = "%:";
+	data->tab[19] = "#";
+	data->tab[20] = NULL;
 }
 
 int		is_int(char *str)
@@ -60,7 +58,7 @@ int		is_int(char *str)
 	return (1);
 }
 
-t_lexer		check_if_valid(char *str, char **inst)
+t_lexer		check_if_valid(char *str, char *inst[])
 {
 	int i;
 	int state;
@@ -105,44 +103,37 @@ int		get_tab_size(char **tab)
 	return (n);
 }
 
-t_filter	*get_filter(char **str, t_lexer lex_id)
+t_filter	get_filter(char **str, t_lexer lex_id)
 {
-	t_filter	*elem;
+	t_filter	elem;
 
-	if (!(elem = (t_filter *)malloc(sizeof(t_filter))))
-		return (NULL);
-	elem->name = *str;
-	elem->label = lex_id;
+	elem.name = *str;
+	elem.label = lex_id;
 	return(elem);
 }
 
-t_error		lexer_parser(t_data *data, char **tab)
+t_error		lexer_parser(t_data *data, char **split)
 {
 	t_lexer		lex_id;
 	int			i;
-	int			n;
-	char		**inst;
-	t_filter	**filter;
+	int			j;
 
 	i = 0;
-	n = get_tab_size(tab);
-	inst = data->tab;
+	data->f_size = get_tab_size(split);
 	init_inst(data);
-	if (!(filter = (t_filter**)malloc(sizeof(t_filter*) * (n + 1))))
+	if (!(data->filter = (t_filter*)malloc(sizeof(t_filter) * data->f_size)))
 		return (ERR_MALLOC);
-	filter[n] = NULL;
-	n = 0;
-	while (tab[i])
+	j = 0;
+	while (i < data->f_size)
 	{
-		lex_id = check_if_valid(tab[i], inst);
+		lex_id = check_if_valid(split[i], data->tab);
 		if (lex_id != COMMENT && lex_id != ERROR)
 		{
-			if (!(filter[n] = get_filter(&tab[i], lex_id)))
-				return (ERR_MALLOC);
-			else if (lex_id == ERROR)
-				return (ERR_BADFMT);
-			n++;
+			data->filter[j] = get_filter(&split[i], lex_id);
+			j++;
 		}
+		else if (lex_id == ERROR)
+			return (ERR_BADFMT);
 		i++;
 	}
 	return (ERR_NOERROR);

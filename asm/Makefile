@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/14 23:40:05 by wta              ###   ########.fr        #
+#    Updated: 2019/02/15 01:24:49 by wta              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ NAME	=	asm
 SRC_DIR	=	src
 SRC		=		\
 get_file_cor.c	\
+lexer.c			\
 read_file.c		\
 utils.c			\
 main.c

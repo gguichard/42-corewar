@@ -6,14 +6,13 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:25:14 by wta               #+#    #+#             */
-/*   Updated: 2019/02/15 01:11:11 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/15 01:35:47 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ASM_H
 # define ASM_H
 
-# include "lexer.h"
 # include "op.h"
 # include "libft.h"
 
@@ -64,12 +63,31 @@ typedef struct	s_param
 	int			argv[3];
 }				t_param;
 
+typedef enum 	s_lexer
+{
+	INST,
+	DIRE,
+	INDIR,
+	LABEL,
+	COMMENT,
+	REG,
+	ERROR
+}				t_lexer;
+
+typedef struct 	s_filter
+{
+	char	*name;
+	t_lexer	label;
+}				t_filter;
+
 typedef struct	s_data
 {
 	t_header	header;
 	t_op		op_tab[16];
 	t_list_ref	list;
 	char 		*tab[21];
+	t_filter	*filter;
+	int			f_size;
 }				t_data;
 
 t_error			read_file(char *file, t_data *data);
@@ -78,5 +96,12 @@ t_error			create_cor(t_data *data, char *str);
 char			**split_by_str(char *str, char *delim);
 char			*expand_label(char *str, char c1, char c2);
 char			**split_by_str(char *str, char *delim);
+
+t_error			lexer_parser(t_data *data, char **tab);
+t_filter		get_filter(char **str, t_lexer lex_id);
+int				get_tab_size(char **tab);
+t_lexer			check_if_valid(char *str, char **inst);
+int				is_int(char *str);
+void			init_inst(t_data *data);
 
 #endif
