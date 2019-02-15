@@ -6,13 +6,14 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:25:14 by wta               #+#    #+#             */
-/*   Updated: 2019/02/14 23:38:27 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/15 01:11:11 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ASM_H
 # define ASM_H
 
+# include "lexer.h"
 # include "op.h"
 # include "libft.h"
 
@@ -68,6 +69,7 @@ typedef struct	s_data
 	t_header	header;
 	t_op		op_tab[16];
 	t_list_ref	list;
+	char 		*tab[21];
 }				t_data;
 
 t_error			read_file(char *file, t_data *data);
