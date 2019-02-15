@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:15:16 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/15 06:05:30 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/15 10:37:15 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,14 @@ static int	get_champ_id(t_env *env, char **argv, int *cur_arg)
 	return (id);
 }
 
-static int	add_champ_to_lst(t_env *env, t_champ champ)
+static int	add_champ_to_lst(t_env *env, t_champ champ, int id)
 {
 	t_list	*node;
 
 	node = ft_lstnew(&champ, sizeof(t_champ));
 	if (node == NULL)
 		return (0);
+	((t_champ *)node->content)->id = id;
 	ft_lstpush(&env->champ_lst, node);
 	return (1);
 }
@@ -85,9 +86,8 @@ t_error		create_def_process(t_env *env, char **argv, int argc
 			return (ERR_NOCHAMPNAME);
 		else if (!read_file(argv[cur_arg], &champ))
 			return (ERR_CHAMPREAD);
-		champ.id = id;
 		node = ft_lstnew(&process, sizeof(t_process));
-		if (node == NULL || !add_champ_to_lst(env, champ))
+		if (node == NULL || !add_champ_to_lst(env, champ, id))
 		{
 			free(node);
 			return (ERR_UNEXPECTED);

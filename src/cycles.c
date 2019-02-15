@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/15 06:27:35 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/15 10:42:13 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static void	kill_old_process(t_env *env)
 				ft_printf("REG[%d]=%d\n", idx, *((int *)process->reg[idx]));
 				idx++;
 			}
-			ft_printf("Process from champ %d killed at cycle %d\n", process->champ_id, env->cur_cycle);
+			ft_printf("Process from champ %d killed at cycle %d\n"
+					, process->champ_id, env->cur_cycle);
 			if (prev == NULL)
 				env->process_lst = cur->next;
 			else
@@ -60,34 +61,32 @@ static void	kill_old_process(t_env *env)
 
 static void	exec_inst(t_env *env, t_process *process)
 {
-	int		opcode;
 	t_op	op;
 	int		result;
 
-	opcode = process->queued_inst[0];
-	if (opcode < 1 || opcode > 2)
-		process->pc = (process->pc + 1) % MEM_SIZE;
-	else
-	{
-		op = g_op[opcode - 1];
-		result = op.fn(env, process, process->queued_inst);
-		if (op.carry)
-			process->carry = (result > 0);
-		process->pc = (process->pc + result) % MEM_SIZE;
-	}
-	process->queued_inst = NULL;
+	op = g_op[process->queued_inst[0] - 1];
+	result = op.fn(env, process, process->queued_inst);
+	if (op.carry)
+		process->carry = (result > 0);
+	process->pc = (process->pc + result) % MEM_SIZE;
+	ft_memdel((void **)&process->queued_inst);
 }
 
 static void	setup_new_inst(t_env *env, t_process *process)
 {
 	int	opcode;
 
-	process->queued_inst = get_in_circle_mem(env, 128, process->pc);
-	if (process->queued_inst != NULL)
+	opcode = env->arena[process->pc];
+	if (opcode < 1 || opcode > 2)
+		process->pc = (process->pc + 1) % MEM_SIZE;
+	else
 	{
-		opcode = process->queued_inst[0];
-		if (opcode >= 1 && opcode <= 2)
+		process->queued_inst = get_in_circle_mem(env, 32, process->pc);
+		if (process->queued_inst != NULL)
 			process->cycles_left = g_op[opcode - 1].cycles;
+		else
+			ft_dprintf(2, "corewar: error: Unexpected error while reading an "
+					"instruction\n");
 	}
 }
 
