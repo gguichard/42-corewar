@@ -6,7 +6,7 @@
 /*   By: zaz <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2019/02/14 02:42:23 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/15 00:58:58 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,22 @@ typedef struct		s_header
 	char			comment[COMMENT_LENGTH + 1];
 }					t_header;
 
+typedef struct	s_type
+{
+	char	arg1;
+	char	arg2;
+	char	arg3;
+}				t_type;
+
+typedef struct	s_op
+{
+	char			*op;
+	int				argc;
+	t_type			arg_type;
+	char			opcode;
+	int				cycle;
+	char			*name;
+	char			encoding	: 1;
+	char			direct		: 1;
+}				t_op;
 #endif

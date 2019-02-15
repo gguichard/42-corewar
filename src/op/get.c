@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:22 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/14 20:35:54 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/15 01:45:58 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,37 @@ unsigned char	*get_op(t_env *env, int size, unsigned char *str)
 	return (ret);
 }
 
-unsigned int		get_encoding_byte(unsigned char *str)
+int		get_args(unsigned char *str, char encoding_byte, t_decode *result)
 {
-	t_encode	*decode;
+	int	i;
+	int	type;
 
-	decode = (t_encode *)str;
-	printf("%d|%d|%d|%d\n", decode->arg1, decode->arg2, decode->arg3, decode->arg4);
-	return (2);
+	i = 0;
+	while (i < MAX_ARGS_NUMBER)
+	{
+		type = encoding_byte & (192 >> 2 * i);
+		if (type == 0)
+			break ;
+		type >>= (6 - 2 * i);
+		result->tab[i].type = type;
+		if (type == REG_CODE)
+		{
+			result->tab[i].value = *str;
+			str += sizeof(char);
+		}
+		else if (type == DIR_CODE)
+		{
+			result->tab[i].value = *((int *)str);
+			str += sizeof(int);
+		}
+		else if (type == IND_CODE)
+		{
+			result->tab[i].value = *((short *)str);
+			str += sizeof(short);
+		}
+		else
+			return (0);
+		i++;
+	}
+	return (1);
 }
