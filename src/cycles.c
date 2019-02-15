@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/15 23:12:44 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/15 23:44:53 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 t_op	g_op[] = {
 	{live, 10, 0},
 	{ld, 5, 1}
+	//{add, 10, 1}
+	//{sub, 10, 1}
 };
 
 static void	kill_old_process(t_env *env)

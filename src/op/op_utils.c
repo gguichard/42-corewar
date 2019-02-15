@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:22 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/15 23:12:22 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/15 23:55:03 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,4 +113,11 @@ int				get_args(unsigned char *bytes, unsigned char encoding_byte
 		i++;
 	}
 	return (1);
+}
+
+int				reg_isvalid(unsigned char *reg)
+{
+	if (*((int *)reg) > 0 && *((int *)reg) < 17)
+		return (1);
+	return (0);
 }

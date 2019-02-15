@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/15 23:04:41 by gguichar         ###   ########.fr        #
+#    Updated: 2019/02/15 23:51:01 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ print_arena.c	\
 op/op_utils.c	\
 op/live.c		\
 op/ld.c			\
+op/sub.c		\
 op/add.c
 
 OBJ_DIR	=	.obj
