@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:24 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/15 06:00:39 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/15 22:36:36 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	ld(t_env *env, t_process *cur_process, unsigned char *str)
 	ft_memset(value, 0, REG_SIZE);
 	if (decode.tab[0].type == DIR_CODE)
 	{
-		ft_memcpy(value + (REG_SIZE - 4), decode.tab[0].value, 4);
+		ft_memcpy(value, decode.tab[0].value, 4);
 		ret += 4;
 	}
 	else if (decode.tab[0].type == IND_CODE)
@@ -41,7 +41,7 @@ int	ld(t_env *env, t_process *cur_process, unsigned char *str)
 				, cur_process->pc + *((int *)decode.tab[0].value) % IDX_MOD);
 		if (tmp == NULL)
 			return (0);
-		ft_memcpy(value + (REG_SIZE - 4), tmp, 4);
+		ft_memcpy(value, tmp, 4);
 		free(tmp);
 		ret += 2;
 	}

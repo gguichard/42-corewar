@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:03 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/15 21:46:15 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/15 22:25:34 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void			setup_champ(t_env *env, t_champ *champ, int pc)
 		process->pc = pc;
 	else
 		ft_dprintf(2, "corewar: error: Unable to create process for \"%s\""
-				, ((t_champ *)cur_champ->content)->header.prog_name);
+				, champ->header.prog_name);
 }
 
 static void			run_vm(t_env *env)
@@ -85,7 +85,7 @@ static void			run_vm(t_env *env)
 		cur_champ = cur_champ->next;
 		idx++;
 	}
-	print_arena(env->arena, MEM_SIZE);
+//	print_arena(env->arena, MEM_SIZE);
 	run_cycles_loop(env);
 }
 

@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/15 21:33:49 by vifonne          ###   ########.fr        #
+#    Updated: 2019/02/15 22:16:45 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ errors.c		\
 print_arena.c	\
 op/live.c		\
 op/get.c		\
-op/ld.c
+op/ld.c			\
+op/add.c
 
 OBJ_DIR	=	.obj
 OBJ		=	$(SRC:.c=.o)
