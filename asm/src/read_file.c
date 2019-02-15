@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:10 by wta               #+#    #+#             */
-/*   Updated: 2019/02/15 03:36:10 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/15 03:55:12 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,12 +242,16 @@ t_error	get_post_header(int fd, char **line, char **inst)
 
 t_error	split_input(t_data *data, char *inst, char ***split)
 {
+	t_error	err_id;
 	(void)data;
+	err_id = ERR_NOERROR;
 	if ((inst = expand_label(inst)) == NULL)
-		return (ERR_MALLOC);
-	if ((*split = split_by_str(inst, " \t,")) == NULL)
-		return (ERR_MALLOC);
-	return (ERR_NOERROR);
+		err_id = ERR_MALLOC;
+	if (err_id == ERR_NOERROR
+			&& (*split = split_by_str(inst, " \t,")) == NULL)
+		err_id = ERR_MALLOC;
+	free(inst);
+	return (err_id);
 }
 
 t_error	get_first_part(t_data *data, int fd, char **line)
@@ -286,5 +290,6 @@ t_error	read_file(char *file, t_data *data)
 	for (int i = 0; i < data->f_size; i++)
 		ft_printf("%s\tlabel= %d\n", data->filter[i].name, data->filter[i].label);
 	close(fd);
+	ft_strtab_free(split);
 	return (err_id);
 }
