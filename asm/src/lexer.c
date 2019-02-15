@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:39:09 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/15 02:33:49 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/15 03:06:02 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_lexer		check_if_valid(char *str, char *inst[])
 		state = ft_strnequ(str, inst[i], ft_strlen(inst[i]));
 		if (state == 1)
 		{
-			if (i <= 15)
+			if (i <= 15 && ft_strlen(str) == ft_strlen(inst[i]))
 				return (INST);
 			else if (i == 16)
 				return (is_int(str + 1) ? REG : ERROR);
@@ -155,6 +155,7 @@ t_error		lexer_parser(t_data *data, char **split)
 	j = 0;
 	while (i < data->f_size)
 	{
+		printf("raw: %s\n", split[i]);
 		lex_id = check_if_valid(split[i], data->tab);
 		if (lex_id != COMMENT && lex_id != ERROR)
 		{
