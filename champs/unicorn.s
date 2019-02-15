@@ -5,6 +5,7 @@ init: sti r1,%:live,%1
 ld %90,r2
 ld %6,r3
 ld %0,r4
+ld 123,r5
 
 live:live%1
 sti r4,r2,r4

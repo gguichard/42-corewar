@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:25:14 by wta               #+#    #+#             */
-/*   Updated: 2019/02/15 03:33:55 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/15 03:42:36 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,14 @@ typedef struct	s_param
 typedef enum 	s_lexer
 {
 	INST,
-	DIRE,
-	INDIR,
-	LABEL,
 	REG,
+	DIRE,
+	ERROR,
+	INDIR,
 	COMMENT,
-	ERROR
+	SIX,
+	SEVEN,
+	LABEL
 }				t_lexer;
 
 typedef struct 	s_filter
