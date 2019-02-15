@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:32 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/15 05:53:14 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/15 06:43:22 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	live(t_env *env, t_process *cur_process, unsigned char *str)
 	champ = env->champ_lst;
 	while (champ != NULL)
 	{
-		if (ft_memcmp(decode.tab[0].value, &((t_champ *)champ->content)->id, REG_SIZE) == 0)
+		if (ft_memcmp(decode.tab[0].value, &((t_champ *)champ->content)->id
+					, REG_SIZE) == 0)
 		{
 			((t_champ *)champ->content)->live_cycle = env->cur_cycle;
 			break ;

@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:15:16 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/15 05:14:51 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/15 06:05:30 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ t_error		create_def_process(t_env *env, char **argv, int argc
 			return (ERR_UNEXPECTED);
 		}
 		((t_process *)node->content)->champ_id = id;
+		ft_memcpy(((t_process *)node->content)->reg[0], &id, REG_SIZE);
 		ft_lstadd(&env->process_lst, node);
 		cur_arg++;
 	}
