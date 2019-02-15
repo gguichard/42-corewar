@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:32 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/15 01:46:32 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/15 02:05:54 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,23 @@
 #include "champion.h"
 #include "func_op.h"
 
-void	live(t_env *env, t_process *cur_process, unsigned char *str)
+int	live(t_env *env, t_process *cur_process, unsigned char *str)
 {
-	unsigned char	*tmp;
-	unsigned int	champ_id;
-	t_list			*champ;
+	t_decode	decode;
+	t_list		*champ;
 
-	tmp = get_op(env, 5, str);
-	champ_id = *((int *)(str + 1));
-	printf("champ_id = %d\n", champ_id);
+	if (!get_args(str + 1, REG_CODE << 6, &decode))
+		return (0);
 	champ = env->champ_lst;
-	while (champ)
+	while (champ != NULL)
 	{
-		if (champ_id == ((t_champ *)champ->content)->id)
+		if (decode.tab[0].value == ((t_champ *)champ->content)->id)
 		{
-			printf("champ_id match\n");
 			((t_champ *)champ->content)->live_cycle = env->cur_cycle;
 			break ;
 		}
 		champ = champ->next;
 	}
-	//cur_process->lives += 1;
-	//cur_process->->pc += 5;
-	(void)cur_process;
+	cur_process->lives += 1;
+	return (1);
 }
