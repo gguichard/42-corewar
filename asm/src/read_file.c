@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:10 by wta               #+#    #+#             */
-/*   Updated: 2019/02/15 04:27:36 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/15 04:32:10 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,7 +221,8 @@ t_error	get_post_header(int fd, char **line, char **inst)
 	*inst = NULL;
 	while ((ret = get_next_line(fd, line)) > 0)
 	{
-		if ((tmp = ft_strchr(*line, '#')) != NULL)
+		if ((tmp = ft_strchr(*line, '#')) != NULL 
+				|| (tmp = ft_strchr(*line, ';')) != NULL)
 			*tmp = '\0';
 		if (*inst == NULL)
 		{
