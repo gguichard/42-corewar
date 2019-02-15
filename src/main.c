@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:03 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/15 21:32:59 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/15 21:46:15 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,32 +53,35 @@ static t_process	*create_process(t_env *env, t_champ *champ)
 	return ((t_process *)node->content);
 }
 
+static void			setup_champ(t_env *env, t_champ *champ, int pc)
+{
+	t_process	*process;
+
+	ft_memcpy(&env->arena[pc], champ->prog, champ->header.prog_size);
+	ft_printf("Champion \"%s\" (%d bytes) has been loaded\n"
+			, champ->header.prog_name
+			, champ->header.prog_size);
+	process = create_process(env, champ);
+	if (process != NULL)
+		process->pc = pc;
+	else
+		ft_dprintf(2, "corewar: error: Unable to create process for \"%s\""
+				, ((t_champ *)cur_champ->content)->header.prog_name);
+}
+
 static void			run_vm(t_env *env)
 {
-	t_list		*cur_champ;
-	size_t		nb_champs;
-	size_t		idx;
-	int			pc;
-	t_process	*process;
+	size_t	idx;
+	size_t	nb_champs;
+	t_list	*cur_champ;
 
 	idx = 0;
 	nb_champs = ft_lstsize(env->champ_lst);
 	cur_champ = env->champ_lst;
 	while (cur_champ != NULL)
 	{
-		pc = (MEM_SIZE / nb_champs) * idx;
-		ft_memcpy(&env->arena[pc]
-				, ((t_champ *)cur_champ->content)->prog
-				, ((t_champ *)cur_champ->content)->header.prog_size);
-		ft_printf("Champion \"%s\" (%d bytes) has been loaded\n"
-				, ((t_champ *)cur_champ->content)->header.prog_name
-				, ((t_champ *)cur_champ->content)->header.prog_size);
-		process = create_process(env, (t_champ *)cur_champ->content);
-		if (process != NULL)
-			process->pc = pc;
-		else
-			ft_dprintf(2, "corewar: error: Unable to create process for \"%s\""
-					, ((t_champ *)cur_champ->content)->header.prog_name);
+		setup_champ(env, (t_champ *)cur_champ->content
+				, (MEM_SIZE / nb_champs) * idx);
 		cur_champ = cur_champ->next;
 		idx++;
 	}

@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:22 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/15 05:52:16 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/15 21:46:33 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ unsigned char	*get_in_circle_mem(t_env *env, int size, int offset)
 	else
 	{
 		ft_memmove(ret, env->arena + offset, MEM_SIZE - offset);
-		ft_memmove((ret + MEM_SIZE - offset), env->arena, size - MEM_SIZE + offset);
+		ft_memmove((ret + MEM_SIZE - offset), env->arena
+				, size - MEM_SIZE + offset);
 	}
 	return (ret);
 }
