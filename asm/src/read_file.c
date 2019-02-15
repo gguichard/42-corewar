@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:10 by wta               #+#    #+#             */
-/*   Updated: 2019/02/15 04:44:27 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/15 05:17:52 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ t_error	check_first_line(int fd)
 	char	buf[1];
 	int		ret;
 
-	if ((ret = read(fd, buf, 1)) == -1)
-		return (ERR_ERRNO);
+	if ((ret = read(fd, buf, 1)) < 1)
+		return ((ret == -1) ? ERR_ERRNO : ERR_BADFMT);
 	if (buf[0] != '\n' && buf[0] != '\t' && buf[0] != '#' && buf[0] != '.')
 		return (ERR_BADFMT);
 	if ((ret = lseek(fd, 0, SEEK_SET)) == -1)
@@ -144,6 +144,7 @@ t_error	fill_comment(t_data *data, int fd, char **str, char **line)
 {
 	t_error	err_id;
 
+	err_id = ERR_NOERROR;
 	if (ft_strlen(*str) + ft_strlen(data->header.comment)
 			> COMMENT_LENGTH)
 		err_id = ERR_BADFMT;
@@ -280,16 +281,18 @@ t_error	read_file(char *file, t_data *data)
 	char	*inst;
 	int		fd;
 
+	split = NULL;
+	err_id = ERR_NOERROR;
 	if ((fd = open(file, O_RDONLY)) == -1)
 		return (ERR_ERRNO);
-	if ((err_id = get_first_part(data, fd, &line)) != ERR_NOERROR)
-		return (err_id);
-	if ((err_id = get_post_header(fd, &line, &inst)) !=	ERR_NOERROR)
-		return (err_id);
-	if ((err_id = split_input(data, inst, &split)) != ERR_NOERROR)
-		return (err_id);
-	if ((err_id = lexer_parser(data, split)) != ERR_NOERROR)
-		return (err_id);
+	if (err_id == ERR_NOERROR)
+		err_id = get_first_part(data, fd, &line);
+	if (err_id == ERR_NOERROR)
+		err_id = get_post_header(fd, &line, &inst);
+	if (err_id == ERR_NOERROR)
+		err_id = split_input(data, inst, &split);
+	if (err_id == ERR_NOERROR)
+		err_id = lexer_parser(data, split);
 	ft_strtab_free(split);
 	for (int i = 0; i < data->f_size; i++)
 		ft_printf("%s\tlabel= %d\n", data->filter[i].name, data->filter[i].label);
