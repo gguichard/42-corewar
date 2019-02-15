@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:03 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/15 21:12:06 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/15 21:32:59 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "corewar.h"
 #include "parsing.h"
 
-static t_error	parse_opts(t_env *env, char **argv, int *cur_arg)
+static t_error		parse_opts(t_env *env, char **argv, int *cur_arg)
 {
 	long	dump_cycles;
 	char	*endptr;
@@ -38,31 +38,55 @@ static t_error	parse_opts(t_env *env, char **argv, int *cur_arg)
 	return (ERR_NOERROR);
 }
 
-static void		run_vm(t_env *env)
+static t_process	*create_process(t_env *env, t_champ *champ)
 {
-	t_list	*cur_champ;
-	size_t	nb_champ;
-	size_t	i;
+	t_process	process;
+	t_list		*node;
 
-	i = 0;
-	nb_champ = ft_lstsize(env->champ_lst);
+	ft_memset(&process, 0, sizeof(t_process));
+	node = ft_lstnew(&process, sizeof(t_process));
+	if (node == NULL)
+		return (NULL);
+	((t_process *)node->content)->champ_id = champ->id;
+	ft_memcpy(((t_process *)node->content)->reg[0], &champ->id, REG_SIZE);
+	ft_lstadd(&env->process_lst, node);
+	return ((t_process *)node->content);
+}
+
+static void			run_vm(t_env *env)
+{
+	t_list		*cur_champ;
+	size_t		nb_champs;
+	size_t		idx;
+	int			pc;
+	t_process	*process;
+
+	idx = 0;
+	nb_champs = ft_lstsize(env->champ_lst);
 	cur_champ = env->champ_lst;
 	while (cur_champ != NULL)
 	{
-		ft_memcpy(env->arena + (MEM_SIZE / nb_champ) * i
+		pc = (MEM_SIZE / nb_champs) * idx;
+		ft_memcpy(&env->arena[pc]
 				, ((t_champ *)cur_champ->content)->prog
 				, ((t_champ *)cur_champ->content)->header.prog_size);
 		ft_printf("Champion \"%s\" (%d bytes) has been loaded\n"
 				, ((t_champ *)cur_champ->content)->header.prog_name
 				, ((t_champ *)cur_champ->content)->header.prog_size);
+		process = create_process(env, (t_champ *)cur_champ->content);
+		if (process != NULL)
+			process->pc = pc;
+		else
+			ft_dprintf(2, "corewar: error: Unable to create process for \"%s\""
+					, ((t_champ *)cur_champ->content)->header.prog_name);
 		cur_champ = cur_champ->next;
-		i++;
+		idx++;
 	}
 	print_arena(env->arena, MEM_SIZE);
 	run_cycles_loop(env);
 }
 
-int				main(int argc, char **argv)
+int					main(int argc, char **argv)
 {
 	t_env	env;
 	int		cur_arg;
@@ -74,7 +98,7 @@ int				main(int argc, char **argv)
 	env.dump_cycles = -1;
 	err_id = parse_opts(&env, argv, &cur_arg);
 	if (err_id == ERR_NOERROR)
-		err_id = create_def_process(&env, argv, argc, cur_arg);
+		err_id = create_champs(&env, argv, argc, cur_arg);
 	if (err_id == ERR_NOERROR && env.champ_lst == NULL)
 		err_id = ERR_NOCHAMPS;
 	if (err_id != ERR_NOERROR)
