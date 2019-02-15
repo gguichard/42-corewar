@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:32 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/15 03:33:29 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/15 04:42:48 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	live(t_env *env, t_process *cur_process, unsigned char *str)
 		}
 		champ = champ->next;
 	}
+	if (champ == NULL)
+		return (0);
 	cur_process->lives += 1;
-	return (1);
+	return (5);
 }
