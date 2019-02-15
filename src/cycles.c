@@ -6,13 +6,20 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/14 03:49:45 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/15 04:27:22 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "corewar.h"
 #include "process.h"
+#include "op.h"
+#include "func_op.h"
+
+t_op	g_op[] = {
+	{live, 10, 0},
+	{ld, 5, 1}
+};
 
 static void	kill_old_process(t_env *env)
 {

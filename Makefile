@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/14 20:36:57 by vifonne          ###   ########.fr        #
+#    Updated: 2019/02/15 04:22:26 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,6 @@ read.c			\
 process.c		\
 cycles.c		\
 errors.c		\
-exec_inst.c		\
 op/live.c		\
 op/get.c		\
 op/ld.c

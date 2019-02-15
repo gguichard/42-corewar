@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:24 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/15 03:49:27 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/15 04:12:09 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	ld(t_env *env, t_process *cur_process, unsigned char *str)
 	else if (decode.tab[0].type == IND_CODE)
 	{
 		tmp = get_in_circle_mem(env, 4, cur_process->pc + *((int *)decode.tab[0].value) % IDX_MOD);
+		if (tmp == NULL)
+			return (0);
 		ft_memcpy(value + (REG_SIZE - 4), tmp, 4);
 		free(tmp);
 	}

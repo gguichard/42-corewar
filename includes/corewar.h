@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:43 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/14 20:23:01 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/15 04:27:23 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include "op.h"
+# include "process.h"
 
 typedef enum e_error	t_error;
 typedef struct s_env	t_env;
@@ -46,5 +47,12 @@ t_error		create_def_process(t_env *env, char **argv, int argc, int cur_arg);
 void		run_cycles_loop(t_env *env);
 
 const char	*str_to_error(t_error err_id);
+
+typedef struct		s_op
+{
+	int				(*fn)(t_env *, t_process *, unsigned char *);
+	int				cycles;
+	int				carry;
+}					t_op;
 
 #endif
