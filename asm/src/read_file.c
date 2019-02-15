@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:10 by wta               #+#    #+#             */
-/*   Updated: 2019/02/15 02:02:09 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/15 02:34:33 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,6 +283,10 @@ t_error	read_file(char *file, t_data *data)
 		return (err_id);
 	if ((err_id = lexer_parser(data, split)) != ERR_NOERROR)
 		return (err_id);
+	for (int i = 0; i < data->f_size; i++)
+	{
+		printf("string= %s\tfiltre: %d\n", data->filter[i].name, data->filter[i].label);
+	}
 	close(fd);
 	return (err_id);
 }
