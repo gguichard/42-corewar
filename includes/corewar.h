@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:43 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/15 06:56:21 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/15 21:23:40 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ typedef struct	s_op
 	int			carry;
 }				t_op;
 
-t_error			create_def_process(t_env *env, char **argv, int argc
-		, int cur_arg);
+t_error			create_champs(t_env *env, char **argv, int argc, int cur_arg);
 
 void			run_cycles_loop(t_env *env);
 

@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/15 04:22:26 by vifonne          ###   ########.fr        #
+#    Updated: 2019/02/15 21:25:28 by gguichar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ SRC_DIR	=	src
 SRC		=		\
 main.c			\
 read.c			\
-process.c		\
+champs.c		\
 cycles.c		\
 errors.c		\
 op/live.c		\
@@ -26,7 +26,6 @@ op/ld.c
 OBJ_DIR	=	.obj
 OBJ		=	$(SRC:.c=.o)
 DEP		=	$(OBJ:.o=.d)
-
 INC_DIR	=	includes
 
 CC		=	gcc -g -fsanitize=address
