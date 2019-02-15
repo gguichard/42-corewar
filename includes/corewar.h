@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:43 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/15 04:27:23 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/15 04:42:48 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 typedef enum e_error	t_error;
 typedef struct s_env	t_env;
 
-enum		e_error
+enum			e_error
 {
 	ERR_NOERROR = 0,
 	ERR_UNEXPECTED = 1,
@@ -31,7 +31,7 @@ enum		e_error
 	ERR_NOCHAMPS
 };
 
-struct		s_env
+struct			s_env
 {
 	t_list			*champ_lst;
 	t_list			*process_lst;
@@ -42,17 +42,18 @@ struct		s_env
 	int				cycle_before_die;
 };
 
-t_error		create_def_process(t_env *env, char **argv, int argc, int cur_arg);
-
-void		run_cycles_loop(t_env *env);
-
-const char	*str_to_error(t_error err_id);
-
-typedef struct		s_op
+typedef struct	s_op
 {
-	int				(*fn)(t_env *, t_process *, unsigned char *);
-	int				cycles;
-	int				carry;
-}					t_op;
+	int			(*fn)(t_env *, t_process *, unsigned char *);
+	int			cycles;
+	int			carry;
+}				t_op;
+
+t_error			create_def_process(t_env *env, char **argv, int argc
+		, int cur_arg);
+
+void			run_cycles_loop(t_env *env);
+
+const char		*str_to_error(t_error err_id);
 
 #endif

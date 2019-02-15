@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:15:16 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/14 06:00:57 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/15 05:14:51 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ t_error		create_def_process(t_env *env, char **argv, int argc
 			return (ERR_NOCHAMPNAME);
 		else if (!read_file(argv[cur_arg], &champ))
 			return (ERR_CHAMPREAD);
+		champ.id = id;
 		node = ft_lstnew(&process, sizeof(t_process));
 		if (node == NULL || !add_champ_to_lst(env, champ))
 		{

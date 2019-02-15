@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 06:03:00 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/14 20:23:40 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/15 04:44:35 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ struct	s_process
 	unsigned char	reg[REG_NUMBER][REG_SIZE];
 	unsigned int	pc;
 	int				carry:1;
+	unsigned char	*queued_inst;
 	int				cycles_left;
 	int				lives;
 };

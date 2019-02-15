@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:22 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/15 03:53:43 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/15 05:52:16 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,24 @@ unsigned char	*get_in_circle_mem(t_env *env, int size, int offset)
 	return (ret);
 }
 
-int				get_args(unsigned char *str, char encoding_byte, t_decode *result)
+static void		ft_swap_bytes(unsigned char *str, int size)
+{
+	int				i;
+	unsigned char	tmp;
+
+	i = 0;
+	while (i < size)
+	{
+		size--;
+		tmp = str[size];
+		str[size] = str[i];
+		str[i] = tmp;
+		i++;
+	}
+}
+
+int				get_args(unsigned char *str, unsigned char encoding_byte
+		, t_decode *result)
 {
 	int	i;
 	int	type;
@@ -55,11 +72,13 @@ int				get_args(unsigned char *str, char encoding_byte, t_decode *result)
 		else if (type == DIR_CODE)
 		{
 			ft_memcpy(result->tab[i].value, str, 4);
+			ft_swap_bytes(result->tab[i].value, 4);
 			str += 4;
 		}
 		else if (type == IND_CODE)
 		{
 			ft_memcpy(result->tab[i].value, str, 2);
+			ft_swap_bytes(result->tab[i].value, 2);
 			str += 2;
 		}
 		else

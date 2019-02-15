@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/15 04:27:22 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/15 04:56:39 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	kill_old_process(t_env *env)
 			process->lives = 0;
 		else
 		{
-			ft_printf("Process from champ %d killed\n", process->champ_id);
+			ft_printf("Process from champ %d killed at cycle %d\n", process->champ_id, env->cur_cycle);
 			if (prev == NULL)
 				env->process_lst = cur->next;
 			else
@@ -48,6 +48,39 @@ static void	kill_old_process(t_env *env)
 		prev = cur;
 		if (cur != NULL)
 			cur = cur->next;
+	}
+}
+
+static void	exec_inst(t_env *env, t_process *process)
+{
+	int		opcode;
+	t_op	op;
+	int		result;
+
+	opcode = process->queued_inst[0];
+	if (opcode < 1 || opcode > 2)
+		process->pc = (process->pc + 1) % MEM_SIZE;
+	else
+	{
+		op = g_op[opcode - 1];
+		result = op.fn(env, process, process->queued_inst);
+		if (op.carry)
+			process->carry = (result > 0);
+		process->pc = (process->pc + result) % MEM_SIZE;
+	}
+	process->queued_inst = NULL;
+}
+
+static void	setup_new_inst(t_env *env, t_process *process)
+{
+	int	opcode;
+
+	process->queued_inst = get_in_circle_mem(env, 128, process->pc);
+	if (process->queued_inst != NULL)
+	{
+		opcode = process->queued_inst[0];
+		if (opcode >= 1 && opcode <= 2)
+			process->cycles_left = g_op[opcode - 1].cycles;
 	}
 }
 
@@ -64,8 +97,9 @@ static void	inst_process(t_env *env)
 			process->cycles_left -= 1;
 		else
 		{
-			// TODO: execute inst & set PC
-			process->cycles_left = 42;
+			if (process->queued_inst != NULL)
+				exec_inst(env, process);
+			setup_new_inst(env, process);
 		}
 		cur = cur->next;
 	}

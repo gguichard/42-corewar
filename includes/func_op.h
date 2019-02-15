@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:13:03 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/15 04:19:25 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/15 05:06:38 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int					ld(t_env *env, t_process *cur_process, unsigned char *str);
 **	UTILS
 */
 unsigned char		*get_in_circle_mem(t_env *env, int size, int offset);
-int					get_args(unsigned char *str, char encoding_byte, t_decode *result);
+int					get_args(unsigned char *str, unsigned char encoding_byte
+		, t_decode *result);
 
 #endif

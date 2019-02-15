@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:32 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/15 04:42:48 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/15 05:53:14 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	live(t_env *env, t_process *cur_process, unsigned char *str)
 	t_decode	decode;
 	t_list		*champ;
 
-	if (!get_args(str + 1, REG_CODE << 6, &decode))
+	if (!get_args(str + 1, DIR_CODE << 6, &decode))
 		return (0);
 	champ = env->champ_lst;
 	while (champ != NULL)

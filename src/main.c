@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:03 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/15 04:22:44 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/15 04:52:24 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static void		run_vm(t_env *env)
 	{
 		ft_printf("Champion \"%s\" (%d bytes) has been loaded\n"
 				, ((t_champ *)cur_champ->content)->header.prog_name
+				, ((t_champ *)cur_champ->content)->header.prog_size);
+		ft_memcpy(env->arena, ((t_champ *)cur_champ->content)->prog
 				, ((t_champ *)cur_champ->content)->header.prog_size);
 		cur_champ = cur_champ->next;
 	}
