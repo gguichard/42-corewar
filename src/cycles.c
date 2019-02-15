@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/15 21:42:08 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/15 23:12:44 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	setup_new_inst(t_env *env, t_process *process)
 		process->pc = (process->pc + 1) % MEM_SIZE;
 	else
 	{
-		process->queued_inst = get_in_circle_mem(env, 32, process->pc);
+		process->queued_inst = get_in_arena(env, 32, process->pc);
 		if (process->queued_inst != NULL)
 			process->cycles_left = g_op[opcode - 1].cycles;
 		else
