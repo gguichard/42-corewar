@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:39:09 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/15 03:43:00 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/15 04:22:15 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "lexer.h"
 #include "asm.h"
 
-void	init_inst(t_data *data)
+void		init_inst(t_data *data)
 {
 	data->tab[0] = "live";
 	data->tab[1] = "ld";
@@ -39,9 +39,9 @@ void	init_inst(t_data *data)
 	data->tab[20] = NULL;
 }
 
-int		is_int(char *str)
+int			is_int(char *str)
 {
-	int i;
+	int		i;
 
 	i = 0;
 	if (((str[i] == '-' || str[i] == '+') && ft_isdigit(str[i + 1]))
@@ -58,16 +58,16 @@ int		is_int(char *str)
 	return (1);
 }
 
-int		check_label(char *str)
+int			check_label(char *str)
 {
-	int i;
-	int n;
-	int len;
+	int		i;
+	int		n;
+	int		len;
 
 	i = 0;
 	n = 0;
 	len = ft_strlen(str) - 1;
-	if(str[len] != ':')
+	if (str[len] != ':')
 		return (0);
 	while (str[i] && i < len)
 	{
@@ -87,8 +87,7 @@ int		check_label(char *str)
 
 t_lexer		check_if_valid(char *str, char *inst[])
 {
-	int i;
-	int state;
+	int		i;
 
 	i = 0;
 	if (is_int(str))
@@ -97,8 +96,7 @@ t_lexer		check_if_valid(char *str, char *inst[])
 		return (LABEL);
 	while (inst[i] != NULL)
 	{
-		state = ft_strnequ(str, inst[i], ft_strlen(inst[i]));
-		if (state == 1)
+		if (ft_strnequ(str, inst[i], ft_strlen(inst[i])) == 1)
 		{
 			if (i <= 15 && ft_strlen(str) == ft_strlen(inst[i]))
 				return (INST);
@@ -113,10 +111,10 @@ t_lexer		check_if_valid(char *str, char *inst[])
 		}
 		i++;
 	}
-	return(ERROR);
+	return (ERROR);
 }
 
-int		get_tab_size(char **tab)
+int			get_tab_size(char **tab)
 {
 	int		n;
 	int		i;
@@ -132,13 +130,12 @@ int		get_tab_size(char **tab)
 	return (n);
 }
 
-t_filter	get_filter(char **str, t_lexer lex_id)
+int			get_filter(char *str, t_filter *filter, t_lexer lex_id)
 {
-	t_filter	elem;
-
-	elem.name = *str;
-	elem.label = lex_id;
-	return(elem);
+	if ((filter->name = ft_strdup(str)) == NULL)
+		return (0);
+	filter->label = lex_id;
+	return (1);
 }
 
 t_error		lexer_parser(t_data *data, char **split)
@@ -153,12 +150,13 @@ t_error		lexer_parser(t_data *data, char **split)
 	if (!(data->filter = (t_filter*)malloc(sizeof(t_filter) * data->f_size)))
 		return (ERR_MALLOC);
 	j = 0;
-	while (i < data->f_size)
+	while (split[i] != NULL && j < data->f_size)
 	{
 		lex_id = check_if_valid(split[i], data->tab);
 		if (lex_id != COMMENT && lex_id != ERROR)
 		{
-			data->filter[j] = get_filter(&split[i], lex_id);
+			if (get_filter(split[i], &data->filter[j], lex_id) == 0)
+				return (ERR_MALLOC);
 			j++;
 		}
 		else if (lex_id == ERROR)
