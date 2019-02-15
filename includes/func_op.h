@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:13:03 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/15 01:45:58 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/15 03:31:55 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ typedef struct		s_encoding_byte
 typedef struct		s_arg
 {
 	int				type;
-	int				value;
+	unsigned char	value[REG_SIZE];
 }					t_arg;
 
 typedef struct		s_decode
@@ -37,13 +37,13 @@ typedef struct		s_decode
 	t_arg			tab[MAX_ARGS_NUMBER];
 }					t_decode;
 
-void				live(t_env *env, t_process *cur_process, unsigned char *str);
-void				ld(t_env *env, t_process *cur_process, unsigned char *str);
+int					live(t_env *env, t_process *cur_process, unsigned char *str);
+int					ld(t_env *env, t_process *cur_process, unsigned char *str);
 
 /*
 **	UTILS
 */
-unsigned char		*get_op(t_env *env, int size, unsigned char *str);
+unsigned char		*get_in_circle_mem(t_env *env, int size, int offset);
 int					get_args(unsigned char *str, char encoding_byte, t_decode *result);
 
 #endif

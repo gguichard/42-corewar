@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 00:39:37 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/15 00:58:09 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/15 03:52:46 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,74 +45,3 @@ void	set_op_tab(t_op op_tab[])
 	op_tab[14] = (t_op){"lfork", 1, {T_DIR, 0, 0}, 15, 1000, "long fork", 0, 1};
 	op_tab[15] = (t_op){"aff", 1, {T_REG, 0, 0}, 16, 2, "aff", 1, 0};
 }
-
-/*
-   void	st(void)
-   {
-   ft_printf("st\n");
-   }
-
-   void	add(void)
-   {
-   ft_printf("add\n");
-   }
-
-   void	sub(void)
-   {
-   ft_printf("sub\n");
-   }
-
-   void	ft_and(void)
-   {
-   ft_printf("and\n");
-   }
-
-   void	ft_or(void)
-   {
-   ft_printf("or\n");
-   }
-
-   void	ft_xor(void)
-   {
-   ft_printf("xor\n");
-   }
-
-   void	zjump(void)
-   {
-   ft_printf("zjump\n");
-   }
-
-   void	ldi(void)
-   {
-   ft_printf("ldi\n");
-   }
-
-   void	sti(void)
-   {
-   ft_printf("sti\n");
-   }
-
-   void	ft_fork(void)
-   {
-   ft_printf("fork\n");
-   }
-
-   void	lld(void)
-   {
-   ft_printf("lld\n");
-   }
-
-   void	lldi(void)
-   {
-   ft_printf("lldi\n");
-   }
-
-   void	lfork(void)
-   {
-   ft_printf("lfork\n");
-   }
-
-   void	aff(void)
-   {
-   ft_printf("aff\n");
-   }*/

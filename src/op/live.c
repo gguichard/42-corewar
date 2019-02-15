@@ -6,13 +6,13 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:32 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/15 02:05:54 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/15 03:33:29 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "corewar.h"
 #include "op.h"
 #include "process.h"
-#include "corewar.h"
 #include "champion.h"
 #include "func_op.h"
 
@@ -26,7 +26,7 @@ int	live(t_env *env, t_process *cur_process, unsigned char *str)
 	champ = env->champ_lst;
 	while (champ != NULL)
 	{
-		if (decode.tab[0].value == ((t_champ *)champ->content)->id)
+		if (ft_memcmp(decode.tab[0].value, &((t_champ *)champ->content)->id, REG_SIZE) == 0)
 		{
 			((t_champ *)champ->content)->live_cycle = env->cur_cycle;
 			break ;

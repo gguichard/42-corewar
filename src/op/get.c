@@ -6,35 +6,35 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:22 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/15 02:49:30 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/15 03:53:43 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "op.h"
-#include "process.h"
 #include "corewar.h"
-#include "champion.h"
+#include "op.h"
 #include "func_op.h"
 
-unsigned char	*get_op(t_env *env, int size, unsigned char *str)
+unsigned char	*get_in_circle_mem(t_env *env, int size, int offset)
 {
 	unsigned char	*ret;
-	int				offset;
 
 	if (!(ret = (unsigned char *)ft_memalloc(sizeof(unsigned char) * size)))
 		return (NULL);
-	offset = size - ((env->arena + MEM_SIZE) - str);
-	if (offset > 0)
-	{
-		ft_memmove(ret, str, (env->arena + MEM_SIZE) - str);
-		ft_memmove((ret + ((env->arena + MEM_SIZE) - str)), env->arena, offset);
-	}
+	if (offset < 0)
+		offset += MEM_SIZE;
+	if (offset > MEM_SIZE)
+		offset %= MEM_SIZE;
+	if ((offset + size) <= MEM_SIZE)
+		ft_memmove(ret, env->arena + offset, size);
 	else
-		ft_memmove(ret, str, size);
+	{
+		ft_memmove(ret, env->arena + offset, MEM_SIZE - offset);
+		ft_memmove((ret + MEM_SIZE - offset), env->arena, size - MEM_SIZE + offset);
+	}
 	return (ret);
 }
 
-int		get_args(unsigned char *str, char encoding_byte, t_decode *result)
+int				get_args(unsigned char *str, char encoding_byte, t_decode *result)
 {
 	int	i;
 	int	type;
@@ -49,18 +49,18 @@ int		get_args(unsigned char *str, char encoding_byte, t_decode *result)
 		result->tab[i].type = type;
 		if (type == REG_CODE)
 		{
-			result->tab[i].value = *str;
-			str += sizeof(char);
+			ft_memcpy(result->tab[i].value, str, 1);
+			str += 1;
 		}
 		else if (type == DIR_CODE)
 		{
-			result->tab[i].value = *((int *)str);
-			str += sizeof(int);
+			ft_memcpy(result->tab[i].value, str, 4);
+			str += 4;
 		}
 		else if (type == IND_CODE)
 		{
-			result->tab[i].value = *((short *)str);
-			str += sizeof(short);
+			ft_memcpy(result->tab[i].value, str, 2);
+			str += 2;
 		}
 		else
 			return (0);
