@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:39:09 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/15 04:32:07 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/16 00:33:12 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,7 @@
 #include "lexer.h"
 #include "asm.h"
 
-void		init_inst(t_data *data)
-{
-	data->tab[0] = "live";
-	data->tab[1] = "ld";
-	data->tab[2] = "st";
-	data->tab[3] = "add";
-	data->tab[4] = "sub";
-	data->tab[5] = "and";
-	data->tab[6] = "or";
-	data->tab[7] = "xor";
-	data->tab[8] = "zjmp";
-	data->tab[9] = "ldi";
-	data->tab[10] = "sti";
-	data->tab[11] = "fork";
-	data->tab[12] = "lld";
-	data->tab[13] = "lldi";
-	data->tab[14] = "lfork";
-	data->tab[15] = "aff";
-	data->tab[16] = "r";
-	data->tab[17] = "%:";
-	data->tab[18] = "%";
-	data->tab[19] = "#";
-	data->tab[20] = NULL;
-}
+extern t_op		g_op_tab[17];
 
 int			is_int(char *str)
 {
@@ -56,6 +33,22 @@ int			is_int(char *str)
 		i++;
 	}
 	return (1);
+}
+
+int			get_tab_size(char **tab)
+{
+	int		n;
+	int		i;
+
+	i = 0;
+	n = 0;
+	while (tab[i])
+	{
+		if (tab[i][0] != '#')
+			n++;
+		i++;
+	}
+	return (n);
 }
 
 int			check_label(char *str)
@@ -85,83 +78,56 @@ int			check_label(char *str)
 	return (1);
 }
 
-t_lexer		check_if_valid(char *str, char *inst[])
+int			set_arg(char *str, t_filter *filter)
 {
-	int		i;
+	if (*str == 'r' && is_int(str + 1) == 1)
+		filter->label = LX_REG;
+	else if (ft_strnequ("%:", str, 2) == 1)
+		filter->label = LX_DIRE;
+	else if (*str == '%' && (is_int(str + 1) == 1))
+		filter->label = LX_DIRE;
+	else if (is_int(str) == 1)
+		filter->label = LX_INDIR;
+	else if (check_label(str) == 1)
+		filter->label = LX_LABEL;
+	if (*str != '#')
+		filter->op.name = ft_strdup(str);
+	return (*str != '#');
+}
 
-	i = 0;
-	if (is_int(str))
-		return (INDIR);
-	else if (check_label(str))
-		return (LABEL);
-	while (inst[i] != NULL)
+int			set_labels(char *str, t_filter *filter)
+{
+	int	idx;
+
+	idx = 0;
+	while (idx < 16)
 	{
-		if (ft_strnequ(str, inst[i], ft_strlen(inst[i])) == 1)
+		if (ft_strnequ(g_op_tab[idx].name, str, ft_strlen(g_op_tab[idx].name)))
 		{
-			if (i <= 15 && ft_strlen(str) == ft_strlen(inst[i]))
-				return (INST);
-			else if (i == 16)
-				return (is_int(str + 1) ? REG : ERROR);
-			else if (i == 18)
-				return ((is_int(str + 1) ? DIRE : ERROR));
-			else if (i == 17)
-				return (DIRE);
-			else if (i == 19)
-				return (COMMENT);
+			filter->op = g_op_tab[idx];
+			filter->label = LX_INST;
+			return (1);
 		}
-		i++;
+		idx += 1;
 	}
-	return (ERROR);
-}
-
-int			get_tab_size(char **tab)
-{
-	int		n;
-	int		i;
-
-	i = 0;
-	n = 0;
-	while (tab[i])
-	{
-		if (tab[i][0] != '#')
-			n++;
-		i++;
-	}
-	return (n);
-}
-
-int			get_filter(char *str, t_filter *filter, t_lexer lex_id)
-{
-	if ((filter->name = ft_strdup(str)) == NULL)
-		return (0);
-	filter->label = lex_id;
-	return (1);
+	return (set_arg(str, filter));
 }
 
 t_error		lexer_parser(t_data *data, char **split)
 {
-	t_lexer		lex_id;
 	int			i;
 	int			j;
 
 	i = 0;
 	data->f_size = get_tab_size(split);
-	init_inst(data);
 	if (!(data->filter = (t_filter*)malloc(sizeof(t_filter) * data->f_size)))
 		return (ERR_MALLOC);
+	ft_memset(data->filter, 0, sizeof(t_filter));
 	j = 0;
 	while (split[i] != NULL && j < data->f_size)
 	{
 		printf("raw= %s\n", split[i]);
-		lex_id = check_if_valid(split[i], data->tab);
-		if (lex_id != COMMENT && lex_id != ERROR)
-		{
-			if (get_filter(split[i], &data->filter[j], lex_id) == 0)
-				return (ERR_MALLOC);
-			j++;
-		}
-		else if (lex_id == ERROR)
-			return (ERR_BADFMT);
+		j += set_labels(split[i], &data->filter[j]);
 		i++;
 	}
 	return (ERR_NOERROR);

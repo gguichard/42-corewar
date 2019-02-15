@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:25:14 by wta               #+#    #+#             */
-/*   Updated: 2019/02/15 04:03:07 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/16 00:25:25 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ typedef struct	s_type
 
 typedef struct	s_op
 {
-	char			*op;
+	char			*name;
 	int				argc;
 	t_type			arg_type;
 	char			opcode;
 	int				cycle;
-	char			*name;
+	char			*long_name;
 	char			encoding	: 1;
 	char			direct		: 1;
 }				t_op;
@@ -65,32 +65,33 @@ typedef struct	s_param
 
 typedef enum 	s_lexer
 {
-	INST,
-	REG,
-	DIRE,
-	ERROR,
-	INDIR,
-	COMMENT,
-	SIX,
-	SEVEN,
-	LABEL
+	LX_INST,
+	LX_REG,
+	LX_DIRE,
+	LX_ERROR,
+	LX_INDIR,
+	LX_COMMENT,
+	LX_SIX,
+	LX_SEVEN,
+	LX_LABEL
 }				t_lexer;
 
 typedef struct 	s_filter
 {
 	char	*name;
+	t_op	op;
 	t_lexer	label;
 }				t_filter;
 
 typedef struct	s_data
 {
 	t_header	header;
-	t_op		op_tab[16];
 	t_list_ref	list;
 	char 		*tab[21];
 	t_filter	*filter;
 	int			f_size;
 }				t_data;
+
 
 t_error			read_file(char *file, t_data *data);
 void			set_op_tab(t_op op_tab[]);
