@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:10 by wta               #+#    #+#             */
-/*   Updated: 2019/02/15 01:38:59 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/15 01:50:57 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,7 @@ t_error	get_post_header(int fd, char **line, char **inst)
 		else
 		{
 			tmp = *inst;
-			if ((*inst = ft_strjoin(*inst, *line)) == NULL)
+			if ((*inst = strjoin_add_c(*inst, *line, ' ')) == NULL)
 				err_id = ERR_MALLOC;
 			free(tmp);
 		}
@@ -274,14 +274,12 @@ t_error	read_file(char *file, t_data *data)
 		err_id = get_post_header(fd, &line, &inst);
 		err_id = split_input(data, inst, &split);
 		err_id = lexer_parser(data, split);
-	/*
-		for (int i = 0; i < data->f_size; i++)
+/*		for (int i = 0; i < data->f_size; i++)
 		{
 			ft_printf("i = %d\n", i);
-			ft_printf("f_size = %d\n", data->f_size);
 			ft_printf("%s\n", data->filter[i].name);
 		}
-		*/
+*/
 	}
 	close(fd);
 	return (err_id);

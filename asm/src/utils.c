@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:09:15 by wta               #+#    #+#             */
-/*   Updated: 2019/02/15 01:10:01 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/15 01:49:21 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,4 +143,25 @@ char	*expand_label(char *str, char c1, char c2)
 	}
 	free(str);
 	return (new);
+}
+
+char	*strjoin_add_c(char const *s1, char const *s2, char c)
+{
+	size_t	s1_len;
+	size_t	s2_len;
+	char	*str;
+
+	if (s1 == NULL && s2 == NULL)
+		return (NULL);
+	s1_len = (s1 == NULL) ? 0 : ft_strlen(s1);
+	s2_len = (s2 == NULL) ? 0 : ft_strlen(s2);
+	if (!(str = (char *)malloc(sizeof(*str) * (s1_len + s2_len + 2))))
+		return (NULL);
+	if (s1_len > 0)
+		ft_memcpy(str, s1, s1_len);
+	str[s1_len] = c;
+	if (s2_len > 0)
+		ft_memcpy(str + s1_len + 1, s2, s2_len);
+	str[s1_len + s2_len + 1] = '\0';
+	return (str);
 }
