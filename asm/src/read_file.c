@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:10 by wta               #+#    #+#             */
-/*   Updated: 2019/02/15 03:55:12 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/15 04:03:36 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,9 +287,9 @@ t_error	read_file(char *file, t_data *data)
 		return (err_id);
 	if ((err_id = lexer_parser(data, split)) != ERR_NOERROR)
 		return (err_id);
+	ft_strtab_free(split);
 	for (int i = 0; i < data->f_size; i++)
 		ft_printf("%s\tlabel= %d\n", data->filter[i].name, data->filter[i].label);
 	close(fd);
-	ft_strtab_free(split);
 	return (err_id);
 }
