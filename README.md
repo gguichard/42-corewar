@@ -1,1 +1,1 @@
-corewar_ng
+![Alt Text](https://media.giphy.com/media/3oKIPf3C7HqqYBVcCk/giphy.gif)

@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:13:03 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/15 23:50:39 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/16 01:30:30 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,17 @@ typedef struct		s_decode
 	t_arg			tab[MAX_ARGS_NUMBER];
 }					t_decode;
 
-int					live(t_env *env, t_process *cur_process, unsigned char *str);
+int					live(t_env *env, t_process *cur_process
+		, unsigned char *str);
 int					ld(t_env *env, t_process *cur_process, unsigned char *str);
+int					add(t_env *env, t_process *cur_process, unsigned char *str);
+int					sub(t_env *env, t_process *cur_process, unsigned char *str);
+int					ft_and(t_env *env, t_process *cur_process
+		, unsigned char *str);
+int					ft_or(t_env *env, t_process *cur_process
+		, unsigned char *str);
+int					ft_xor(t_env *env, t_process *cur_process
+		, unsigned char *str);
 
 /*
 **	UTILS
@@ -49,4 +58,6 @@ void				write_in_arena(t_env *env, unsigned char *bytes, size_t size
 int					get_args(unsigned char *str, unsigned char encoding_byte
 		, t_decode *result);
 int					reg_isvalid(unsigned char *reg);
+int					parse_multitype_args(unsigned char ***str, t_env *env
+		, t_process *cur_process, t_decode decode);
 #endif
