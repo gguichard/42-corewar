@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/16 06:32:24 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/16 23:09:58 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
 #include "func_op.h"
 
 t_op	g_op[] = {
-	{live, 10, 0},
-	{ld, 5, 1},
-	{st, 4, 0},
-	{add, 10, 1},
-	{sub, 10, 1},
-	{ft_and, 6, 1},
-	{ft_or, 6, 1},
-	{ft_xor, 6, 1}
+	{live, 10, 0, 0},
+	{ld, 5, 1, 1},
+	{st, 4, 0, 1},
+	{add, 10, 1, 1},
+	{sub, 10, 1, 1},
+	{ft_and, 6, 1, 1},
+	{ft_or, 6, 1, 1},
+	{ft_xor, 6, 1, 1}
 };
 
 static void	print_reg(t_process *process)
@@ -77,8 +77,10 @@ static void	exec_inst(t_env *env, t_process *process)
 	op = g_op[process->queued_inst[0] - 1];
 	result = op.fn(env, process, process->queued_inst);
 	if (op.carry)
-		process->carry = (result > 0);
-	process->pc = (process->pc + result) % MEM_SIZE;
+		process->carry = result != -1;
+	if (op.use_encoding_byte)
+		result += 1;
+	process->pc = (process->pc + result + 1) % MEM_SIZE;
 	ft_memdel((void **)&process->queued_inst);
 }
 

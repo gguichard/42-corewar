@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:22 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/16 01:45:43 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/16 23:06:15 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,54 +70,52 @@ void			write_in_arena(t_env *env, unsigned char *bytes, size_t size
 	ft_swap_bytes(bytes, size);
 }
 
-static int		get_arg_with_type(unsigned char *dest, unsigned char *bytes
-		, int type)
+static int		get_arg_with_type(t_arg *arg, unsigned char *bytes, int type)
 {
 	int	size;
-	int	reg;
 
-	ft_memset(dest, 0, REG_SIZE);
+	size = 0;
 	if (type == DIR_CODE)
 		size = 4;
 	else if (type == IND_CODE)
 		size = 2;
 	else if (type == REG_CODE)
 		size = 1;
-	else
-		size = 0;
-	ft_memcpy(dest, bytes, size);
-	ft_swap_bytes(dest, size);
-	if (type == REG_CODE)
+	if (size > 0)
 	{
-		reg = *((int *)dest);
-		if (reg < 1 || reg > 16)
-			return (0);
+		ft_memcpy(arg->value, bytes, size);
+		ft_swap_bytes(arg->value, size);
 	}
+	if (type == REG_CODE && !reg_isvalid(bytes))
+		type = 0;
+	arg->type = type;
 	return (size);
 }
 
 int				get_args(unsigned char *bytes, unsigned char encoding_byte
-		, t_decode *result)
+		, t_decode *decode)
 {
-	int	i;
+	int	idx;
+	int	ret;
 	int	type;
 	int	size;
 
-	i = 0;
-	while (i < MAX_ARGS_NUMBER)
+	ft_memset(decode, 0, sizeof(t_decode));
+	idx = 0;
+	ret = 0;
+	while (idx < MAX_ARGS_NUMBER)
 	{
-		type = encoding_byte & (0xC0 >> 2 * i);
+		type = encoding_byte & (0xC0 >> 2 * idx);
 		if (type == 0)
 			break ;
-		type >>= (6 - 2 * i);
-		result->tab[i].type = type;
-		size = get_arg_with_type(result->tab[i].value, bytes, type);
+		type >>= (6 - 2 * idx);
+		size = get_arg_with_type(decode->tab + idx, bytes + ret, type);
 		if (size == 0)
-			return (0);
-		bytes += size;
-		i++;
+			break ;
+		ret += size;
+		idx++;
 	}
-	return (1);
+	return (ret);
 }
 
 int				reg_isvalid(unsigned char *reg)

@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 23:39:23 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/16 06:19:24 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/16 22:34:29 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,24 @@
 
 int	sub(t_env *env, t_process *cur_process, unsigned char *bytes)
 {
+	int			ret;
 	t_decode	decode;
+	int			idx;
 	int			args[3];
 	int			tmp;
-	int			idx;
 
 	(void)env;
+	ret = get_args(bytes + 2, *(bytes + 1), &decode);
 	idx = 0;
-	if (!get_args(bytes + 2, *(bytes + 1), &decode))
-		return (0);
 	while (idx < 3)
 	{
 		if (decode.tab[idx].type != REG_CODE)
-			return (0);
+			return (ret);
 		args[idx] = *((int *)decode.tab[idx].value);
 		idx++;
 	}
-	tmp = *((int *)cur_process->reg[args[0] - 1])
-		- *((int *)cur_process->reg[args[1] - 1]);
+	tmp = *((int *)cur_process->reg[args[0] - 1]);
+	tmp -= *((int *)cur_process->reg[args[1] - 1]);
 	ft_memcpy(cur_process->reg[args[2] - 1], &tmp, sizeof(int));
-	return (5);
+	return (ret);
 }
