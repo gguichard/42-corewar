@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 20:19:44 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/16 02:22:35 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/16 03:07:14 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,31 @@ static int	check_arg(t_data *data, int i)
 	return (n);
 }
 
+t_error		check_is_label(t_data *data)
+{
+	int		i;
+	int		n;
+
+	i = 0;
+	while (i < data->f_size)
+	{
+		n = 0;
+		if (ft_strnequ(data->filter[i].op.name, "%:", 2))
+			while (n < data->f_size)
+			{
+				if (ft_strnequ((data->filter[i].op.name + 2),
+							data->filter[n].op.name,
+							ft_strlen(data->filter[i].op.name + 2)))
+					break ;
+				n++;
+			}
+		if (n == data->f_size)
+			return (ERR_BADFMT);
+		i++;
+	}
+	return (ERR_NOERROR);
+}
+
 t_error		check_valid_tab(t_data *data)
 {
 	int		i;
@@ -62,5 +87,7 @@ t_error		check_valid_tab(t_data *data)
 		else
 			return (ERR_BADFMT);
 	}
+	if (check_is_label(data) != ERR_NOERROR)
+		return (ERR_BADFMT);
 	return (ERR_NOERROR);
 }
