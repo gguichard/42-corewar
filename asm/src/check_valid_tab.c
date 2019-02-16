@@ -6,56 +6,61 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 20:19:44 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/15 21:46:41 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/16 02:22:35 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-t_error		check_arg(t_data *data, t_op op, t_type type, int i)
+static int	check_arg(t_data *data, int i)
 {
-
-}
-
-t_error		check_op(t_data *data, t_filter filter, t_op op, int i)
-{
-	int		n;
+	int n;
 
 	n = 0;
-	while (n < op.argc)
+	while (++n <= data->filter[i].op.argc)
 	{
-		check_arg();
-	}
-}
-
-t_error		check_inst(t_data *data, t_filter filter, int i)
-{
-	int		n;
-
-	n = 0;
-	while (data->op_tab[n])
-	{
-		if (ft_strequ(filter.name, data->op_tab[n]))
+		if (n == 1)
 		{
-			if (check_op(data, filter, data->op_tab[n], i) != ERR_NOERROR)
-				return (ERR_BADFMT);
+			if ((data->filter[i + n].label
+						& data->filter[i].op.arg_type.arg1) == 0)
+				return (-1);
 		}
-		n++;
+		else if (n == 2)
+		{
+			if ((data->filter[i + n].label
+						& data->filter[i].op.arg_type.arg2) == 0)
+				return (-1);
+		}
+		else if (n == 3)
+		{
+			if ((data->filter[i + n].label
+						& data->filter[i].op.arg_type.arg3) == 0)
+				return (-1);
+		}
 	}
+	return (n);
 }
 
 t_error		check_valid_tab(t_data *data)
 {
 	int		i;
+	int		n;
 
 	i = 0;
+	n = 0;
 	while (i < data->f_size)
-	{	
+	{
+		printf("inst: %s\n", data->filter[i].op.name);
 		if (data->filter[i].label == 0)
 		{
-			if (check_inst(data, data->filter[i], i) != ERR_NOERROR)
-				return (ERR_BADFMT);	
+			if ((n = check_arg(data, i)) == -1)
+				return (ERR_BADFMT);
+			i += n;
 		}
-		i++;
+		else if (data->filter[i].label == 8)
+			i++;
+		else
+			return (ERR_BADFMT);
 	}
+	return (ERR_NOERROR);
 }

@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:25:14 by wta               #+#    #+#             */
-/*   Updated: 2019/02/16 00:25:25 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/16 01:25:52 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,5 @@ int				get_tab_size(char **tab);
 t_lexer			check_if_valid(char *str, char **inst);
 int				is_int(char *str);
 void			init_inst(t_data *data);
-
+t_error			check_valid_tab(t_data *data);
 #endif
