@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:39:09 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/16 00:33:12 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/16 02:08:51 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,16 +80,16 @@ int			check_label(char *str)
 
 int			set_arg(char *str, t_filter *filter)
 {
-	if (*str == 'r' && is_int(str + 1) == 1)
+	if (is_int(str) == 1)
+		filter->label = LX_INDIR;
+	else if (check_label(str) == 1)
+		filter->label = LX_LABEL;
+	else if (*str == 'r' && is_int(str + 1) == 1)
 		filter->label = LX_REG;
 	else if (ft_strnequ("%:", str, 2) == 1)
 		filter->label = LX_DIRE;
 	else if (*str == '%' && (is_int(str + 1) == 1))
 		filter->label = LX_DIRE;
-	else if (is_int(str) == 1)
-		filter->label = LX_INDIR;
-	else if (check_label(str) == 1)
-		filter->label = LX_LABEL;
 	if (*str != '#')
 		filter->op.name = ft_strdup(str);
 	return (*str != '#');
@@ -97,12 +97,14 @@ int			set_arg(char *str, t_filter *filter)
 
 int			set_labels(char *str, t_filter *filter)
 {
-	int	idx;
+	size_t	len;
+	int		idx;
 
 	idx = 0;
 	while (idx < 16)
 	{
-		if (ft_strnequ(g_op_tab[idx].name, str, ft_strlen(g_op_tab[idx].name)))
+		len = ft_strlen(g_op_tab[idx].name);
+		if (ft_strlen(str) == len && ft_strnequ(g_op_tab[idx].name, str, len))
 		{
 			filter->op = g_op_tab[idx];
 			filter->label = LX_INST;
