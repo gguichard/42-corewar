@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/16 01:29:54 by vifonne          ###   ########.fr        #
+#    Updated: 2019/02/16 01:49:48 by gguichar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ op/op_utils.c			\
 op/parse_multitype.c	\
 op/live.c				\
 op/ld.c					\
+op/st.c					\
 op/sub.c				\
 op/ft_and.c				\
 op/add.c

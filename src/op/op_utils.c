@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:22 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/15 23:55:03 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/16 01:45:43 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,6 @@ unsigned char	*get_in_arena(t_env *env, size_t size, int offset)
 	return (ret);
 }
 
-void			write_in_arena(t_env *env, unsigned char *bytes, size_t size
-		, int offset)
-{
-	if (offset < 0)
-		offset += MEM_SIZE;
-	if (offset > MEM_SIZE)
-		offset %= MEM_SIZE;
-	if ((offset + size) <= MEM_SIZE)
-		ft_memcpy(&env->arena[offset], bytes, size);
-	else
-	{
-		ft_memcpy(env->arena + offset, bytes, MEM_SIZE - offset);
-		ft_memcpy(env->arena, bytes + (MEM_SIZE - offset)
-				, size - MEM_SIZE + offset);
-	}
-}
-
 static void		ft_swap_bytes(unsigned char *str, int size)
 {
 	int				i;
@@ -68,27 +51,49 @@ static void		ft_swap_bytes(unsigned char *str, int size)
 	}
 }
 
+void			write_in_arena(t_env *env, unsigned char *bytes, size_t size
+		, int offset)
+{
+	if (offset < 0)
+		offset += MEM_SIZE;
+	if (offset > MEM_SIZE)
+		offset %= MEM_SIZE;
+	ft_swap_bytes(bytes, size);
+	if ((offset + size) <= MEM_SIZE)
+		ft_memcpy(&env->arena[offset], bytes, size);
+	else
+	{
+		ft_memcpy(env->arena + offset, bytes, MEM_SIZE - offset);
+		ft_memcpy(env->arena, bytes + (MEM_SIZE - offset)
+				, size - MEM_SIZE + offset);
+	}
+	ft_swap_bytes(bytes, size);
+}
+
 static int		get_arg_with_type(unsigned char *dest, unsigned char *bytes
 		, int type)
 {
+	int	size;
+	int	reg;
+
+	ft_memset(dest, 0, REG_SIZE);
+	if (type == DIR_CODE)
+		size = 4;
+	else if (type == IND_CODE)
+		size = 2;
+	else if (type == REG_CODE)
+		size = 1;
+	else
+		size = 0;
+	ft_memcpy(dest, bytes, size);
+	ft_swap_bytes(dest, size);
 	if (type == REG_CODE)
 	{
-		ft_memcpy(dest, bytes, 1);
-		return (1);
+		reg = *((int *)dest);
+		if (reg < 1 || reg > 16)
+			return (0);
 	}
-	else if (type == DIR_CODE)
-	{
-		ft_memcpy(dest, bytes, 4);
-		ft_swap_bytes(dest, 4);
-		return (4);
-	}
-	else if (type == IND_CODE)
-	{
-		ft_memcpy(dest, bytes, 2);
-		ft_swap_bytes(dest, 2);
-		return (2);
-	}
-	return (0);
+	return (size);
 }
 
 int				get_args(unsigned char *bytes, unsigned char encoding_byte

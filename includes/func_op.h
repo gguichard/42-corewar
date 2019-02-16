@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:13:03 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/16 01:30:30 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/16 01:48:06 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,6 @@
 # include "process.h"
 # include "op.h"
 
-typedef struct		s_encoding_byte
-{
-	unsigned int	f_arg4: 2;
-	unsigned int	f_arg3: 2;
-	unsigned int	f_arg2: 2;
-	unsigned int	f_arg1: 2;
-}					t_encoding_byte;
-
 typedef struct		s_arg
 {
 	int				type;
@@ -33,13 +25,13 @@ typedef struct		s_arg
 
 typedef struct		s_decode
 {
-	t_encoding_byte	*raw_decode;
 	t_arg			tab[MAX_ARGS_NUMBER];
 }					t_decode;
 
 int					live(t_env *env, t_process *cur_process
 		, unsigned char *str);
 int					ld(t_env *env, t_process *cur_process, unsigned char *str);
+int					st(t_env *env, t_process *cur_process, unsigned char *bytes);
 int					add(t_env *env, t_process *cur_process, unsigned char *str);
 int					sub(t_env *env, t_process *cur_process, unsigned char *str);
 int					ft_and(t_env *env, t_process *cur_process
@@ -60,4 +52,5 @@ int					get_args(unsigned char *str, unsigned char encoding_byte
 int					reg_isvalid(unsigned char *reg);
 int					parse_multitype_args(unsigned char ***str, t_env *env
 		, t_process *cur_process, t_decode decode);
+
 #endif
