@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:24 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/16 06:19:02 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/16 06:29:43 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	ld(t_env *env, t_process *cur_process, unsigned char *bytes)
 	unsigned char	*tmp;
 	int				ret;
 
-	ret = 2;
 	if (!get_args(bytes + 2, *(bytes + 1), &decode))
 		return (0);
+	ret = 3;
 	reg = *((int *)decode.tab[1].value);
 	ft_memset(value, 0, REG_SIZE);
 	if (decode.tab[0].type == DIR_CODE)

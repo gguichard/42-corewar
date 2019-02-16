@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/16 01:47:45 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/16 06:32:24 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,12 @@
 t_op	g_op[] = {
 	{live, 10, 0},
 	{ld, 5, 1},
-	{st, 4, 0}
-	/*{add, 10, 1}
-	{sub, 10, 1}
-	{ft_and, 6, 1}
-	{ft_or, 6, 1}
+	{st, 4, 0},
+	{add, 10, 1},
+	{sub, 10, 1},
+	{ft_and, 6, 1},
+	{ft_or, 6, 1},
 	{ft_xor, 6, 1}
-	*/
 };
 
 static void	print_reg(t_process *process)
@@ -88,7 +87,7 @@ static void	setup_new_inst(t_env *env, t_process *process)
 	int	opcode;
 
 	opcode = env->arena[process->pc];
-	if (opcode < 1 || opcode > 3)
+	if (opcode < 1 || opcode > 8)
 		process->pc = (process->pc + 1) % MEM_SIZE;
 	else
 	{

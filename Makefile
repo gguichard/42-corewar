@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/16 01:49:48 by gguichar         ###   ########.fr        #
+#    Updated: 2019/02/16 06:32:25 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,9 +25,11 @@ op/parse_multitype.c	\
 op/live.c				\
 op/ld.c					\
 op/st.c					\
+op/add.c				\
 op/sub.c				\
 op/ft_and.c				\
-op/add.c
+op/ft_or.c				\
+op/ft_xor.c
 
 OBJ_DIR	=	.obj
 OBJ		=	$(SRC:.c=.o)
