@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:39:09 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/16 02:08:51 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/16 02:14:10 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,14 +97,16 @@ int			set_arg(char *str, t_filter *filter)
 
 int			set_labels(char *str, t_filter *filter)
 {
-	size_t	len;
+	size_t	op_len;
+	size_t	str_len;
 	int		idx;
 
 	idx = 0;
+	str_len = ft_strlen(str);
 	while (idx < 16)
 	{
-		len = ft_strlen(g_op_tab[idx].name);
-		if (ft_strlen(str) == len && ft_strnequ(g_op_tab[idx].name, str, len))
+		op_len = ft_strlen(g_op_tab[idx].name);
+		if (str_len == op_len && ft_strnequ(g_op_tab[idx].name, str, op_len))
 		{
 			filter->op = g_op_tab[idx];
 			filter->label = LX_INST;
