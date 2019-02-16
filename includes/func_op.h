@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:13:03 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/16 01:48:06 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/16 06:22:37 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,21 @@ typedef struct		s_decode
 }					t_decode;
 
 int					live(t_env *env, t_process *cur_process
-		, unsigned char *str);
-int					ld(t_env *env, t_process *cur_process, unsigned char *str);
-int					st(t_env *env, t_process *cur_process, unsigned char *bytes);
-int					add(t_env *env, t_process *cur_process, unsigned char *str);
-int					sub(t_env *env, t_process *cur_process, unsigned char *str);
+		, unsigned char *bytes);
+int					ld(t_env *env, t_process *cur_process
+		, unsigned char *bytes);
+int					st(t_env *env, t_process *cur_process
+		, unsigned char *bytes);
+int					add(t_env *env, t_process *cur_process
+		, unsigned char *bytes);
+int					sub(t_env *env, t_process *cur_process
+		, unsigned char *bytes);
 int					ft_and(t_env *env, t_process *cur_process
-		, unsigned char *str);
+		, unsigned char *bytes);
 int					ft_or(t_env *env, t_process *cur_process
-		, unsigned char *str);
+		, unsigned char *bytes);
 int					ft_xor(t_env *env, t_process *cur_process
-		, unsigned char *str);
+		, unsigned char *bytes);
 
 /*
 **	UTILS
@@ -47,10 +51,10 @@ int					ft_xor(t_env *env, t_process *cur_process
 unsigned char		*get_in_arena(t_env *env, size_t size, int offset);
 void				write_in_arena(t_env *env, unsigned char *bytes, size_t size
 		, int offset);
-int					get_args(unsigned char *str, unsigned char encoding_byte
+int					get_args(unsigned char *bytes, unsigned char encoding_byte
 		, t_decode *result);
 int					reg_isvalid(unsigned char *reg);
-int					parse_multitype_args(unsigned char ***str, t_env *env
-		, t_process *cur_process, t_decode decode);
+int					parse_multitype_args(unsigned char *dest, t_env *env
+		, t_process *cur_process, t_arg arg);
 
 #endif

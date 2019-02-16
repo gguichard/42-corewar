@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:24 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/16 01:47:01 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/16 06:19:02 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "process.h"
 #include "func_op.h"
 
-int	ld(t_env *env, t_process *cur_process, unsigned char *str)
+int	ld(t_env *env, t_process *cur_process, unsigned char *bytes)
 {
 	t_decode		decode;
 	int				reg;
@@ -24,7 +24,7 @@ int	ld(t_env *env, t_process *cur_process, unsigned char *str)
 	int				ret;
 
 	ret = 2;
-	if (!get_args(str + 2, *(str + 1), &decode))
+	if (!get_args(bytes + 2, *(bytes + 1), &decode))
 		return (0);
 	reg = *((int *)decode.tab[1].value);
 	ft_memset(value, 0, REG_SIZE);

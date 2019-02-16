@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:32 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/16 01:34:07 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/16 06:18:54 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 #include "champion.h"
 #include "func_op.h"
 
-int	live(t_env *env, t_process *cur_process, unsigned char *str)
+int	live(t_env *env, t_process *cur_process, unsigned char *bytes)
 {
 	t_decode	decode;
 	t_list		*champ;
 
-	if (!get_args(str + 1, DIR_CODE << 6, &decode))
+	if (!get_args(bytes + 1, DIR_CODE << 6, &decode))
 		return (0);
 	champ = env->champ_lst;
 	while (champ != NULL)
