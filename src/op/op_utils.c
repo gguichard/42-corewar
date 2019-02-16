@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:22 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/16 23:06:15 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/16 23:23:23 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static int		get_arg_with_type(t_arg *arg, unsigned char *bytes, int type)
 		ft_memcpy(arg->value, bytes, size);
 		ft_swap_bytes(arg->value, size);
 	}
-	if (type == REG_CODE && !reg_isvalid(bytes))
+	if (type == REG_CODE && (*bytes < 1 || *bytes > 16))
 		type = 0;
 	arg->type = type;
 	return (size);
@@ -116,11 +116,4 @@ int				get_args(unsigned char *bytes, unsigned char encoding_byte
 		idx++;
 	}
 	return (ret);
-}
-
-int				reg_isvalid(unsigned char *reg)
-{
-	if (*((int *)reg) > 0 && *((int *)reg) < 17)
-		return (1);
-	return (0);
 }

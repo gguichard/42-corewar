@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:13:03 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/16 23:05:36 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/16 23:23:46 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ void				write_in_arena(t_env *env, unsigned char *bytes, size_t size
 		, int offset);
 int					get_args(unsigned char *bytes, unsigned char encoding_byte
 		, t_decode *result);
-int					reg_isvalid(unsigned char *reg);
-
 int					parse_lmultitype(unsigned char *dest, t_env *env
 		, t_process *cur_process, t_arg arg);
 int					parse_multitype(unsigned char *dest, t_env *env
