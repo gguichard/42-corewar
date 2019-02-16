@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 21:55:32 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/16 00:02:05 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/16 01:33:42 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ int	add(t_env *env, t_process *cur_process, unsigned char *str)
 		return (0);
 	while (idx < 3)
 	{
-		if (decode.tab[idx].type != REG_CODE
-				|| !reg_isvalid(decode.tab[idx].value))
+		if (decode.tab[idx].type != REG_CODE)
 			return (0);
 		args[idx] = *((int *)decode.tab[idx].value);
 		idx++;
 	}
-	tmp = *((int *)cur_process->reg[args[0] - 1]) + *((int *)cur_process->reg[args[1] - 1]);
+	tmp = *((int *)cur_process->reg[args[0] - 1])
+		+ *((int *)cur_process->reg[args[1] - 1]);
 	ft_memcpy(cur_process->reg[args[2] - 1], &tmp, sizeof(int));
 	return (3);
 }

@@ -6,25 +6,26 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/16 00:31:42 by vifonne          ###   ########.fr        #
+#    Updated: 2019/02/16 01:29:54 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	corewar
 
 SRC_DIR	=	src
-SRC		=		\
-main.c			\
-read.c			\
-champs.c		\
-cycles.c		\
-errors.c		\
-print_arena.c	\
-op/op_utils.c	\
-op/live.c		\
-op/ld.c			\
-op/sub.c		\
-op/ft_and.c		\
+SRC		=				\
+main.c					\
+read.c					\
+champs.c				\
+cycles.c				\
+errors.c				\
+print_arena.c			\
+op/op_utils.c			\
+op/parse_multitype.c	\
+op/live.c				\
+op/ld.c					\
+op/sub.c				\
+op/ft_and.c				\
 op/add.c
 
 OBJ_DIR	=	.obj

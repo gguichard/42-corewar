@@ -1,39 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sub.c                                              :+:      :+:    :+:   */
+/*   ft_xor.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/15 23:39:23 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/16 01:33:50 by vifonne          ###   ########.fr       */
+/*   Created: 2019/02/16 01:04:23 by vifonne           #+#    #+#             */
+/*   Updated: 2019/02/16 01:30:26 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 #include "op.h"
 #include "func_op.h"
+#include <stdlib.h>
 
-int	sub(t_env *env, t_process *cur_process, unsigned char *str)
+int	ft_xor(t_env *env, t_process *cur_process, unsigned char *str)
 {
-	t_decode	decode;
-	int			args[3];
-	int			tmp;
-	int			idx;
+	int				tmp;
+	t_decode		decode;
+	unsigned char	args[3][REG_SIZE];
 
-	(void)env;
-	idx = 0;
 	if (!get_args(str + 2, *(str + 1), &decode))
 		return (0);
-	while (idx < 3)
-	{
-		if (decode.tab[idx].type != REG_CODE)
-			return (0);
-		args[idx] = *((int *)decode.tab[idx].value);
-		idx++;
-	}
-	tmp = *((int *)cur_process->reg[args[0] - 1])
-		- *((int *)cur_process->reg[args[1] - 1]);
-	ft_memcpy(cur_process->reg[args[2] - 1], &tmp, sizeof(int));
-	return (3);
+	if (!parse_multitype_args((unsigned char ***)args
+				, env, cur_process, decode))
+		return (0);
+	ft_memcpy(args[2], decode.tab[2].value, 4);
+	tmp = *((int *)args[0]) ^ *((int *)args[1]);
+	ft_memcpy(cur_process->reg[*((int *)args[2]) - 1], &tmp, REG_SIZE);
+	return (1);
 }
