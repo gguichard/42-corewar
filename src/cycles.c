@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/17 22:17:35 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/18 00:09:02 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	kill_old_process(t_env *env)
 	while (cur != NULL)
 	{
 		process = (t_process *)cur->content;
-		if (process->lives > 0)
+		if (process->lives > 1)
 		{
 			lives += process->lives;
 			process->lives = 0;
@@ -90,11 +90,12 @@ static void	exec_inst(t_env *env, t_process *process)
 
 	op = g_op[process->queued_inst[0] - 1];
 	result = op.fn(env, process, process->queued_inst);
-	/*if (op.carry)
-	  process->carry = 1;*/
 	if (op.use_encoding_byte)
 		result += 1;
-	process->pc = (process->pc + result + 1) % MEM_SIZE;
+	process->pc += result + 1;
+	if (process->pc < 0)
+		process->pc += MEM_SIZE;
+	process->pc %= MEM_SIZE;
 	ft_memdel((void **)&process->queued_inst);
 }
 
@@ -141,11 +142,6 @@ void		run_cycles_loop(t_env *env)
 {
 	while (env->process_lst != NULL)
 	{
-		if (env->cur_cycle == env->dump_cycles)
-		{
-			print_arena(env);
-			break ;
-		}
 		if (env->cycle_before_die > 0)
 			env->cycle_before_die -= 1;
 		else
@@ -155,6 +151,11 @@ void		run_cycles_loop(t_env *env)
 			env->cycle_before_die = env->cycle_to_die;
 		}
 		inst_process(env);
+		if (env->cur_cycle == env->dump_cycles)
+		{
+			print_arena(env);
+			break ;
+		}
 		env->cur_cycle += 1;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:13:03 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 05:54:34 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/18 00:04:24 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,6 @@ int					dispatch_multitype(unsigned char *dest
 		, t_decode decode, t_arg arg, int eb);
 void				fill_struct(t_env *env, t_process *cur_process
 		, t_decode *decode);
+void				increase_pc(t_process *process, int value);
 
 #endif
