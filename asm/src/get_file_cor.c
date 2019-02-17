@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 00:55:22 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/17 11:31:39 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/17 11:43:16 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,8 @@ int			manage_inst(t_filter *inst, t_data *data, int fd)
 	idx = 0;
 	(void)data;
 	write(fd, &inst->op.opcode, 1);
-	write_encoding_byte(&inst->op, fd);
+	if (inst->op.encoding == 1)
+		write_encoding_byte(&inst->op, fd);
 	while (idx < inst->op.argc)
 	{
 //		if (arg->label == LX_LABEL)
