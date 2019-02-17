@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 00:55:22 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/17 04:51:30 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/17 05:17:37 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	write_bytes(uint8_t *ptr, int fd, int len)
 	}
 }
 
-static void fill_cor(t_data *data, int fd)
+static void fill_header(t_data *data, int fd)
 {
 	t_header *header;
 
@@ -75,6 +75,10 @@ static void fill_cor(t_data *data, int fd)
 	write(fd, "\0\0\0\0", 4);
 }
 
+void		fill_instruction(t_data *data, int fd)
+{
+	
+}
 
 t_error		create_cor(t_data *data, char *str)
 {
@@ -88,7 +92,8 @@ t_error		create_cor(t_data *data, char *str)
 		return (ERR_MALLOC);
 	if((fd = open(file_name, O_TRUNC | O_WRONLY | O_CREAT, 0644)) < 0)
 		return (ERR_ERRNO);
-	fill_cor(data, fd);
+	fill_header(data, fd);
+	fill_instruction(data, fd);
 	close(fd);
 	return (err_id);
 }

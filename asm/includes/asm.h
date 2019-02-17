@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:25:14 by wta               #+#    #+#             */
-/*   Updated: 2019/02/17 04:09:39 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/17 05:15:53 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,7 @@ t_error			check_valid_tab(t_data *data);
 
 void			lst_pushback(t_list_ref *list, t_list *node);
 t_list			*lstnew_mallocfree(void *content);
+
+void			write_bytes(uint8_t *ptr, int fd, int len);
 
 #endif
