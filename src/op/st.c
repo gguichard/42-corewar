@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 00:15:06 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/17 01:18:03 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 02:32:35 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	st(t_env *env, t_process *cur_process, unsigned char *bytes)
 		reg = *((int *)decode.tab[0].value);
 		if (decode.tab[1].type == IND_CODE)
 			write_in_arena(env, cur_process->reg[reg - 1], REG_SIZE
-					, cur_process->pc + *((int *)decode.tab[1].value));
+					, cur_process->pc + *((int*)decode.tab[1].value) % IDX_MOD);
 		else if (decode.tab[1].type == REG_CODE)
 		{
 			to_reg = *((int *)decode.tab[1].value);

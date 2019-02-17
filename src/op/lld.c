@@ -6,11 +6,10 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 21:25:00 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 01:17:53 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 02:51:34 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "corewar.h"
 #include "process.h"
 #include "func_op.h"

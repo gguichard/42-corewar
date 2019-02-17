@@ -6,14 +6,13 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 01:04:23 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 01:17:27 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 02:51:19 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 #include "op.h"
 #include "func_op.h"
-#include <stdlib.h>
 
 int	ft_xor(t_env *env, t_process *cur_process, unsigned char *bytes)
 {

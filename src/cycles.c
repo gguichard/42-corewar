@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/17 01:01:47 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 02:52:01 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ t_op	g_op[] = {
 	{ft_or, 6, 1, 1},
 	{ft_xor, 6, 1, 1},
 	{ft_xor, 6, 1, 1},
-	{ldi, 25, 1, 1}
+	{ldi, 25, 1, 1},
+	{sti, 25, 1, 1}
 };
 
 static void	print_reg(t_process *process)

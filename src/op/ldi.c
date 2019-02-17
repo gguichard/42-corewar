@@ -6,14 +6,13 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 21:28:28 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 02:13:07 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 02:21:34 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 #include "process.h"
 #include "func_op.h"
-#include <unistd.h>
 
 int	ldi(t_env *env, t_process *cur_process, unsigned char *bytes)
 {

@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:22 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 01:39:10 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 02:50:32 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ void			write_in_arena(t_env *env, unsigned char *bytes, size_t size
 	ft_swap_bytes(bytes, size);
 }
 
-static int		get_arg_with_type(t_arg *arg, unsigned char *bytes, int type)
+static int		get_arg_with_type(t_arg *arg, unsigned char *bytes, int type
+		, int sizeof_dir)
 {
 	int	size;
 
@@ -81,6 +82,8 @@ static int		get_arg_with_type(t_arg *arg, unsigned char *bytes, int type)
 		size = 2;
 	else if (type == REG_CODE)
 		size = 1;
+	if (type == DIR_CODE && sizeof_dir == 1)
+		size = 2;
 	if (size > 0)
 	{
 		ft_memcpy(arg->value, bytes, size);
@@ -91,32 +94,9 @@ static int		get_arg_with_type(t_arg *arg, unsigned char *bytes, int type)
 	arg->type = type;
 	return (size);
 }
-
-static int		get_iarg_with_type(t_arg *arg, unsigned char *bytes, int type)
-{
-	int	size;
-
-	size = 0;
-	if (type == DIR_CODE)
-		size = 2;
-	else if (type == IND_CODE)
-		size = 2;
-	else if (type == REG_CODE)
-		size = 1;
-	if (size > 0)
-	{
-		ft_memcpy(arg->value, bytes, size);
-		ft_swap_bytes(arg->value, size);
-	}
-	if (type == REG_CODE && (*bytes < 1 || *bytes > 16))
-		type = 0;
-	arg->type = type;
-	return (size);
-}
-
 
 int				get_args(unsigned char *bytes, unsigned char encoding_byte
-		, t_decode *decode, int i)
+		, t_decode *decode, int sizeof_dir)
 {
 	int	idx;
 	int	ret;
@@ -132,10 +112,8 @@ int				get_args(unsigned char *bytes, unsigned char encoding_byte
 		if (type == 0)
 			break ;
 		type >>= (6 - 2 * idx);
-		if (i == 0)
-			size = get_arg_with_type(decode->tab + idx, bytes + ret, type);
-		else
-			size = get_iarg_with_type(decode->tab + idx, bytes + ret, type);
+		size = get_arg_with_type(decode->tab + idx, bytes + ret
+				, type, sizeof_dir);
 		if (size == 0)
 			break ;
 		ret += size;
