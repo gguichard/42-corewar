@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 02:58:20 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 04:46:13 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 05:29:10 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ int	lldi(t_env *env, t_process *cur_process, unsigned char *bytes)
 	int				tmp;
 	unsigned char	*target;
 
+	fill_struct(env, cur_process, &decode);
 	ret = get_args(bytes + 2, *(bytes + 1), &decode, 1);
 	if ((decode.tab[1].type == DIR_CODE || decode.tab[1].type == REG_CODE)
-			&& decode.tab[2].type == REG_CODE
-			&& decode.tab[0].type != BAD_CODE
+			&& decode.tab[2].type == REG_CODE && decode.tab[0].type != BAD_CODE
 			&& parse_limultitype(args[0], env, cur_process, decode.tab[0])
 			&& parse_limultitype(args[1], env, cur_process, decode.tab[1]))
 	{

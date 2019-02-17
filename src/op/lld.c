@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 21:25:00 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 02:51:34 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 05:29:07 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	lld(t_env *env, t_process *cur_process, unsigned char *bytes)
 	unsigned char	value[REG_SIZE];
 	int				reg;
 
+	fill_struct(env, cur_process, &decode);
 	ret = get_args(bytes + 2, *(bytes + 1), &decode, 0);
 	if ((decode.tab[0].type == IND_CODE || decode.tab[0].type == DIR_CODE)
 			&& decode.tab[1].type == REG_CODE

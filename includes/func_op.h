@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:13:03 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 05:23:58 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/17 05:30:14 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ typedef struct		s_arg
 typedef struct		s_decode
 {
 	t_arg			tab[MAX_ARGS_NUMBER];
+	t_env			*env;
+	t_process		*cur_process;
 }					t_decode;
 
 int					live(t_env *env, t_process *cur_process

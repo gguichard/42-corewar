@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 23:39:23 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 01:18:11 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 05:29:48 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	sub(t_env *env, t_process *cur_process, unsigned char *bytes)
 	int			args[3];
 	int			tmp;
 
-	(void)env;
+	fill_struct(env, cur_process, &decode);
 	ret = get_args(bytes + 2, *(bytes + 1), &decode, 0);
 	idx = 0;
 	while (idx < 3)

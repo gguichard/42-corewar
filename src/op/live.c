@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:32 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 04:46:21 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/17 05:29:01 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	live(t_env *env, t_process *cur_process, unsigned char *bytes)
 	t_decode	decode;
 	t_list		*champ;
 
+	fill_struct(env, cur_process, &decode);
 	ret = get_args(bytes + 1, DIR_CODE << 6, &decode, 0);
 	champ = env->champ_lst;
 	while (champ != NULL)

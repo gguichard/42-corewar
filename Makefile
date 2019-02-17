@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/17 05:23:20 by gguichar         ###   ########.fr        #
+#    Updated: 2019/02/17 05:26:20 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ errors.c				\
 print_arena.c			\
 op/op_utils.c			\
 op/parse_multitype.c	\
+op/fill_struct.c		\
 op/live.c				\
 op/ld.c					\
 op/st.c					\
