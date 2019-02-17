@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/17 03:43:59 by gguichar         ###   ########.fr        #
+#    Updated: 2019/02/17 04:07:04 by gguichar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,11 +34,11 @@ op/zjmp.c				\
 op/ldi.c				\
 op/sti.c				\
 op/lld.c				\
-op/lldi.c
+op/lldi.c				\
+op/aff.c
 #op/zjump.c
 #op/ft_fork.c
 #op/ft_lfork.c
-#op/aff.c
 
 OBJ_DIR	=	.obj
 OBJ		=	$(SRC:.c=.o)

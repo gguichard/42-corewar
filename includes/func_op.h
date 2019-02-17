@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:13:03 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 03:45:15 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/17 04:06:48 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int					sti(t_env *env, t_process *cur_process
 int					lld(t_env *env, t_process *cur_process
 		, unsigned char *bytes);
 int					lldi(t_env *env, t_process *cur_process
+		, unsigned char *bytes);
+int					aff(t_env *env, t_process *cur_process
 		, unsigned char *bytes);
 
 /*
