@@ -6,19 +6,20 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/16 01:26:13 by rvalenti         ###   ########.fr        #
+#    Updated: 2019/02/17 04:08:13 by wta              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	asm
 
 SRC_DIR	=	src
-SRC		=		\
-get_file_cor.c	\
-lexer.c			\
-read_file.c		\
-utils.c			\
-check_valid_tab.c\
+SRC		=			\
+get_file_cor.c		\
+lexer.c				\
+read_file.c			\
+utils.c				\
+lst_utils.c			\
+check_valid_tab.c	\
 main.c
 
 OBJ_DIR	=	.obj

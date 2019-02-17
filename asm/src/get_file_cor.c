@@ -6,16 +6,17 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 00:55:22 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/14 04:20:35 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/17 04:51:30 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "asm.h"
 #include <stdlib.h>
-#include <fcntl.h>
-#include "libft.h"
 #include <unistd.h>
 #include <errno.h>
+#include <fcntl.h>
+#include <inttypes.h>
+#include "libft.h"
+#include "asm.h"
 
 static char	*get_file_name(char *str)
 {
@@ -34,16 +35,44 @@ static char	*get_file_name(char *str)
 	return (file_name);
 }
 
+void	write_magic(uint8_t *ptr, int fd, int len)
+{
+	int		idx;
+
+	idx = len - 1;
+	while (idx >= 0)
+	{
+		if (ptr[idx] > 0)
+			write(fd, &ptr[idx], 1);
+		idx -= 1;
+	}
+}
+
+void	write_bytes(uint8_t *ptr, int fd, int len)
+{
+	int		idx;
+
+	idx = len - 1;
+	while (idx >= 0)
+	{
+		write(fd, &ptr[idx], 1);
+		idx -= 1;
+	}
+}
+
 static void fill_cor(t_data *data, int fd)
 {
-	t_header header;
+	t_header *header;
 
-	header = data->header;
-	header.magic = 0x00f383ea;
+	header = &data->header;
+	header->magic = COREWAR_EXEC_MAGIC;
 	write(fd, "\0", 1);
-	write(fd, &header.magic, 4);
-	write(fd, header.prog_name, 128);
-	write(fd, header.comment, 2048);
+	write_magic((uint8_t *)&header->magic, fd, sizeof(uint32_t));
+	write(fd, header->prog_name, 128);
+	write(fd, "\0\0\0\0", 4);
+	write_bytes((uint8_t *)&data->header.prog_size, fd, sizeof(uint32_t));
+	write(fd, header->comment, 2048);
+	write(fd, "\0\0\0\0", 4);
 }
 
 

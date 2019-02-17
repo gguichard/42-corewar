@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:25:14 by wta               #+#    #+#             */
-/*   Updated: 2019/02/17 03:33:11 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/17 04:09:39 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct 	s_filter
 typedef struct	s_data
 {
 	t_header	header;
-	t_list_ref	list;
+	t_list_ref	label_lst;
 	char 		*tab[21];
 	t_filter	*filter;
 	int			f_size;
@@ -103,4 +103,8 @@ t_lexer			check_if_valid(char *str, char **inst);
 int				is_int(char *str);
 void			init_inst(t_data *data);
 t_error			check_valid_tab(t_data *data);
+
+void			lst_pushback(t_list_ref *list, t_list *node);
+t_list			*lstnew_mallocfree(void *content);
+
 #endif
