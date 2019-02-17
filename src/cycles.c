@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/17 02:52:01 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 03:12:50 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,14 @@ t_op	g_op[] = {
 	{ft_and, 6, 1, 1},
 	{ft_or, 6, 1, 1},
 	{ft_xor, 6, 1, 1},
-	{ft_xor, 6, 1, 1},
+	{ft_xor, 6, 1, 1},	//{zjump, 20, 0, 0},
 	{ldi, 25, 1, 1},
-	{sti, 25, 1, 1}
+	{sti, 25, 1, 1},
+	{ft_xor, 6, 1, 1},	//{ft_fork, 800, 0, 0},
+	{lld, 10, 1, 1},
+	{lldi, 50, 1, 1}
+	//{ft_lfork, 1000, 0, 0},
+	//{aff, 2, 0, 0}
 };
 
 static void	print_reg(t_process *process)
