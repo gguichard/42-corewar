@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 00:01:29 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 05:28:13 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 05:52:57 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_and(t_env *env, t_process *cur_process, unsigned char *bytes)
 	idx = 0;
 	while (idx < 2)
 	{
-		if (!parse_multitype(args[idx], env, cur_process, decode.tab[idx]))
+		if (!dispatch_multitype(args[idx], decode, decode.tab[idx], 0))
 			return (ret);
 		idx++;
 	}

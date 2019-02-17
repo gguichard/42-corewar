@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 02:21:10 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 05:29:41 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 05:53:34 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	sti(t_env *env, t_process *cur_process, unsigned char *bytes)
 	{
 		while (idx < 3)
 		{
-			parse_multitype(args[idx], env, cur_process, decode.tab[idx]);
+			dispatch_multitype(args[idx], decode, decode.tab[idx], 0);
 			idx++;
 		}
 		tmp = *((short *)args[1]) + *((short *)args[2]);

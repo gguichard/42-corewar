@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 21:28:28 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 05:28:52 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 05:53:24 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	ldi(t_env *env, t_process *cur_process, unsigned char *bytes)
 	if ((decode.tab[1].type == DIR_CODE || decode.tab[1].type == REG_CODE)
 			&& decode.tab[2].type == REG_CODE
 			&& decode.tab[0].type != BAD_CODE
-			&& parse_imultitype(args[0], env, cur_process, decode.tab[0])
-			&& parse_imultitype(args[1], env, cur_process, decode.tab[1]))
+			&& dispatch_multitype(args[0], decode, decode.tab[0], 2)
+			&& dispatch_multitype(args[1], decode, decode.tab[1], 2))
 	{
 		tmp = *((short *)args[0]) + *((short *)args[1]);
 		target = get_in_arena(env, REG_SIZE, cur_process->pc + tmp % IDX_MOD);

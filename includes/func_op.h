@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:13:03 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 05:30:14 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 05:54:34 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 # include "corewar.h"
 # include "process.h"
 # include "op.h"
+
+# define T_NRML	0
+# define T_LONG	1
+# define T_INDX	2
 
 typedef struct		s_arg
 {
@@ -69,17 +73,11 @@ int					aff(t_env *env, t_process *cur_process
 unsigned char		*get_in_arena(t_env *env, size_t size, int offset);
 void				write_in_arena(t_env *env, unsigned char *bytes, size_t size
 		, int offset);
-
 int					get_args(unsigned char *bytes, unsigned char encoding_byte
 		, t_decode *result, int sizeof_dir);
-
-int					parse_multitype(unsigned char *dest, t_env *env
-		, t_process *cur_process, t_arg arg);
-int					parse_lmultitype(unsigned char *dest, t_env *env
-		, t_process *cur_process, t_arg arg);
-int					parse_imultitype(unsigned char *dest, t_env *env
-		, t_process *cur_process, t_arg arg);
-int					parse_limultitype(unsigned char *dest, t_env *env
-		, t_process *cur_process, t_arg arg);
+int					dispatch_multitype(unsigned char *dest
+		, t_decode decode, t_arg arg, int eb);
+void				fill_struct(t_env *env, t_process *cur_process
+		, t_decode *decode);
 
 #endif
