@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 20:05:46 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 22:31:14 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/18 00:12:30 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ void		print_arena(t_env *env)
 	{
 		ft_putstr("0x");
 		put_hex_with_pad(idx, 4);
-		ft_putstr(" :");
+		ft_putstr(" : ");
 		jdx = 0;
 		while (jdx < 64 && idx < MEM_SIZE)
 		{
-			ft_putchar(' ');
 			put_hex_with_pad(env->arena[idx], 2);
+			ft_putchar(' ');
 			jdx++;
 			idx++;
 		}
