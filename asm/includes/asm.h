@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:25:14 by wta               #+#    #+#             */
-/*   Updated: 2019/02/17 03:30:45 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/17 03:33:11 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ typedef struct	s_op
 	char			opcode;
 	int				cycle;
 	char			*long_name;
-	char			encoding	: 1;
-	char			direct		: 1;
+	unsigned char			encoding	: 1;
+	unsigned char			direct		: 1;
 }				t_op;
 
 typedef enum 	s_lexer
@@ -75,6 +75,7 @@ typedef struct 	s_filter
 	t_op	op;
 	long	argv[3];
 	t_lexer	label;
+	int		index;
 }				t_filter;
 
 typedef struct	s_data

@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 20:19:44 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/17 03:31:01 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/17 03:33:44 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,32 @@ t_error		check_is_label(t_data *data)
 	return (ERR_NOERROR);
 }
 
+void		set_label_size(t_data *data)
+{
+	int		i;
+	int		n;
+
+	i = 0;
+	n = 0;
+	while (i < data->f_size)
+	{
+		data->filter[i].index = n;
+		if (data->filter[i].label == LX_INST && data->filter[i].op.encoding == 1)
+			n += 2;
+		else if (data->filter[i].label == LX_INST)
+			n += 1;
+		else if (data->filter[i].label == LX_REG)
+			n += 1;
+		else if (data->filter[i].label == LX_DIRE && data->filter[i].op.direct == 1)
+			n += 2;
+		else if (data->filter[i].label == LX_DIRE)
+			n += 4;
+		else if (data->filter[i].label == LX_INDIR)
+			n += 2;
+		i++;
+	}
+}
+
 t_error		check_valid_tab(t_data *data)
 {
 	int		i;
@@ -85,5 +111,8 @@ t_error		check_valid_tab(t_data *data)
 	}
 	if (check_is_label(data) != ERR_NOERROR)
 		return (ERR_BADFMT);
+	set_label_size(data);
+	for (int i = 0; i < data->f_size; i++)
+		ft_printf("%s\tlabel= %d\tindex= %d\tencoding=%u\tdirect=%u\n", data->filter[i].op.name, data->filter[i].label, data->filter[i].index,data->filter[i].op.encoding,data->filter[i].op.direct);
 	return (ERR_NOERROR);
 }
