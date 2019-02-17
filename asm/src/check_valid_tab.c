@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 20:19:44 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/17 03:31:01 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/17 03:35:27 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	check_arg(t_data *data, int i)
 	{
 		arg = &data->filter[i + 1 + n];
 		id = arg->label;
-		inst->op.direct = arg->op.direct;
+		arg->op.direct = inst->op.direct;
 		if ((id & inst->op.type[n]) == 0)
 			return (-1);
 		if (id == LX_DIRE || id == LX_REG)
