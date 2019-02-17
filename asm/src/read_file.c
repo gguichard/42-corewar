@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:10 by wta               #+#    #+#             */
-/*   Updated: 2019/02/17 22:16:38 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/17 22:56:19 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,21 +82,6 @@ char	*get_dquote(char *str)
 	return (&str[i + 1]);
 }
 
-t_error	fill_prog_name(t_data *data, int fd, char **str, char **line)
-{
-	t_error	err_id;
-
-	if (ft_strlen(*str) + ft_strlen(data->header.prog_name)
-			> PROG_NAME_LENGTH)
-		err_id = ERR_BADFMT;
-	ft_strcat(*str, data->header.prog_name);
-	free(*line);
-	if (get_next_line(fd, line) <= 0)
-		err_id = ERR_BADFMT;
-	*str = *line;
-	return (err_id);
-}
-
 t_error	check_endline(char *str)
 {
 	int	i;
@@ -114,6 +99,22 @@ t_error	check_endline(char *str)
 	return (ERR_NOERROR);
 }
 
+t_error	fill_prog_name(t_data *data, int fd, char **str, char **line)
+{
+	t_error	err_id;
+
+	err_id = ERR_NOERROR;
+	if (ft_strlen(*str) + 1 + ft_strlen(data->header.prog_name)
+			> PROG_NAME_LENGTH)
+		err_id = ERR_BADFMT;
+	ft_strcat(*str, data->header.prog_name);
+	free(*line);
+	if (get_next_line(fd, line) <= 0)
+		err_id = ERR_BADFMT;
+	*str = *line;
+	return (err_id);
+}
+
 t_error	get_name(t_data *data, int fd, char **line)
 {
 	t_error	err_id;
@@ -128,6 +129,7 @@ t_error	get_name(t_data *data, int fd, char **line)
 		err_id = ERR_BADFMT;
 	while (err_id == ERR_NOERROR && (needle = ft_strchr(str, '"')) == NULL)
 		err_id = fill_prog_name(data, fd, &str, line);
+	str = (str == NULL) ? *line : str;
 	if (err_id == ERR_NOERROR
 			&& (ft_strlen(data->header.prog_name)
 				+ (needle - str) > PROG_NAME_LENGTH))
@@ -145,7 +147,7 @@ t_error	fill_comment(t_data *data, int fd, char **str, char **line)
 	t_error	err_id;
 
 	err_id = ERR_NOERROR;
-	if (ft_strlen(*str) + ft_strlen(data->header.comment)
+	if (ft_strlen(*str) + 1 + ft_strlen(data->header.comment)
 			> COMMENT_LENGTH)
 		err_id = ERR_BADFMT;
 	ft_strcat(*str, data->header.comment);
@@ -259,19 +261,14 @@ t_error	read_file(char *file, t_data *data)
 	err_id = ERR_NOERROR;
 	if ((fd = open(file, O_RDONLY)) == -1)
 		return (ERR_ERRNO);
-	ft_printf("err %d\n", err_id);
 	if (err_id == ERR_NOERROR)
 		err_id = get_first_part(data, fd, &line);
-	ft_printf("err %d\n", err_id);
 	if (err_id == ERR_NOERROR)
 		err_id = get_post_header(fd, &line, &inst);
-	ft_printf("err %d\n", err_id);
 	if (err_id == ERR_NOERROR)
 		err_id = split_input(data, inst, &split);
-	ft_printf("err %d\n", err_id);
 	if (err_id == ERR_NOERROR)
 		err_id = classify(data, split);
-	ft_printf("err %d\n", err_id);
 	ft_strtab_free(split);
 	//for (int i = 0; i < data->f_size; i++)
 	//	ft_printf("%s\tlabel= %d\n", data->filter[i].op.name, data->filter[i].label);

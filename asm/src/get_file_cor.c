@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 00:55:22 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/17 22:10:57 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/17 23:24:44 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,35 +142,47 @@ void		manage_dir(t_filter *inst, t_filter *arg, int fd)
 	}
 }
 
-void		manage_label(t_filter *inst, t_filter *arg, t_list *node, int fd)
+void		manage_label(t_filter *inst, t_filter *arg, t_filter *label, int fd)
 {
-	t_filter		*ptr;
 	uint16_t	two_bytes;
 	uint32_t	four_bytes;
 
-	while (node != NULL && ft_strequ(((t_filter*)node->content)->op.name, arg->op.name) == 0)
-		node = node->next;
-	ptr = (t_filter*)node->content;
-	if (ptr != NULL)
+	if (inst->op.direct == 1 || arg->size == 2)
 	{
-		if (inst->op.direct == 1 || arg->size == 2)
-		{
-			two_bytes = (uint16_t)(ptr->index - arg->index);
-			swap_bytes((uint8_t*)&two_bytes, 2);
-			write(fd, &two_bytes, 2);
-		}
-		else
-		{
-			four_bytes = ptr->index - arg->index;
-			swap_bytes((uint8_t*)&four_bytes, 4);
-			write(fd, &four_bytes, 4);
-		}
+		two_bytes = (uint16_t)(label->index - arg->index + 2);
+		swap_bytes((uint8_t*)&two_bytes, 2);
+		write(fd, &two_bytes, 2);
 	}
+	else
+	{
+		four_bytes = label->index - arg->index + 2;
+		swap_bytes((uint8_t*)&four_bytes, 4);
+		write(fd, &four_bytes, 4);
+	}
+}
+
+t_filter	*is_label(char *str, t_list *head)
+{
+	t_filter	*label;
+	t_list		*node;
+
+	node = head;
+	if (ft_strnequ("%:", str, 2) == 0)
+		return (NULL);
+	while (node != NULL)
+	{
+		label = (t_filter*)node->content;
+		if (ft_strnequ(label->op.name, str + 2, ft_strlen(label->op.name) - 1))
+			return (label);
+		node = node->next;
+	}
+	return (NULL);
 }
 
 int			manage_inst(t_filter *inst, t_data *data, int fd)
 {
 	t_filter	*arg;
+	t_filter	*label;
 	int			idx;
 
 	arg = inst + 1;
@@ -181,13 +193,13 @@ int			manage_inst(t_filter *inst, t_data *data, int fd)
 		write_encoding_byte(&inst->op, fd);
 	while (idx < inst->op.argc)
 	{
-		if (arg->label == LX_LABEL)
-			manage_label(inst, arg, data->label_lst.head, fd);
-		if (arg->label == LX_INDIR)
+		if ((label = is_label(arg->op.name, data->label_lst.head)) != NULL)
+			manage_label(inst, arg, label, fd);
+		else if (arg->label == LX_INDIR)
 			manage_ind(arg, fd);
-		if (arg->label == LX_REG)
+		else if (arg->label == LX_REG)
 			write(fd, &arg->value, 1);
-		if (arg->label == LX_DIRE)
+		else if (arg->label == LX_DIRE)
 			manage_dir(inst, arg, fd);
 		arg += 1;
 		idx += 1;
