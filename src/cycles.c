@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/18 00:09:02 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/18 00:47:08 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,12 @@ static void	exec_inst(t_env *env, t_process *process)
 	ft_memdel((void **)&process->queued_inst);
 }
 
-static void	setup_new_inst(t_env *env, t_process *process)
+void		setup_new_inst(t_env *env, t_process *process)
 {
 	int	opcode;
 
 	opcode = env->arena[process->pc];
+	ft_printf("opcode %d|process %p|cur_cycle %d\n", opcode, process, env->cur_cycle);
 	if (opcode < 1 || opcode > 16)
 		process->pc = (process->pc + 1) % MEM_SIZE;
 	else
