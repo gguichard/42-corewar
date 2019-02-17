@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 02:21:10 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 02:46:51 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 04:44:54 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	sti(t_env *env, t_process *cur_process, unsigned char *bytes)
 			parse_multitype(args[idx], env, cur_process, decode.tab[idx]);
 			idx++;
 		}
-		tmp = *((int *)args[1]) + *((int *)args[2]);
+		tmp = *((short *)args[1]) + *((short *)args[2]);
 		write_in_arena(env, args[0], REG_SIZE, cur_process->pc + tmp % IDX_MOD);
 	}
 	return (ret);

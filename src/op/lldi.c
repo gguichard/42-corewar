@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 02:58:20 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 03:11:47 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 04:46:13 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	lldi(t_env *env, t_process *cur_process, unsigned char *bytes)
 			&& parse_limultitype(args[0], env, cur_process, decode.tab[0])
 			&& parse_limultitype(args[1], env, cur_process, decode.tab[1]))
 	{
-		tmp = *((int *)args[0]) + *((int *)args[1]);
+		tmp = *((short *)args[0]) + *((short *)args[1]);
 		target = get_in_arena(env, REG_SIZE, cur_process->pc + tmp);
 		if (target == NULL)
 			return (-1);
