@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 03:54:14 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 05:27:56 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 06:05:26 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int	aff(t_env *env, t_process *cur_process, unsigned char *bytes)
 	char		c;
 	t_decode	decode;
 
-	fill_struct(env, cur_process, &decode);
 	ret = get_args(bytes + 2, *(bytes + 1), &decode, 0);
+	fill_struct(env, cur_process, &decode);
 	if (decode.tab[0].type == REG_CODE)
 	{
 		reg = *((int *)decode.tab[0].value);

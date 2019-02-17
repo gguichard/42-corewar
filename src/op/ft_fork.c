@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 05:12:44 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/17 05:30:56 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 06:05:48 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	ft_fork(t_env *env, t_process *cur_process, unsigned char *bytes)
 	t_list		*node;
 	t_process	*process;
 
-	fill_struct(env, cur_process, &decode);
 	ret = get_args(bytes + 1, DIR_CODE << 6, &decode, 1);
+	fill_struct(env, cur_process, &decode);
 	if (decode.tab[0].type == DIR_CODE)
 	{
 		node = ft_lstnew(cur_process, sizeof(t_process));

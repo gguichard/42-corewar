@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 00:15:06 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/17 05:29:18 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 06:06:49 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	st(t_env *env, t_process *cur_process, unsigned char *bytes)
 	int			reg;
 	int			to_reg;
 
-	fill_struct(env, cur_process, &decode);
 	ret = get_args(bytes + 2, *(bytes + 1), &decode, 0);
+	fill_struct(env, cur_process, &decode);
 	if ((decode.tab[1].type == REG_CODE || decode.tab[1].type == IND_CODE)
 			&& decode.tab[0].type == REG_CODE)
 	{

@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 01:03:59 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 05:53:03 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 06:05:58 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	ft_or(t_env *env, t_process *cur_process, unsigned char *bytes)
 	unsigned char	args[3][REG_SIZE];
 	int				tmp;
 
-	fill_struct(env, cur_process, &decode);
 	ret = get_args(bytes + 2, *(bytes + 1), &decode, 0);
+	fill_struct(env, cur_process, &decode);
 	idx = 0;
 	while (idx < 2)
 	{

@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 02:21:10 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 05:53:34 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 06:06:56 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	sti(t_env *env, t_process *cur_process, unsigned char *bytes)
 	unsigned char	args[3][REG_SIZE];
 
 	idx = 0;
-	fill_struct(env, cur_process, &decode);
 	ret = get_args(bytes + 2, *(bytes + 1), &decode, 1);
+	fill_struct(env, cur_process, &decode);
 	if ((decode.tab[2].type == REG_CODE || decode.tab[2].type == DIR_CODE)
 			&& decode.tab[0].type == REG_CODE
 			&& decode.tab[1].type != BAD_CODE)
