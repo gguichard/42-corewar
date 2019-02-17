@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 23:39:23 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/16 22:34:29 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/17 01:18:11 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	sub(t_env *env, t_process *cur_process, unsigned char *bytes)
 	int			tmp;
 
 	(void)env;
-	ret = get_args(bytes + 2, *(bytes + 1), &decode);
+	ret = get_args(bytes + 2, *(bytes + 1), &decode, 0);
 	idx = 0;
 	while (idx < 3)
 	{
