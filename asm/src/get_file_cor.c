@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 00:55:22 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/17 23:24:44 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/17 23:31:22 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,13 +149,13 @@ void		manage_label(t_filter *inst, t_filter *arg, t_filter *label, int fd)
 
 	if (inst->op.direct == 1 || arg->size == 2)
 	{
-		two_bytes = (uint16_t)(label->index - arg->index + 2);
+		two_bytes = (uint16_t)(label->index - arg->index + 1);
 		swap_bytes((uint8_t*)&two_bytes, 2);
 		write(fd, &two_bytes, 2);
 	}
 	else
 	{
-		four_bytes = label->index - arg->index + 2;
+		four_bytes = label->index - arg->index + 1;
 		swap_bytes((uint8_t*)&four_bytes, 4);
 		write(fd, &four_bytes, 4);
 	}
