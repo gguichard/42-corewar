@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 00:55:22 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/17 07:40:00 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/17 11:31:39 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,37 +108,105 @@ void		write_encoding_byte(t_op *op, int fd)
 	write(fd, &encoding_byte, 1);
 }
 
+void		manage_ind(t_filter *arg, int fd)
+{
+	uint16_t	two_bytes;
+
+	if (arg->size == 4)
+	{
+		swap_bytes((uint8_t*)&arg->value, 4);
+		write(fd, &arg->value, 4);
+	}
+	else
+	{
+		two_bytes = (uint16_t)arg->value;
+		swap_bytes((uint8_t*)&two_bytes, 2);
+		write(fd, &two_bytes, 2);
+	}
+}
+
+void		manage_dir(t_filter *inst, t_filter *arg, int fd)
+{
+	uint16_t	two_bytes;
+
+	if (inst->op.direct == 1 || arg->size == 2)
+	{
+		two_bytes = (uint16_t)arg->value;
+		swap_bytes((uint8_t*)&two_bytes, 2);
+		write(fd, &two_bytes, 2);
+	}
+	else
+	{
+		swap_bytes((uint8_t*)&arg->value, 4);
+		write(fd, &arg->value, 4);
+	}
+}
+
+void		manage_label(t_filter *inst, t_filter *arg, t_list *node, int fd)
+{
+	t_filter		*ptr;
+	uint16_t	two_bytes;
+
+	while (node != NULL && ft_strequ(((t_filter*)node->content)->op.name, arg->op.name) == 0)
+		node = node->next;
+	ptr = (t_filter*)node->content;
+	if (inst->op.direct == 1 || arg->size == 2)
+	{
+		two_bytes = (uint16_t)ptr->index;
+		swap_bytes((uint8_t*)&two_bytes, 2);
+		write(fd, &two_bytes, 2);
+	}
+	else
+	{
+		swap_bytes((uint8_t*)&ptr->index, 4);
+		write(fd, &ptr->index, 4);
+	}
+}
+
+int			manage_inst(t_filter *inst, t_data *data, int fd)
+{
+	t_filter	*arg;
+	int			idx;
+
+	arg = inst + 1;
+	idx = 0;
+	(void)data;
+	write(fd, &inst->op.opcode, 1);
+	write_encoding_byte(&inst->op, fd);
+	while (idx < inst->op.argc)
+	{
+//		if (arg->label == LX_LABEL)
+//			manage_label(inst, arg, data->label_lst.head, fd);
+		if (arg->label == LX_INDIR)
+			manage_ind(arg, fd);
+		if (arg->label == LX_REG)
+			write(fd, &arg->value, 1);
+		if (arg->label == LX_DIRE)
+			manage_dir(inst, arg, fd);
+		arg += 1;
+		idx += 1;
+	}
+	return (inst->op.argc);
+}
+
+int			manage_filter(t_filter *elem, t_data *data, int fd)
+{
+	(void)data;
+	if (elem->label == LX_INST)
+		return (manage_inst(elem, data, fd));
+	return (1);
+}
+
 void		fill_instruction(t_data *data, int fd)
 {
 	t_filter	*elem;
 	int			idx;
-	int			jdx;
 
 	idx = 0;
 	while (idx < data->f_size)
 	{
 		elem = &data->filter[idx];
-		if (elem->label != LX_LABEL)
-		{
-			if (elem->label == LX_INST)
-			{
-				write(fd, &elem->op.opcode, 1);
-				if (elem->op.encoding > 0)
-					write_encoding_byte(&elem->op, fd);
-				jdx = 0;
-				while (jdx < elem->op.argc)
-				{
-					swap_bytes((uint8_t*)&data->filter[idx + jdx + 1].value, 4);
-					if (data->filter[idx + jdx + 1].label == LX_LABEL)
-						write(fd, &data->filter[idx + jdx + 1].size, data->filter[idx + jdx + 1].size);
-					else
-						write(fd, &data->filter[idx + jdx + 1].value, data->filter[idx + jdx + 1].size);
-					jdx += 1;
-				}
-				idx += jdx;
-			}
-		}
-		idx += 1;
+		idx += manage_filter(elem, data, fd);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 20:19:44 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/17 07:03:32 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/17 11:26:50 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static int	check_arg(t_data *data, int i)
 			arg->op.direct = inst->op.direct;
 		if ((id & inst->op.type[n]) == 0)
 			return (-1);
+		inst->op.type[n] &= id;
 		if (id == LX_DIRE || id == LX_REG)
 			arg->value = (int)ft_strtol(arg->op.name + 1, &endptr, 10);
 		else if (id == LX_INDIR)
@@ -75,7 +76,7 @@ void		set_label_size(t_data *data)
 	{
 		data->filter[i].index = size;
 		if (data->filter[i].label == LX_LABEL)
-			lst_pushback(&data->label_lst, lstnew_mallocfree(&data->filter[i]));
+			lst_pushback(&data->label_lst, lstnew_mallocfree(&data->filter[i].op));
 		if (data->filter[i].label == LX_INST && data->filter[i].op.encoding == 1)
 			data->filter[i].size = 2;
 		else if (data->filter[i].label == LX_INST)
