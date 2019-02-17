@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 23:39:23 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 06:07:01 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 06:36:53 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ int	sub(t_env *env, t_process *cur_process, unsigned char *bytes)
 	tmp = *((int *)cur_process->reg[args[0] - 1]);
 	tmp -= *((int *)cur_process->reg[args[1] - 1]);
 	ft_memcpy(cur_process->reg[args[2] - 1], &tmp, sizeof(int));
+	cur_process->carry = tmp == 0;
 	return (ret);
 }

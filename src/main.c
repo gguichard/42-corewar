@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:03 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/15 23:02:34 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/17 06:52:44 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,30 @@ static void			setup_champ(t_env *env, t_champ *champ, int pc)
 				, champ->header.prog_name);
 }
 
+static void			print_winner(t_env *env)
+{
+	int		last_cycle;
+	t_list	*best_champ;
+	t_list	*cur_champ;
+
+	last_cycle = -1;
+	best_champ = NULL;
+	cur_champ = env->champ_lst;
+	while (cur_champ != NULL)
+	{
+		if (last_cycle < (int)((t_champ *)cur_champ->content)->live_cycle)
+		{
+			last_cycle = (int)((t_champ *)cur_champ->content)->live_cycle;
+			best_champ = cur_champ;
+		}
+		cur_champ = cur_champ->next;
+	}
+	if (best_champ != NULL)
+	{
+		ft_printf("Winner is %s\n", ((t_champ *)best_champ->content)->header.prog_name);
+	}
+}
+
 static void			run_vm(t_env *env)
 {
 	size_t	idx;
@@ -87,6 +111,7 @@ static void			run_vm(t_env *env)
 	}
 //	print_arena(env->arena, MEM_SIZE);
 	run_cycles_loop(env);
+	print_winner(env);
 }
 
 int					main(int argc, char **argv)

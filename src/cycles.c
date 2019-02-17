@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/17 05:51:26 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/17 06:45:32 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ static void	exec_inst(t_env *env, t_process *process)
 
 	op = g_op[process->queued_inst[0] - 1];
 	result = op.fn(env, process, process->queued_inst);
-	if (op.carry)
-		process->carry = 1;
+	/*if (op.carry)
+	  process->carry = 1;*/
 	if (op.use_encoding_byte)
 		result += 1;
 	process->pc = (process->pc + result + 1) % MEM_SIZE;
@@ -150,8 +150,8 @@ void		run_cycles_loop(t_env *env)
 			env->cycle_before_die -= 1;
 		else
 		{
-			if (kill_old_process(env) > NBR_LIVE)
-				env->cycle_to_die -= CYCLE_DELTA;
+			kill_old_process(env);
+			env->cycle_to_die -= CYCLE_DELTA;
 			env->cycle_before_die = env->cycle_to_die;
 		}
 		inst_process(env);

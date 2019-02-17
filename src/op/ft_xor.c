@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 01:04:23 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 06:06:04 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 06:37:18 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ int	ft_xor(t_env *env, t_process *cur_process, unsigned char *bytes)
 	ft_memcpy(args[2], decode.tab[2].value, REG_SIZE);
 	tmp = *((int *)args[0]) ^ *((int *)args[1]);
 	ft_memcpy(cur_process->reg[*((int *)args[2]) - 1], &tmp, REG_SIZE);
+	cur_process->carry = tmp == 0;
 	return (ret);
 }

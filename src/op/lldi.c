@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 02:58:20 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 06:06:43 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 06:38:29 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	lldi(t_env *env, t_process *cur_process, unsigned char *bytes)
 			return (-1);
 		ft_memcpy(cur_process->reg[*((int *)decode.tab[2].value) - 1]
 				, target, REG_SIZE);
+		cur_process->carry = ft_memcmp(target, "\0\0\0\0", 4) == 0;
 	}
 	return (ret);
 }
