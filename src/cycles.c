@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/17 06:45:32 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/17 22:17:35 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void		run_cycles_loop(t_env *env)
 	{
 		if (env->cur_cycle == env->dump_cycles)
 		{
-			print_arena(env->arena, MEM_SIZE);
+			print_arena(env);
 			break ;
 		}
 		if (env->cycle_before_die > 0)

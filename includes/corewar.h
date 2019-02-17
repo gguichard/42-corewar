@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:43 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/16 23:07:43 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/17 22:17:26 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,6 @@ void			run_cycles_loop(t_env *env);
 
 const char		*str_to_error(t_error err_id);
 
-
-//A SUPPRIMER
-void			print_arena(unsigned char *str, int size);
-
-
-
-
-
-
-
+void			print_arena(t_env *env);
 
 #endif
