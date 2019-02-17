@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:43 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/17 22:17:26 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/18 00:47:46 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ typedef struct	s_op
 }				t_op;
 
 t_error			create_champs(t_env *env, char **argv, int argc, int cur_arg);
+
+void			setup_new_inst(t_env *env, t_process *process);
 
 void			run_cycles_loop(t_env *env);
 
