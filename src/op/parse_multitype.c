@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 01:25:00 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 03:11:48 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 03:56:19 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	parse_imultitype(unsigned char *dest, t_env *env, t_process *cur_process
 {
 	if (arg.type == DIR_CODE)
 	{
+		ft_memset(dest, 0, 4);
 		ft_memcpy(dest, arg.value, 2);
 		return (2);
 	}
@@ -87,6 +88,7 @@ int	parse_limultitype(unsigned char *dest, t_env *env, t_process *cur_process
 {
 	if (arg.type == DIR_CODE)
 	{
+		ft_memset(dest, 0, 4);
 		ft_memcpy(dest, arg.value, 2);
 		return (2);
 	}

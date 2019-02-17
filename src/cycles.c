@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/17 03:12:50 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 03:43:42 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_op	g_op[] = {
 	{ft_and, 6, 1, 1},
 	{ft_or, 6, 1, 1},
 	{ft_xor, 6, 1, 1},
-	{ft_xor, 6, 1, 1},	//{zjump, 20, 0, 0},
+	{zjmp, 20, 0, 0},
 	{ldi, 25, 1, 1},
 	{sti, 25, 1, 1},
 	{ft_xor, 6, 1, 1},	//{ft_fork, 800, 0, 0},
@@ -85,7 +85,7 @@ static void	exec_inst(t_env *env, t_process *process)
 	op = g_op[process->queued_inst[0] - 1];
 	result = op.fn(env, process, process->queued_inst);
 	if (op.carry)
-		process->carry = result != -1;
+		process->carry = 1;
 	if (op.use_encoding_byte)
 		result += 1;
 	process->pc = (process->pc + result + 1) % MEM_SIZE;

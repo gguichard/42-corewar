@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:13:03 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 03:12:48 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/17 03:45:15 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ int					ft_or(t_env *env, t_process *cur_process
 		, unsigned char *bytes);
 int					ft_xor(t_env *env, t_process *cur_process
 		, unsigned char *bytes);
-// INSERER zjump
+int					zjmp(t_env *env, t_process *cur_process
+		, unsigned char *bytes);
 int					ldi(t_env *env, t_process *cur_process
 		, unsigned char *bytes);
 int					sti(t_env *env, t_process *cur_process
@@ -59,24 +60,19 @@ int					lldi(t_env *env, t_process *cur_process
 **	UTILS
 */
 unsigned char		*get_in_arena(t_env *env, size_t size, int offset);
-
 void				write_in_arena(t_env *env, unsigned char *bytes, size_t size
 		, int offset);
 
 int					get_args(unsigned char *bytes, unsigned char encoding_byte
 		, t_decode *result, int sizeof_dir);
 
-int					parse_lmultitype(unsigned char *dest, t_env *env
-		, t_process *cur_process, t_arg arg);
-
-int					parse_imultitype(unsigned char *dest, t_env *env
-		, t_process *cur_process, t_arg arg);
-
 int					parse_multitype(unsigned char *dest, t_env *env
 		, t_process *cur_process, t_arg arg);
-
+int					parse_lmultitype(unsigned char *dest, t_env *env
+		, t_process *cur_process, t_arg arg);
+int					parse_imultitype(unsigned char *dest, t_env *env
+		, t_process *cur_process, t_arg arg);
 int					parse_limultitype(unsigned char *dest, t_env *env
 		, t_process *cur_process, t_arg arg);
-
 
 #endif
