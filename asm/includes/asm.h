@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:25:14 by wta               #+#    #+#             */
-/*   Updated: 2019/02/16 01:25:52 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/17 03:30:45 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,13 @@ typedef struct	s_op
 {
 	char			*name;
 	int				argc;
-	t_type			arg_type;
+	char			type[3];
 	char			opcode;
 	int				cycle;
 	char			*long_name;
 	char			encoding	: 1;
 	char			direct		: 1;
 }				t_op;
-
-typedef struct	s_param
-{
-	t_op		op;
-	int			argv[3];
-}				t_param;
 
 typedef enum 	s_lexer
 {
@@ -78,8 +72,8 @@ typedef enum 	s_lexer
 
 typedef struct 	s_filter
 {
-	char	*name;
 	t_op	op;
+	long	argv[3];
 	t_lexer	label;
 }				t_filter;
 
@@ -101,7 +95,7 @@ char			*expand_label(char *str);
 char			**split_by_str(char *str, char *delim);
 char			*strjoin_add_c(char const *s1, char const *s2, char c);
 
-t_error			lexer_parser(t_data *data, char **tab);
+t_error			classify(t_data *data, char **split);
 int				get_filter(char *str, t_filter *filter, t_lexer lex_id);
 int				get_tab_size(char **tab);
 t_lexer			check_if_valid(char *str, char **inst);

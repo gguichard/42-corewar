@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:23:11 by wta               #+#    #+#             */
-/*   Updated: 2019/02/16 01:57:11 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/16 23:48:29 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		return (1);
 	ft_memset(&data, 0, sizeof(t_data));
-	printf("err %d\n", read_file(av[1], &data));
-	printf("err %d\n", check_valid_tab(&data));
+	printf("read err %d\n", read_file(av[1], &data));
+	printf("check err %d\n", check_valid_tab(&data));
 	free(data.filter);
 	//TODO free NAME dans data->filter
 	//	printf("%s\n", data.header.prog_name);

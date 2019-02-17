@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 20:19:44 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/16 03:07:14 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/17 03:31:01 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,28 @@
 
 static int	check_arg(t_data *data, int i)
 {
-	int n;
+	t_filter	*inst;
+	t_filter	*arg;
+	t_lexer		id;
+	char		*endptr;
+	int			n;
 
 	n = 0;
-	while (++n <= data->filter[i].op.argc)
+	inst = &data->filter[i];
+	while (n < data->filter[i].op.argc)
 	{
-		if (n == 1)
-		{
-			if ((data->filter[i + n].label
-						& data->filter[i].op.arg_type.arg1) == 0)
-				return (-1);
-		}
-		else if (n == 2)
-		{
-			if ((data->filter[i + n].label
-						& data->filter[i].op.arg_type.arg2) == 0)
-				return (-1);
-		}
-		else if (n == 3)
-		{
-			if ((data->filter[i + n].label
-						& data->filter[i].op.arg_type.arg3) == 0)
-				return (-1);
-		}
+		arg = &data->filter[i + 1 + n];
+		id = arg->label;
+		inst->op.direct = arg->op.direct;
+		if ((id & inst->op.type[n]) == 0)
+			return (-1);
+		if (id == LX_DIRE || id == LX_REG)
+			inst->argv[n] = ft_strtol(arg->op.name + 1, &endptr, 10);
+		else if (id == LX_INDIR)
+			inst->argv[n] = ft_strtol(arg->op.name, &endptr, 10);
+		n += 1;
 	}
-	return (n);
+	return (n + 1);
 }
 
 t_error		check_is_label(t_data *data)
@@ -75,14 +72,13 @@ t_error		check_valid_tab(t_data *data)
 	n = 0;
 	while (i < data->f_size)
 	{
-		printf("inst: %s\n", data->filter[i].op.name);
-		if (data->filter[i].label == 0)
+		if (data->filter[i].label == LX_INST)
 		{
 			if ((n = check_arg(data, i)) == -1)
 				return (ERR_BADFMT);
 			i += n;
 		}
-		else if (data->filter[i].label == 8)
+		else if (data->filter[i].label == LX_LABEL)
 			i++;
 		else
 			return (ERR_BADFMT);

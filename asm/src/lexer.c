@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:39:09 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/16 02:14:10 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/17 03:27:39 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int			set_labels(char *str, t_filter *filter)
 	return (set_arg(str, filter));
 }
 
-t_error		lexer_parser(t_data *data, char **split)
+t_error		classify(t_data *data, char **split)
 {
 	int			i;
 	int			j;
@@ -130,7 +130,6 @@ t_error		lexer_parser(t_data *data, char **split)
 	j = 0;
 	while (split[i] != NULL && j < data->f_size)
 	{
-		printf("raw= %s\n", split[i]);
 		j += set_labels(split[i], &data->filter[j]);
 		i++;
 	}
