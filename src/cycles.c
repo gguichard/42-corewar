@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/17 05:23:43 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/17 05:27:54 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static void	setup_new_inst(t_env *env, t_process *process)
 	int	opcode;
 
 	opcode = env->arena[process->pc];
-	if (opcode < 1 || opcode > 10)
+	if (opcode < 1 || opcode > 16)
 		process->pc = (process->pc + 1) % MEM_SIZE;
 	else
 	{

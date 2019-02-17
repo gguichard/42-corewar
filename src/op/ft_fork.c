@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 05:12:44 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/17 05:24:09 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/17 05:28:59 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	ft_fork(t_env *env, t_process *cur_process, unsigned char *bytes)
 		if (node == NULL)
 			return (-1);
 		process = (t_process *)node->content;
+		process->queued_inst = NULL;
 		process->pc = (process->pc + *((short *)decode.tab[0].value) % IDX_MOD)
 			% MEM_SIZE;
 		ft_lstadd(&env->process_lst, node);
