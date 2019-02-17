@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/17 05:27:54 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/17 05:51:26 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,38 +35,43 @@ t_op	g_op[] = {
 	{aff, 2, 0, 0}
 };
 
-static void	print_reg(t_process *process)
-{
-	int	idx;
+/*static void	print_reg(t_process *process)
+  {
+  int	idx;
 
-	idx = 0;
-	while (idx < 16)
-	{
-		ft_printf("REG[%d]=%d\n", idx + 1, *((int *)process->reg[idx]));
-		idx++;
-	}
-}
+  idx = 0;
+  while (idx < 16)
+  {
+  ft_printf("REG[%d]=%d\n", idx + 1, *((int *)process->reg[idx]));
+  idx++;
+  }
+  }*/
 
-static void	kill_old_process(t_env *env)
+static int	kill_old_process(t_env *env)
 {
+	int			lives;
 	t_list		*prev;
 	t_list		*cur;
 	t_process	*process;
 
+	lives = 0;
 	prev = NULL;
 	cur = env->process_lst;
 	while (cur != NULL)
 	{
 		process = (t_process *)cur->content;
 		if (process->lives > 0)
+		{
+			lives += process->lives;
 			process->lives = 0;
+		}
 		else
 		{
 			if (prev == NULL)
 				env->process_lst = cur->next;
 			else
 				prev->next = cur->next;
-			print_reg(process);
+			//print_reg(process);
 			free(cur->content);
 			free(cur);
 			cur = prev;
@@ -75,6 +80,7 @@ static void	kill_old_process(t_env *env)
 		if (cur != NULL)
 			cur = cur->next;
 	}
+	return (lives);
 }
 
 static void	exec_inst(t_env *env, t_process *process)
@@ -136,12 +142,16 @@ void		run_cycles_loop(t_env *env)
 	while (env->process_lst != NULL)
 	{
 		if (env->cur_cycle == env->dump_cycles)
+		{
+			print_arena(env->arena, MEM_SIZE);
 			break ;
+		}
 		if (env->cycle_before_die > 0)
 			env->cycle_before_die -= 1;
 		else
 		{
-			kill_old_process(env);
+			if (kill_old_process(env) > NBR_LIVE)
+				env->cycle_to_die -= CYCLE_DELTA;
 			env->cycle_before_die = env->cycle_to_die;
 		}
 		inst_process(env);
