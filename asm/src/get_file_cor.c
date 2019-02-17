@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 00:55:22 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/18 00:00:48 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 00:44:11 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ void		manage_label(t_filter *inst, t_filter *arg, t_filter *label, int fd)
 	}
 	else
 	{
-		four_bytes = label->index - inst->index;
+		four_bytes = (uint32_t)(label->index - inst->index);
 		swap_bytes((uint8_t*)&four_bytes, 4);
 		write(fd, &four_bytes, 4);
 	}
@@ -172,7 +172,8 @@ t_filter	*is_label(char *str, t_list *head)
 	while (node != NULL)
 	{
 		label = (t_filter*)node->content;
-		if (ft_strnequ(label->op.name, str + 2, ft_strlen(label->op.name) - 1))
+		if (ft_strlen(label->op.name) - 1 == ft_strlen(str + 2)
+				&& ft_strnequ(label->op.name, str + 2, ft_strlen(str + 2)))
 			return (label);
 		node = node->next;
 	}
