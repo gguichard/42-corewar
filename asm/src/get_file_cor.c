@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 00:55:22 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/17 05:17:37 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/17 07:40:00 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,28 @@ void	write_magic(uint8_t *ptr, int fd, int len)
 {
 	int		idx;
 
-	idx = len - 1;
-	while (idx >= 0)
+	idx = 0;
+	while (idx < len)
 	{
 		if (ptr[idx] > 0)
 			write(fd, &ptr[idx], 1);
-		idx -= 1;
+		idx += 1;
 	}
 }
 
-void	write_bytes(uint8_t *ptr, int fd, int len)
+void        swap_bytes(unsigned char *str, int size)
 {
-	int		idx;
+	int                i;
+	unsigned char    tmp;
 
-	idx = len - 1;
-	while (idx >= 0)
+	i = 0;
+	while (i < size)
 	{
-		write(fd, &ptr[idx], 1);
-		idx -= 1;
+		size--;
+		tmp = str[size];
+		str[size] = str[i];
+		str[i] = tmp;
+		i++;
 	}
 }
 
@@ -66,18 +70,76 @@ static void fill_header(t_data *data, int fd)
 
 	header = &data->header;
 	header->magic = COREWAR_EXEC_MAGIC;
+	swap_bytes((unsigned char *)&header->magic, 4);
 	write(fd, "\0", 1);
-	write_magic((uint8_t *)&header->magic, fd, sizeof(uint32_t));
+	write_magic((unsigned char *)&header->magic, fd, 4);
 	write(fd, header->prog_name, 128);
 	write(fd, "\0\0\0\0", 4);
-	write_bytes((uint8_t *)&data->header.prog_size, fd, sizeof(uint32_t));
+	swap_bytes((unsigned char *)&data->header.prog_size, 4);
+	write(fd, &data->header.prog_size, 4);
 	write(fd, header->comment, 2048);
 	write(fd, "\0\0\0\0", 4);
 }
 
+void		write_encoding_byte(t_op *op, int fd)
+{
+	uint8_t	encoding_byte;
+	uint8_t	dire;
+	uint8_t	ind;
+	uint8_t	reg;
+	int		idx;
+
+	reg = 0x1;
+	dire = 0x2;
+	ind = 0x3;
+	idx = 0;
+	encoding_byte = 0;
+	while (idx < 3)
+	{
+		if (op->type[idx] & T_DIR)
+			encoding_byte |= dire;
+		else if (op->type[idx] & T_IND)
+			encoding_byte |= ind;
+		else if (op->type[idx] & T_REG)
+			encoding_byte |= reg;
+		encoding_byte <<= 2;
+		idx += 1;
+	}
+	write(fd, &encoding_byte, 1);
+}
+
 void		fill_instruction(t_data *data, int fd)
 {
-	
+	t_filter	*elem;
+	int			idx;
+	int			jdx;
+
+	idx = 0;
+	while (idx < data->f_size)
+	{
+		elem = &data->filter[idx];
+		if (elem->label != LX_LABEL)
+		{
+			if (elem->label == LX_INST)
+			{
+				write(fd, &elem->op.opcode, 1);
+				if (elem->op.encoding > 0)
+					write_encoding_byte(&elem->op, fd);
+				jdx = 0;
+				while (jdx < elem->op.argc)
+				{
+					swap_bytes((uint8_t*)&data->filter[idx + jdx + 1].value, 4);
+					if (data->filter[idx + jdx + 1].label == LX_LABEL)
+						write(fd, &data->filter[idx + jdx + 1].size, data->filter[idx + jdx + 1].size);
+					else
+						write(fd, &data->filter[idx + jdx + 1].value, data->filter[idx + jdx + 1].size);
+					jdx += 1;
+				}
+				idx += jdx;
+			}
+		}
+		idx += 1;
+	}
 }
 
 t_error		create_cor(t_data *data, char *str)

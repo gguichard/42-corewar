@@ -6,13 +6,14 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:25:14 by wta               #+#    #+#             */
-/*   Updated: 2019/02/17 05:15:53 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/17 07:01:55 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ASM_H
 # define ASM_H
 
+# include <inttypes.h>
 # include "op.h"
 # include "libft.h"
 
@@ -32,25 +33,12 @@ typedef struct	s_list_ref
 	t_list		*tail;
 }				t_list_ref;
 
-typedef struct	s_label
-{
-	char	*name;
-	int		offset;
-}				t_label;
-
-typedef struct	s_type
-{
-	char	arg1;
-	char	arg2;
-	char	arg3;
-}				t_type;
-
 typedef struct	s_op
 {
 	char			*name;
 	int				argc;
-	char			type[3];
-	char			opcode;
+	uint8_t			type[3];
+	uint8_t			opcode;
 	int				cycle;
 	char			*long_name;
 	unsigned char			encoding	: 1;
@@ -72,17 +60,17 @@ typedef enum 	s_lexer
 
 typedef struct 	s_filter
 {
-	t_op	op;
-	long	argv[3];
-	t_lexer	label;
-	int		index;
+	t_op			op;
+	t_lexer			label;
+	int				size;
+	int				value;
+	int				index;
 }				t_filter;
 
 typedef struct	s_data
 {
 	t_header	header;
 	t_list_ref	label_lst;
-	char 		*tab[21];
 	t_filter	*filter;
 	int			f_size;
 }				t_data;
@@ -107,6 +95,6 @@ t_error			check_valid_tab(t_data *data);
 void			lst_pushback(t_list_ref *list, t_list *node);
 t_list			*lstnew_mallocfree(void *content);
 
-void			write_bytes(uint8_t *ptr, int fd, int len);
+void			write_bytes(uint8_t *ptr, int fd, int len, int size);
 
 #endif

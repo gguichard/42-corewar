@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 20:19:44 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/17 04:38:51 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/17 07:03:32 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ static int	check_arg(t_data *data, int i)
 		if ((id & inst->op.type[n]) == 0)
 			return (-1);
 		if (id == LX_DIRE || id == LX_REG)
-			inst->argv[n] = ft_strtol(arg->op.name + 1, &endptr, 10);
+			arg->value = (int)ft_strtol(arg->op.name + 1, &endptr, 10);
 		else if (id == LX_INDIR)
-			inst->argv[n] = ft_strtol(arg->op.name, &endptr, 10);
+			arg->value = (int)ft_strtol(arg->op.name, &endptr, 10);
 		n += 1;
 	}
 	return (n + 1);
@@ -66,31 +66,32 @@ t_error		check_is_label(t_data *data)
 
 void		set_label_size(t_data *data)
 {
-	int		i;
-	int		n;
+	unsigned int	size;
+	int				i;
 
 	i = 0;
-	n = 0;
+	size = 0;
 	while (i < data->f_size)
 	{
-		data->filter[i].index = n;
+		data->filter[i].index = size;
 		if (data->filter[i].label == LX_LABEL)
 			lst_pushback(&data->label_lst, lstnew_mallocfree(&data->filter[i]));
 		if (data->filter[i].label == LX_INST && data->filter[i].op.encoding == 1)
-			n += 2;
+			data->filter[i].size = 2;
 		else if (data->filter[i].label == LX_INST)
-			n += 1;
+			data->filter[i].size = 1;
 		else if (data->filter[i].label == LX_REG)
-			n += 1;
+			data->filter[i].size = 1;
 		else if (data->filter[i].label == LX_DIRE && data->filter[i].op.direct == 1)
-			n += 2;
+			data->filter[i].size = 2;
 		else if (data->filter[i].label == LX_DIRE)
-			n += 4;
+			data->filter[i].size = 4;
 		else if (data->filter[i].label == LX_INDIR)
-			n += 2;
+			data->filter[i].size = 2;
+		size += data->filter[i].size;
 		i++;
 	}
-	data->header.prog_size = n;
+	data->header.prog_size = size;
 }
 
 t_error		check_valid_tab(t_data *data)
