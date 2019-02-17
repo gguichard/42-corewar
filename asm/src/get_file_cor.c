@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 00:55:22 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/17 11:43:16 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/17 22:10:57 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,20 +146,25 @@ void		manage_label(t_filter *inst, t_filter *arg, t_list *node, int fd)
 {
 	t_filter		*ptr;
 	uint16_t	two_bytes;
+	uint32_t	four_bytes;
 
 	while (node != NULL && ft_strequ(((t_filter*)node->content)->op.name, arg->op.name) == 0)
 		node = node->next;
 	ptr = (t_filter*)node->content;
-	if (inst->op.direct == 1 || arg->size == 2)
+	if (ptr != NULL)
 	{
-		two_bytes = (uint16_t)ptr->index;
-		swap_bytes((uint8_t*)&two_bytes, 2);
-		write(fd, &two_bytes, 2);
-	}
-	else
-	{
-		swap_bytes((uint8_t*)&ptr->index, 4);
-		write(fd, &ptr->index, 4);
+		if (inst->op.direct == 1 || arg->size == 2)
+		{
+			two_bytes = (uint16_t)(ptr->index - arg->index);
+			swap_bytes((uint8_t*)&two_bytes, 2);
+			write(fd, &two_bytes, 2);
+		}
+		else
+		{
+			four_bytes = ptr->index - arg->index;
+			swap_bytes((uint8_t*)&four_bytes, 4);
+			write(fd, &four_bytes, 4);
+		}
 	}
 }
 
@@ -176,8 +181,8 @@ int			manage_inst(t_filter *inst, t_data *data, int fd)
 		write_encoding_byte(&inst->op, fd);
 	while (idx < inst->op.argc)
 	{
-//		if (arg->label == LX_LABEL)
-//			manage_label(inst, arg, data->label_lst.head, fd);
+		if (arg->label == LX_LABEL)
+			manage_label(inst, arg, data->label_lst.head, fd);
 		if (arg->label == LX_INDIR)
 			manage_ind(arg, fd);
 		if (arg->label == LX_REG)

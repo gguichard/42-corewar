@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:10 by wta               #+#    #+#             */
-/*   Updated: 2019/02/17 07:01:13 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/17 22:16:38 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,14 +259,19 @@ t_error	read_file(char *file, t_data *data)
 	err_id = ERR_NOERROR;
 	if ((fd = open(file, O_RDONLY)) == -1)
 		return (ERR_ERRNO);
+	ft_printf("err %d\n", err_id);
 	if (err_id == ERR_NOERROR)
 		err_id = get_first_part(data, fd, &line);
+	ft_printf("err %d\n", err_id);
 	if (err_id == ERR_NOERROR)
 		err_id = get_post_header(fd, &line, &inst);
+	ft_printf("err %d\n", err_id);
 	if (err_id == ERR_NOERROR)
 		err_id = split_input(data, inst, &split);
+	ft_printf("err %d\n", err_id);
 	if (err_id == ERR_NOERROR)
 		err_id = classify(data, split);
+	ft_printf("err %d\n", err_id);
 	ft_strtab_free(split);
 	//for (int i = 0; i < data->f_size; i++)
 	//	ft_printf("%s\tlabel= %d\n", data->filter[i].op.name, data->filter[i].label);
