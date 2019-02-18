@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:22 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/18 10:15:38 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/18 22:42:41 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int		decode_args(t_decode *decode, uint8_t *args, uint8_t encoding_byte
 		if ((encoding_byte & 0xC0) == 0x40)
 		{
 			decode->tab[idx].type = REG_CODE;
-			decode->tab[idx].value = *args;
+			decode->tab[idx].value = *((int8_t *)args);
 			if ((int)decode->tab[idx].value < 1
 					|| (int)decode->tab[idx].value > 16)
 				decode->tab[idx].type = BAD_REG;
@@ -106,7 +106,7 @@ int		decode_args(t_decode *decode, uint8_t *args, uint8_t encoding_byte
 			decode->tab[idx].type = ((encoding_byte & 0xC0) == 0xC0)
 				? IND_CODE : DIR_CODE;
 			swap_bytes(args, 2);
-			decode->tab[idx].value = (short)*((uint16_t *)args);
+			decode->tab[idx].value = *((int16_t *)args);
 			ret += 2;
 			args += 2;
 		}
@@ -114,7 +114,7 @@ int		decode_args(t_decode *decode, uint8_t *args, uint8_t encoding_byte
 		{
 			decode->tab[idx].type = DIR_CODE;
 			swap_bytes(args, 4);
-			decode->tab[idx].value = *((uint32_t *)args);
+			decode->tab[idx].value = *((int32_t *)args);
 			ret += 4;
 			args += 4;
 		}

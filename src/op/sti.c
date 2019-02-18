@@ -6,39 +6,40 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 02:21:10 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/18 05:06:39 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/18 22:31:05 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <inttypes.h>
 #include "corewar.h"
 #include "process.h"
 #include "func_op.h"
+#include "op.h"
 
-int	sti(t_env *env, t_process *cur_process, unsigned char *bytes)
+int	sti(t_env *env, t_process *cur_process, uint8_t *bytes)
 {
-	int				ret;
-	int				tmp;
-	int				idx;
-	t_decode		decode;
-	unsigned char	args[3][REG_SIZE];
+	int			ret;
+	t_decode	decode;
+	int			idx;
+	uint32_t	args[3];
+	int			address;
 
-	ret = get_args(bytes + 2, *(bytes + 1), &decode, 1);
-	fill_struct(env, cur_process, &decode);
+	ret = decode_args(&decode, bytes + 2, *(bytes + 1), SHORT_DIR) + 2;
+	fill_decode(env, cur_process, &decode);
 	if (decode.tab[0].type == REG_CODE
-			&& (decode.tab[1].type == REG_CODE
-				|| decode.tab[1].type == DIR_CODE)
+			&& (decode.tab[1].type != BAD_REG)
 			&& (decode.tab[2].type == REG_CODE
 				|| decode.tab[2].type == DIR_CODE))
 	{
 		idx = 0;
 		while (idx < 3)
 		{
-			dispatch_multitype(args[idx], decode, decode.tab[idx], T_INDX);
+			store_multitype(args + idx, decode, decode.tab[idx], 0);
 			idx++;
 		}
-		tmp = *((short *)args[1]) + *((short *)args[2]);
-		ft_printf("sti r%d %hd %hd (%d)\n", *((int *)decode.tab[0].value), *((short *)args[1]), *((short *)args[2]), cur_process->pc + tmp % IDX_MOD);
-		write_in_arena(env, args[0], REG_SIZE, cur_process->pc + tmp % IDX_MOD);
+		address = (int)args[1] + (int)args[2];
+		ft_printf("sti r%d %d %d (pc %d)\n", decode.tab[0].value, args[1], args[2], cur_process->pc + address % IDX_MOD);
+		write_in_arena(env, (uint8_t *)args, 4, cur_process->pc + address % IDX_MOD);
 	}
 	return (ret);
 }

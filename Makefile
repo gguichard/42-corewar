@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/18 09:25:12 by gguichar         ###   ########.fr        #
+#    Updated: 2019/02/18 21:18:34 by gguichar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,8 @@ op/ft_and.c				\
 op/ft_or.c				\
 op/ft_xor.c				\
 op/zjmp.c				\
-op/ldi.c				#\
-#op/sti.c				\
+op/ldi.c				\
+op/sti.c				#\
 #op/ft_fork.c			\
 #op/lld.c				\
 #op/lldi.c				\
