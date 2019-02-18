@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/18 02:20:14 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/18 02:33:47 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,7 @@ void		run_cycles_loop(t_env *env)
 {
 	while (env->process_lst != NULL)
 	{
+		ft_printf("It is now cycle %d\n", env->cur_cycle);
 		if (env->cycle_before_die > 0)
 			env->cycle_before_die -= 1;
 		else

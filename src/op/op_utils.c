@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:22 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 06:42:45 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/18 03:36:40 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ unsigned char	*get_in_arena(t_env *env, size_t size, int offset)
 	if (offset > MEM_SIZE)
 		offset %= MEM_SIZE;
 	if ((offset + size) <= MEM_SIZE)
-		ft_memmove(ret, env->arena + offset, size);
+		ft_memcpy(ret, env->arena + offset, size);
 	else
 	{
 		ft_memcpy(ret, env->arena + offset, MEM_SIZE - offset);
@@ -33,6 +33,23 @@ unsigned char	*get_in_arena(t_env *env, size_t size, int offset)
 				, size - MEM_SIZE + offset);
 	}
 	return (ret);
+}
+
+void			write_in_arena(t_env *env, unsigned char *bytes, size_t size
+		, int offset)
+{
+	if (offset < 0)
+		offset += MEM_SIZE;
+	if (offset > MEM_SIZE)
+		offset %= MEM_SIZE;
+	if ((offset + size) <= MEM_SIZE)
+		ft_memcpy(&env->arena[offset], bytes, size);
+	else
+	{
+		ft_memcpy(env->arena + offset, bytes, MEM_SIZE - offset);
+		ft_memcpy(env->arena, bytes + (MEM_SIZE - offset)
+				, size - MEM_SIZE + offset);
+	}
 }
 
 static void		ft_swap_bytes(unsigned char *str, int size)
@@ -49,25 +66,6 @@ static void		ft_swap_bytes(unsigned char *str, int size)
 		str[i] = tmp;
 		i++;
 	}
-}
-
-void			write_in_arena(t_env *env, unsigned char *bytes, size_t size
-		, int offset)
-{
-	if (offset < 0)
-		offset += MEM_SIZE;
-	if (offset > MEM_SIZE)
-		offset %= MEM_SIZE;
-	ft_swap_bytes(bytes, size);
-	if ((offset + size) <= MEM_SIZE)
-		ft_memcpy(&env->arena[offset], bytes, size);
-	else
-	{
-		ft_memcpy(env->arena + offset, bytes, MEM_SIZE - offset);
-		ft_memcpy(env->arena, bytes + (MEM_SIZE - offset)
-				, size - MEM_SIZE + offset);
-	}
-	ft_swap_bytes(bytes, size);
 }
 
 static int		get_arg_with_type(t_arg *arg, unsigned char *bytes, int type
