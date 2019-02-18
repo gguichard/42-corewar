@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 02:21:10 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/18 22:31:05 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/18 23:13:56 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	sti(t_env *env, t_process *cur_process, uint8_t *bytes)
 		}
 		address = (int)args[1] + (int)args[2];
 		ft_printf("sti r%d %d %d (pc %d)\n", decode.tab[0].value, args[1], args[2], cur_process->pc + address % IDX_MOD);
-		write_in_arena(env, (uint8_t *)args, 4, cur_process->pc + address % IDX_MOD);
+		write_in_arena(env, (uint8_t *)args, 4
+				, cur_process->pc + address % IDX_MOD);
 	}
 	return (ret);
 }
