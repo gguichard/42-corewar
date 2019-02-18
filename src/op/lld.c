@@ -6,30 +6,33 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 21:25:00 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 22:12:07 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/18 23:37:27 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <inttypes.h>
 #include "corewar.h"
 #include "process.h"
 #include "func_op.h"
+#include "op.h"
 
 int	lld(t_env *env, t_process *cur_process, unsigned char *bytes)
 {
-	int				ret;
-	t_decode		decode;
-	unsigned char	value[REG_SIZE];
-	int				reg;
+	int			ret;
+	t_decode	decode;
+	uint32_t	value;
+	int			reg;
 
-	ret = get_args(bytes + 2, *(bytes + 1), &decode, 0);
-	fill_struct(env, cur_process, &decode);
+	ret = decode_args(&decode, bytes + 2, *(bytes + 1), REG_DIR);
+	fill_decode(env, cur_process, &decode);
 	if ((decode.tab[0].type == IND_CODE || decode.tab[0].type == DIR_CODE)
-			&& decode.tab[1].type == REG_CODE
-			&& dispatch_multitype(value, decode, decode.tab[0], 1))
+			&& decode.tab[1].type == REG_CODE)
 	{
-		reg = *((int *)decode.tab[1].value);
-		ft_memcpy(cur_process->reg[reg - 1], value, REG_SIZE);
-		cur_process->carry = ft_memcmp(value, "\0\0\0\0", 4) == 0;
+		store_multitype(&value, decode, decode.tab[0], 1);
+		reg = (int)decode.tab[1].value;
+		cur_process->reg[reg - 1] = value;
+		ft_printf("lld %d r%d\n", value, reg);
+		cur_process->carry = (value == 0);
 	}
-	return (ret);
+	return (ret + 2);
 }
