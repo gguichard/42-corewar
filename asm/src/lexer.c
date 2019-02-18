@@ -6,12 +6,11 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:39:09 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/18 05:13:19 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 05:39:18 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "lexer.h"
 #include "asm.h"
 
 extern t_op	g_op_tab[17];
