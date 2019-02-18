@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:10 by wta               #+#    #+#             */
-/*   Updated: 2019/02/18 01:08:44 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 02:55:39 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ t_error	fill_prog_name(t_data *data, int fd, char **str, char **line)
 	if (ft_strlen(*str) + 1 + ft_strlen(data->header.prog_name)
 			> PROG_NAME_LENGTH)
 		err_id = ERR_BADFMT;
-	ft_strcat(*str, data->header.prog_name);
+	ft_strcat(data->header.prog_name, *str);
+	ft_strcat(data->header.prog_name, "\n");
 	free(*line);
 	if (get_next_line(fd, line) <= 0)
 		err_id = ERR_BADFMT;
@@ -150,7 +151,8 @@ t_error	fill_comment(t_data *data, int fd, char **str, char **line)
 	if (ft_strlen(*str) + 1 + ft_strlen(data->header.comment)
 			> COMMENT_LENGTH)
 		err_id = ERR_BADFMT;
-	ft_strcat(*str, data->header.comment);
+	ft_strcat(data->header.comment, *str);
+	ft_strcat(data->header.comment, "\n");
 	free(*line);
 	if (get_next_line(fd, line) <= 0)
 		err_id = ERR_BADFMT;
