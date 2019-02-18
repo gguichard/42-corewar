@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:25:14 by wta               #+#    #+#             */
-/*   Updated: 2019/02/17 07:01:55 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 04:39:57 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,25 +76,48 @@ typedef struct	s_data
 }				t_data;
 
 
-t_error			read_file(char *file, t_data *data);
-void			set_op_tab(t_op op_tab[]);
-t_error			create_cor(t_data *data, char *str);
-char			**split_by_str(char *str, char *delim);
-char			*expand_label(char *str);
-char			**split_by_str(char *str, char *delim);
-char			*strjoin_add_c(char const *s1, char const *s2, char c);
+t_error		read_file(char *file, t_data *data);
+void		set_op_tab(t_op op_tab[]);
 
-t_error			classify(t_data *data, char **split);
-int				get_filter(char *str, t_filter *filter, t_lexer lex_id);
-int				get_tab_size(char **tab);
-t_lexer			check_if_valid(char *str, char **inst);
-int				is_int(char *str);
-void			init_inst(t_data *data);
-t_error			check_valid_tab(t_data *data);
+int			get_filter(char *str, t_filter *filter, t_lexer lex_id);
+int			get_tab_size(char **tab);
 
-void			lst_pushback(t_list_ref *list, t_list *node);
-t_list			*lstnew_mallocfree(void *content);
+t_lexer		check_if_valid(char *str, char **inst);
+int			is_int(char *str);
+t_filter	*is_label(char *str, t_list *head);
 
-void			write_bytes(uint8_t *ptr, int fd, int len, int size);
+void		init_inst(t_data *data);
+
+t_error		check_valid_tab(t_data *data);
+t_error		classify(t_data *data, char **split);
+t_error		create_cor(t_data *data, char *str);
+
+void		lst_pushback(t_list_ref *list, t_list *node);
+t_list		*lstnew_mallocfree(void *content);
+
+void		swap_bytes(unsigned char *str, int size);
+void		write_magic(uint8_t *ptr, int fd, int len);
+void		write_encoding_byte(t_op *op, int fd);
+
+char		*get_file_name(char *str);
+void		fill_header(t_data *data, int fd);
+void		fill_instruction(t_data *data, int fd);
+
+int			manage_filter(t_filter *elem, t_data *data, int fd);
+int			manage_inst(t_filter *inst, t_data *data, int fd);
+void		manage_label(t_filter *inst, t_filter *arg
+		, t_filter *label, int fd);
+void		manage_dir(t_filter *inst, t_filter *arg, int fd);
+void		manage_ind(t_filter *arg, int fd);
+
+int			replace_mod(char *str, char *new);
+int			replace_colon(char *str, char *new);
+
+void		expand_space(char *str, char *new, int len);
+char		*expand_label(char *str);
+
+char		*strjoin_add_c(char const *s1, char const *s2, char c);
+char		**split_by_str(char *str, char *delim);
+int			cnt_space_to_add(char *str);
 
 #endif

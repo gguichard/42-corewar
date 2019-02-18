@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/18 02:52:40 by wta              ###   ########.fr        #
+#    Updated: 2019/02/18 04:44:40 by wta              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,13 +14,20 @@ NAME	=	asm
 
 SRC_DIR	=	src
 SRC		=			\
+asm_managers.c		\
+asm_utils.c			\
+check_line.c		\
+check_valid_tab.c	\
+create_cor_utils.c	\
+error_handler.c		\
 get_file_cor.c		\
 lexer.c				\
+lst_utils.c			\
+main.c				\
 read_file.c			\
 utils.c				\
-lst_utils.c			\
-check_valid_tab.c	\
-main.c
+utils2.c			\
+write_bytes.c
 
 OBJ_DIR	=	.obj
 OBJ		=	$(SRC:.c=.o)

@@ -6,13 +6,13 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 20:19:44 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/18 03:11:11 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/18 04:21:57 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 
-static int	check_arg(t_data *data, int i)
+static int		check_arg(t_data *data, int i)
 {
 	t_filter	*inst;
 	t_filter	*arg;
@@ -40,34 +40,54 @@ static int	check_arg(t_data *data, int i)
 	return (n + 1);
 }
 
-t_error		check_is_label(t_data *data)
+static t_error	check_is_label(t_data *data)
 {
-	int		i;
-	int		n;
+	char	*name;
+	int		offset;
+	int		idx;
+	int		jdx;
 
-	i = 0;
-	while (i < data->f_size)
+	idx = 0;
+	while (idx < data->f_size)
 	{
-		n = 0;
-		if (ft_strnequ(data->filter[i].op.name, "%:", 2)
-				|| *data->filter[i].op.name == ':')
-			while (n < data->f_size)
+		name = data->filter[idx].op.name;
+		jdx = 0;
+		if (ft_strnequ(name, "%:", 2) || *name == ':')
+		{
+			offset = 1 + (*name != ':');
+			while (jdx < data->f_size)
 			{
-				if (ft_strnequ((data->filter[i].op.name + 1 + (*data->filter[i].op.name != ':')),
-							data->filter[n].op.name,
-							ft_strlen(data->filter[i].op.name + 1 + (*data->filter[i].op.name != ':'))))
+				if (ft_strnequ((name + offset), name, ft_strlen(name + offset)))
 					break ;
-				n++;
+				jdx++;
 			}
-		if (n == data->f_size)
+		}
+		if (jdx == data->f_size)
 			return (ERR_BADFMT);
-		i++;
+		idx++;
 	}
 	return (ERR_NOERROR);
 }
 
-void		set_label_size(t_data *data)
+static void		set_size(t_filter *filter)
 {
+	if (filter->label == LX_INST && filter->op.encoding == 1)
+		filter->size = 2;
+	else if (filter->label == LX_INST)
+		filter->size = 1;
+	else if (filter->label == LX_REG)
+		filter->size = 1;
+	else if (filter->label == LX_DIRE && filter->op.direct == 1)
+		filter->size = 2;
+	else if (filter->label == LX_DIRE)
+		filter->size = 4;
+	else if (filter->label == LX_INDIR)
+		filter->size = 2;
+}
+
+static t_error	set_label_size(t_data *data)
+{
+	t_list			*node;
 	unsigned int	size;
 	int				i;
 
@@ -78,56 +98,41 @@ void		set_label_size(t_data *data)
 		data->filter[i].size = 0;
 		data->filter[i].index = size;
 		if (data->filter[i].label == LX_LABEL)
-			lst_pushback(&data->label_lst, lstnew_mallocfree(&data->filter[i].op));
-		if (data->filter[i].label == LX_INST && data->filter[i].op.encoding == 1)
-			data->filter[i].size = 2;
-		else if (data->filter[i].label == LX_INST)
-			data->filter[i].size = 1;
-		else if (data->filter[i].label == LX_REG)
-			data->filter[i].size = 1;
-		else if (data->filter[i].label == LX_DIRE && data->filter[i].op.direct == 1)
-			data->filter[i].size = 2;
-		else if (data->filter[i].label == LX_DIRE)
-			data->filter[i].size = 4;
-		else if (data->filter[i].label == LX_INDIR)
-			data->filter[i].size = 2;
+		{
+			if ((node = lstnew_mallocfree(&data->filter[i].op)))
+				return (ERR_MALLOC);
+			lst_pushback(&data->label_lst, node);
+		}
+		set_size(&data->filter[i]);
 		size += data->filter[i].size;
-		printf("size = %u\n",size);
 		i++;
 	}
 	data->header.prog_size = size;
+	return (ERR_NOERROR);
 }
 
 t_error		check_valid_tab(t_data *data)
 {
-	int		i;
-	int		n;
+	int		idx;
+	int		jdx;
 
-	i = 0;
-	n = 0;
-	while (i < data->f_size)
+	idx = 0;
+	jdx = 0;
+	while (idx < data->f_size)
 	{
-		if (data->filter[i].label == LX_INST)
+		if (data->filter[idx].label == LX_INST)
 		{
-			if ((n = check_arg(data, i)) == -1)
-			{
-				ft_printf("1\n");
+			if ((jdx = check_arg(data, idx)) == -1)
 				return (ERR_BADFMT);
-			}
-			i += n;
+			idx += jdx;
 		}
-		else if (data->filter[i].label == LX_LABEL)
-			i++;
+		else if (data->filter[idx].label == LX_LABEL)
+			idx += 1;
 		else
-		{
-				ft_printf("2\n");
 			return (ERR_BADFMT);
-		}
 	}
 	if (check_is_label(data) != ERR_NOERROR)
 		return (ERR_BADFMT);
 	set_label_size(data);
-	for (int i = 0; i < data->f_size; i++)
-		ft_printf("%s\tlabel= %d\tindex= %d\tencoding=%u\tdirect=%u\n", data->filter[i].op.name, data->filter[i].label, data->filter[i].index,data->filter[i].op.encoding,data->filter[i].op.direct);
 	return (ERR_NOERROR);
 }

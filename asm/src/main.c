@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:23:11 by wta               #+#    #+#             */
-/*   Updated: 2019/02/18 03:03:37 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/18 04:13:00 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,8 @@ int	main(int ac, char **av)
 		return (-1);
 	if ((err_id = check_valid_tab(&data)) != ERR_NOERROR)
 		return (-1);
-	free(data.filter);
-	//TODO free NAME dans data->filter
 	if ((err_id = create_cor(&data, av[1])) != ERR_NOERROR)
 		return(-1);
+	free(data.filter);
 	return (0);
 }
