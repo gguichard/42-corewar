@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/17 05:26:20 by vifonne          ###   ########.fr        #
+#    Updated: 2019/02/18 09:25:12 by gguichar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,7 @@ cycles.c				\
 errors.c				\
 print_arena.c			\
 op/op_utils.c			\
-op/parse_multitype.c	\
-op/fill_struct.c		\
+op/op_utils2.c			\
 op/live.c				\
 op/ld.c					\
 op/st.c					\
@@ -32,13 +31,13 @@ op/ft_and.c				\
 op/ft_or.c				\
 op/ft_xor.c				\
 op/zjmp.c				\
-op/ldi.c				\
-op/sti.c				\
-op/ft_fork.c			\
-op/lld.c				\
-op/lldi.c				\
-op/ft_lfork.c			\
-op/aff.c
+op/ldi.c				#\
+#op/sti.c				\
+#op/ft_fork.c			\
+#op/lld.c				\
+#op/lldi.c				\
+#op/ft_lfork.c			\
+#op/aff.c
 
 OBJ_DIR	=	.obj
 OBJ		=	$(SRC:.c=.o)

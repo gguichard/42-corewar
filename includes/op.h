@@ -6,7 +6,7 @@
 /*   By: zaz <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2019/02/16 22:51:55 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/18 06:51:42 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # define REG_SIZE				4
 # define DIR_SIZE				REG_SIZE
 
-# define BAD_CODE				0
 # define REG_CODE				1
 # define DIR_CODE				2
 # define IND_CODE				3

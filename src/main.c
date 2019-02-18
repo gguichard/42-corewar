@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:03 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/18 03:05:18 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/18 07:25:48 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,6 @@ static t_error		parse_opts(t_env *env, char **argv, int *cur_arg)
 	return (ERR_NOERROR);
 }
 
-static void		ft_swap_bytes(unsigned char *str, int size)
-{
-	int				i;
-	unsigned char	tmp;
-
-	i = 0;
-	while (i < size)
-	{
-		size--;
-		tmp = str[size];
-		str[size] = str[i];
-		str[i] = tmp;
-		i++;
-	}
-}
-
 static t_process	*create_process(t_env *env, t_champ *champ)
 {
 	t_process	process;
@@ -64,8 +48,7 @@ static t_process	*create_process(t_env *env, t_champ *champ)
 	if (node == NULL)
 		return (NULL);
 	((t_process *)node->content)->champ_id = champ->id;
-	ft_memcpy(((t_process *)node->content)->reg[0], &champ->id, REG_SIZE);
-	ft_swap_bytes(((t_process *)node->content)->reg[0], REG_SIZE);
+	((t_process *)node->content)->reg[0] = champ->id;
 	ft_lstadd(&env->process_lst, node);
 	return ((t_process *)node->content);
 }
@@ -138,6 +121,7 @@ int					main(int argc, char **argv)
 	t_error	err_id;
 
 	ft_memset(&env, 0, sizeof(t_env));
+	env.cur_cycle = 1;
 	env.cycle_to_die = CYCLE_TO_DIE;
 	env.cycle_before_die = env.cycle_to_die;
 	env.dump_cycles = -1;

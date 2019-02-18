@@ -6,13 +6,14 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:43 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/18 00:47:46 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/18 07:38:06 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COREWAR_H
 # define COREWAR_H
 
+# include <inttypes.h>
 # include "libft.h"
 # include "op.h"
 # include "process.h"
@@ -33,21 +34,19 @@ enum			e_error
 
 struct			s_env
 {
-	t_list			*champ_lst;
-	t_list			*process_lst;
-	unsigned char	arena[MEM_SIZE];
-	int				cur_cycle;
-	int				dump_cycles;
-	int				cycle_to_die;
-	int				cycle_before_die;
+	t_list		*champ_lst;
+	t_list		*process_lst;
+	uint8_t		arena[MEM_SIZE];
+	int			cur_cycle;
+	int			dump_cycles;
+	int			cycle_to_die;
+	int			cycle_before_die;
 };
 
 typedef struct	s_op
 {
-	int			(*fn)(t_env *, t_process *, unsigned char *);
+	int			(*fn)(t_env *, t_process *, uint8_t *);
 	int			cycles;
-	int			carry;
-	int			use_encoding_byte;
 }				t_op;
 
 t_error			create_champs(t_env *env, char **argv, int argc, int cur_arg);
