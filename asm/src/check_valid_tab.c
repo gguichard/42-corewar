@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 20:19:44 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/18 05:05:05 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 07:01:40 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,28 +43,28 @@ static int		check_arg(t_data *data, int i)
 static t_error	check_is_label(t_data *data)
 {
 	char	*name;
+	char	*arg;
 	int		offset;
 	int		idx;
 	int		jdx;
 
-	idx = 0;
-	while (idx < data->f_size)
+	idx = -1;
+	while (++idx < data->f_size)
 	{
 		name = data->filter[idx].op.name;
-		jdx = 0;
+		jdx = -1;
 		if (ft_strnequ(name, "%:", 2) || *name == ':')
 		{
 			offset = 1 + (*name != ':');
-			while (jdx < data->f_size)
+			while (++jdx < data->f_size)
 			{
-				if (ft_strnequ((name + offset), name, ft_strlen(name + offset)))
+				arg = data->filter[jdx].op.name;
+				if (ft_strnequ((name + offset), arg, ft_strlen(name + offset)))
 					break ;
-				jdx++;
 			}
 		}
 		if (jdx == data->f_size)
 			return (ERR_BADFMT);
-		idx++;
 	}
 	return (ERR_NOERROR);
 }
