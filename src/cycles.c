@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/18 00:47:08 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/18 02:20:14 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static int	kill_old_process(t_env *env)
 	while (cur != NULL)
 	{
 		process = (t_process *)cur->content;
-		if (process->lives > 1)
+		if (process->lives > 0)
 		{
 			lives += process->lives;
 			process->lives = 0;
@@ -89,6 +89,7 @@ static void	exec_inst(t_env *env, t_process *process)
 	int		result;
 
 	op = g_op[process->queued_inst[0] - 1];
+	//ft_printf("opcode %d|process %p|cur_cycle %d\n", process->queued_inst[0], process, env->cur_cycle);
 	result = op.fn(env, process, process->queued_inst);
 	if (op.use_encoding_byte)
 		result += 1;
@@ -104,7 +105,6 @@ void		setup_new_inst(t_env *env, t_process *process)
 	int	opcode;
 
 	opcode = env->arena[process->pc];
-	ft_printf("opcode %d|process %p|cur_cycle %d\n", opcode, process, env->cur_cycle);
 	if (opcode < 1 || opcode > 16)
 		process->pc = (process->pc + 1) % MEM_SIZE;
 	else
@@ -127,7 +127,7 @@ static void	inst_process(t_env *env)
 	while (cur != NULL)
 	{
 		process = (t_process *)cur->content;
-		if (process->cycles_left > 0)
+		if (process->cycles_left > 1)
 			process->cycles_left -= 1;
 		else
 		{

@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 02:17:41 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/17 06:07:05 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/18 00:59:53 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	zjmp(t_env *env, t_process *cur_process, unsigned char *bytes)
 
 	ret = get_args(bytes + 1, DIR_CODE << 6, &decode, 1);
 	fill_struct(env, cur_process, &decode);
+	ft_printf("zjmp val=%d carry=%d\n", *((short *)decode.tab[0].value) % IDX_MOD, cur_process->carry);
 	if (decode.tab[0].type == DIR_CODE && cur_process->carry == 1)
 		return (*((short *)decode.tab[0].value) % IDX_MOD - 1);
 	return (ret);

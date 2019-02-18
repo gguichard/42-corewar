@@ -5,7 +5,7 @@ echo -n "Dump offset: "
 read offset
 for i in `seq $offset $max_dump`
 do
-	~/vm_champ/corewar -d $i $1 $2 | grep '^0x' > zaz
+	~/vm_champs/corewar -d $i $1 $2 | grep '^0x' > zaz
 	./corewar -dump $i -n -1 $1 -n -2 $2 | grep '^0x' > our
 	diff zaz our > diff
 	echo "Cycle: $i"

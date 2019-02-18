@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:24 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 06:37:51 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/18 01:19:41 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	ld(t_env *env, t_process *cur_process, unsigned char *bytes)
 			&& dispatch_multitype(value, decode, decode.tab[0], 0))
 	{
 		reg = *((int *)decode.tab[1].value);
+		ft_printf("ld %d r%d\n", *((int *)value), reg);
 		ft_memcpy(cur_process->reg[reg - 1], value, REG_SIZE);
 		cur_process->carry = ft_memcmp(value, "\0\0\0\0", 4) == 0;
 	}

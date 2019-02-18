@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 21:55:32 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/17 06:36:44 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/18 01:22:06 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	add(t_env *env, t_process *cur_process, unsigned char *bytes)
 		args[idx] = *((int *)decode.tab[idx].value);
 		idx++;
 	}
+	ft_printf("add r%d r%d r%d\n", args[0], args[1], args[2]);
 	tmp = *((int *)cur_process->reg[args[0] - 1]);
 	tmp += *((int *)cur_process->reg[args[1] - 1]);
 	ft_memcpy(cur_process->reg[args[2] - 1], &tmp, sizeof(int));
