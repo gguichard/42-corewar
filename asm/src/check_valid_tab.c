@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 20:19:44 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/18 00:35:40 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 01:26:02 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,13 @@ t_error		check_is_label(t_data *data)
 	while (i < data->f_size)
 	{
 		n = 0;
-		if (ft_strnequ(data->filter[i].op.name, "%:", 2))
+		if (ft_strnequ(data->filter[i].op.name, "%:", 2)
+				|| *data->filter[i].op.name == ':')
 			while (n < data->f_size)
 			{
-				if (ft_strnequ((data->filter[i].op.name + 2),
+				if (ft_strnequ((data->filter[i].op.name + 1 + (*data->filter[i].op.name != ':')),
 							data->filter[n].op.name,
-							ft_strlen(data->filter[i].op.name + 2)))
+							ft_strlen(data->filter[i].op.name + 1 + (*data->filter[i].op.name != ':'))))
 					break ;
 				n++;
 			}
@@ -107,13 +108,19 @@ t_error		check_valid_tab(t_data *data)
 		if (data->filter[i].label == LX_INST)
 		{
 			if ((n = check_arg(data, i)) == -1)
+			{
+				ft_printf("1\n");
 				return (ERR_BADFMT);
+			}
 			i += n;
 		}
 		else if (data->filter[i].label == LX_LABEL)
 			i++;
 		else
+		{
+				ft_printf("2\n");
 			return (ERR_BADFMT);
+		}
 	}
 	if (check_is_label(data) != ERR_NOERROR)
 		return (ERR_BADFMT);

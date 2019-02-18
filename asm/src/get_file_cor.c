@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 00:55:22 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/18 00:44:11 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 01:37:15 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,16 +165,20 @@ t_filter	*is_label(char *str, t_list *head)
 {
 	t_filter	*label;
 	t_list		*node;
+	int			offset;
 
 	node = head;
-	if (ft_strnequ("%:", str, 2) == 0)
+	if (ft_strnequ("%:", str, 2) == 0 && *str != ':')
 		return (NULL);
+	offset = 1 + (*str == '%');
 	while (node != NULL)
 	{
 		label = (t_filter*)node->content;
-		if (ft_strlen(label->op.name) - 1 == ft_strlen(str + 2)
-				&& ft_strnequ(label->op.name, str + 2, ft_strlen(str + 2)))
+		if (ft_strlen(label->op.name) - 1 == ft_strlen(str + offset)
+				&& ft_strnequ(label->op.name, str + offset, ft_strlen(str + offset)))
+		{
 			return (label);
+		}
 		node = node->next;
 	}
 	return (NULL);

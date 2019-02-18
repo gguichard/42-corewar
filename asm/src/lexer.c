@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:39:09 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/17 03:27:39 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 01:20:10 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ int			set_arg(char *str, t_filter *filter)
 		filter->label = LX_DIRE;
 	else if (*str == '%' && (is_int(str + 1) == 1))
 		filter->label = LX_DIRE;
+	else if (*str == ':')
+		filter->label = LX_INDIR;
 	if (*str != '#')
 		filter->op.name = ft_strdup(str);
 	return (*str != '#');
