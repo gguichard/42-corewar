@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:23:11 by wta               #+#    #+#             */
-/*   Updated: 2019/02/17 04:24:59 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 01:19:06 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,28 @@ t_op    g_op_tab[17] =
 int	main(int ac, char **av)
 {
 	t_data	data;
+	t_error err_id;
 
+	err_id = ERR_NOERROR;
 	if (ac != 2)
 		return (1);
 	ft_memset(&data, 0, sizeof(t_data));
-	printf("read err %d\n", read_file(av[1], &data));
-	printf("check err %d\n", check_valid_tab(&data));
+	if ((err_id = read_file(av[1], &data)) != ERR_NOERROR)
+	{
+		printf("err_read= %d\n", err_id);
+		return (0);
+	}
+	if ((err_id = check_valid_tab(&data)) != ERR_NOERROR)
+	{
+		printf("err_read= %d\n", err_id);
+		return (0);
+	}
 	free(data.filter);
 	//TODO free NAME dans data->filter
-	//	printf("%s\n", data.header.prog_name);
-	//	printf("%s\n", data.header.comment);
-		printf("%d\n", create_cor(&data, av[1]));
+	if ((err_id = create_cor(&data, av[1])) != ERR_NOERROR)
+	{
+		printf("err_read= %d\n", err_id);
+		return(0);
+	}
 	return (0);
 }
