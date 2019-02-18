@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:10 by wta               #+#    #+#             */
-/*   Updated: 2019/02/18 07:32:59 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 09:34:05 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,10 @@ t_error	read_file(char *file, t_data *data)
 		err_id = get_first_part(data, fd, &line);
 	if (err_id == ERR_NOERROR)
 		err_id = get_post_header(fd, &line, &inst);
-	if (err_id == ERR_NOERROR)
+	if (inst != NULL && err_id == ERR_NOERROR)
 		err_id = split_input(inst, &split);
+	else
+		err_id = ERR_BADFMT;
 	if (err_id == ERR_NOERROR)
 		err_id = classify(data, split);
 	ft_strtab_free(split);

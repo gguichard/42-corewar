@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:39:09 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/18 05:39:18 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 09:59:45 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int			check_label(char *str)
 			n++;
 		}
 		if (!LABEL_CHARS[n])
-			return (0);
+			return (-1);
 		i++;
 	}
 	return (1);
@@ -44,11 +44,16 @@ int			check_label(char *str)
 
 int			set_arg(char *str, t_filter *filter)
 {
+	int	ret;
+
 	if (is_int(str) == 1)
 		filter->label = LX_INDIR;
-	else if (check_label(str) == 1)
+	else if ((ret = check_label(str)) == 1)
 		filter->label = LX_LABEL;
-	else if (*str == 'r' && is_int(str + 1) == 1)
+	else if (ret == -1)
+		filter->label = LX_ERROR;
+	else if (*str == 'r' && is_int(str + 1) == 1
+			&& (ret = ft_atoi(str + 1)) <= 16 && ret >= 0)
 		filter->label = LX_REG;
 	else if (ft_strnequ("%:", str, 2) == 1)
 		filter->label = LX_DIRE;
@@ -56,6 +61,8 @@ int			set_arg(char *str, t_filter *filter)
 		filter->label = LX_DIRE;
 	else if (*str == ':')
 		filter->label = LX_INDIR;
+	else
+		filter->label = LX_ERROR;
 	if (*str != '#')
 		filter->op.name = ft_strdup(str);
 	return (*str != '#');

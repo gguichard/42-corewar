@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:25:14 by wta               #+#    #+#             */
-/*   Updated: 2019/02/18 06:29:01 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/18 10:11:04 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "op.h"
 # include "libft.h"
 
-typedef enum	s_error
+typedef enum	e_error
 {
 	ERR_NOERROR,
 	ERR_ERRNO,

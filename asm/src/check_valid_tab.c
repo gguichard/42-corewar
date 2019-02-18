@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 20:19:44 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/18 07:01:40 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 09:59:40 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ static t_error	set_label_size(t_data *data)
 				return (ERR_MALLOC);
 			lst_pushback(&data->label_lst, node);
 		}
+		else if (data->filter[i].label == LX_ERROR)
+			return (ERR_BADFMT);
 		set_size(&data->filter[i]);
 		size += data->filter[i].size;
 		i++;

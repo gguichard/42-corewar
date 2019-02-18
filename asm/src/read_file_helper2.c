@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 05:21:48 by wta               #+#    #+#             */
-/*   Updated: 2019/02/18 07:44:22 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 10:05:55 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,15 @@ t_error	get_name(t_data *data, int fd, char **line)
 	while (err_id == ERR_NOERROR && (needle = ft_strchr(str, '"')) == NULL)
 		err_id = fill_prog_name(data, fd, &str, line);
 	str = (str == NULL) ? *line : str;
-	if (err_id == ERR_NOERROR
-			&& (ft_strlen(data->header.prog_name)
+	if (err_id == ERR_NOERROR && (ft_strlen(data->header.prog_name)
 				+ (needle - str) > PROG_NAME_LENGTH))
 		err_id = ERR_NAME;
-	else
+	else if (ft_strlen(data->header.prog_name)
+			+ (needle - str) <= PROG_NAME_LENGTH)
 		ft_strncat(data->header.prog_name, str, needle - str);
-	if (needle != NULL)
+	else
+		err_id = ERR_BADFMT;
+	if (err_id == ERR_NOERROR && needle != NULL)
 		err_id = check_endline(needle + 1);
 	free(*line);
 	return (err_id);
@@ -94,9 +96,11 @@ t_error	get_comment(t_data *data, int fd, char **line)
 	if (err_id == ERR_NOERROR && (ft_strlen(data->header.comment)
 				+ (needle - str) > COMMENT_LENGTH))
 		err_id = ERR_NAME;
-	else
+	else if (ft_strlen(data->header.comment) + (needle - str) <= COMMENT_LENGTH)
 		ft_strncat(data->header.comment, str, needle - str);
-	if (needle != NULL)
+	else
+		err_id = ERR_BADFMT;
+	if (err_id == ERR_NOERROR && needle != NULL)
 		err_id = check_endline(needle + 1);
 	free(*line);
 	return (err_id);
