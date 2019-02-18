@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:25:14 by wta               #+#    #+#             */
-/*   Updated: 2019/02/18 05:26:52 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 05:35:53 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct	s_data
 	t_list_ref	label_lst;
 	t_filter	*filter;
 	int			f_size;
+	char		*file_name;
 }				t_data;
 
 
@@ -90,6 +91,10 @@ t_filter	*is_label(char *str, t_list *head);
 char		*get_dquote(char *str);
 t_error		skip_useless(int fd, char **line);
 char		*skip_tab_n_space(char *str);
+
+void			lst_pushback(t_list_ref *list, t_list *node);
+t_list			*lstnew_mallocfree(void *content);
+void			lst_free(t_list_ref *list);
 
 void		init_inst(t_data *data);
 

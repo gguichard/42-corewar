@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:23:11 by wta               #+#    #+#             */
-/*   Updated: 2019/02/18 05:14:28 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 05:37:31 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,26 @@ t_op	g_op_tab[17] =
 	{0, 0, {0, 0, 0}, 0, 0, 0, 0, 0}
 };
 
+void	free_data(t_data *data)
+{
+	int		idx;
+
+	idx = 0;
+	while (idx < data->f_size)
+	{
+		if (data->filter[idx].label != LX_INST)
+			ft_strdel(&data->filter[idx].op.name);
+		idx += 1;
+	}
+	lst_free(&data->label_lst);
+	ft_strdel(&data->file_name);
+	free(data->filter);
+}
+
 int		main(int ac, char **av)
 {
 	t_data	data;
 	t_error err_id;
-
 	err_id = ERR_NOERROR;
 	if (ac != 2)
 		return (0);
@@ -56,8 +71,11 @@ int		main(int ac, char **av)
 		err_id = check_valid_tab(&data);
 	if (err_id == ERR_NOERROR)
 		err_id = create_cor(&data, av[1]);
-	ft_printf("err %d\n", err_id);
-	ft_printf("prog size %d\n", data.header.prog_size);
-	free(data.filter);
+	if (err_id == ERR_NOERROR)
+		ft_printf("Writing output program to %s\n", data.file_name);
+	//	free_data(&data);
+	//else
+	//err_handler(err_id);
+	free_data(&data);
 	return (0);
 }

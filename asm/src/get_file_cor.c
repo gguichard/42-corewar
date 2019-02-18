@@ -6,7 +6,6 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 00:55:22 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/18 05:09:36 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +21,11 @@ t_error		create_cor(t_data *data, char *str)
 {
 	t_error err_id;
 	int		fd;
-	char	*file_name;
 
 	err_id = ERR_NOERROR;
-	if (!(file_name = get_file_name(str)))
+	if (!(data->file_name = get_file_name(str)))
 		return (ERR_MALLOC);
-	if ((fd = open(file_name, O_TRUNC | O_WRONLY | O_CREAT, 0644)) < 0)
+	if ((fd = open(data->file_name, O_TRUNC | O_WRONLY | O_CREAT, 0644)) < 0)
 		return (ERR_ERRNO);
 	fill_header(data, fd);
 	fill_instruction(data, fd);
