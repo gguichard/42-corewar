@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:23:11 by wta               #+#    #+#             */
-/*   Updated: 2019/02/18 06:53:16 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 07:02:40 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,14 @@ void	free_data(t_data *data)
 	}
 	lst_free(&data->label_lst);
 	ft_strdel(&data->file_name);
-	free(data->filter);
+	ft_memdel((void **)&data->filter);
 }
 
 int		main(int ac, char **av)
 {
 	t_data	data;
 	t_error err_id;
+
 	err_id = ERR_NOERROR;
 	if (ac != 2)
 		return (0);
@@ -73,9 +74,8 @@ int		main(int ac, char **av)
 		err_id = create_cor(&data, av[1]);
 	if (err_id == ERR_NOERROR)
 		ft_printf("Writing output program to %s\n", data.file_name);
-	//	free_data(&data);
-	//else
-	//err_handler(err_id);
+	else
+		err_handler(err_id);
 	free_data(&data);
 	return (0);
 }
