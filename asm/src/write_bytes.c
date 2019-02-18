@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 04:22:34 by wta               #+#    #+#             */
-/*   Updated: 2019/02/18 04:34:20 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 05:15:40 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 void	swap_bytes(unsigned char *str, int size)
 {
-	int                i;
-	unsigned char    tmp;
+	unsigned char	tmp;
+	int				i;
 
 	i = 0;
 	while (i < size)

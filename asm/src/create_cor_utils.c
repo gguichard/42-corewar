@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 04:41:40 by wta               #+#    #+#             */
-/*   Updated: 2019/02/18 04:45:21 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 05:09:05 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_filter	*is_label(char *str, t_list *head)
 
 char		*get_file_name(char *str)
 {
-	char *file_name;
+	char	*file_name;
 	size_t	len;
 
 	len = ft_strlen(str);
@@ -47,7 +47,7 @@ char		*get_file_name(char *str)
 		len--;
 	if (len == 0)
 		len = ft_strlen(str);
-	if(!(file_name = ft_strnew(len + 5)))
+	if (!(file_name = ft_strnew(len + 5)))
 		return (NULL);
 	ft_memcpy(file_name, str, len);
 	ft_strcat(file_name, ".cor");

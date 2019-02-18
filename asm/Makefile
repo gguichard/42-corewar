@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/18 04:44:40 by wta              ###   ########.fr        #
+#    Updated: 2019/02/18 05:22:24 by wta              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,16 +15,18 @@ NAME	=	asm
 SRC_DIR	=	src
 SRC		=			\
 asm_managers.c		\
-asm_utils.c			\
 check_line.c		\
 check_valid_tab.c	\
 create_cor_utils.c	\
 error_handler.c		\
 get_file_cor.c		\
 lexer.c				\
+lexer_helper.c		\
 lst_utils.c			\
 main.c				\
 read_file.c			\
+read_file_helper.c	\
+read_file_helper2.c	\
 utils.c				\
 utils2.c			\
 write_bytes.c

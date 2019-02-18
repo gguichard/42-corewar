@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:23:11 by wta               #+#    #+#             */
-/*   Updated: 2019/02/18 05:02:28 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 05:14:28 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "asm.h"
 #include <stdlib.h>
 
-t_op    g_op_tab[17] =
+t_op	g_op_tab[17] =
 {
 	{"live", 1, {T_DIR, 0, 0}, 1, 10, "alive", 0, 0},
 	{"ld", 2, {T_DIR | T_IND, T_REG, 0}, 2, 5, "load", 1, 0},
@@ -42,7 +42,7 @@ t_op    g_op_tab[17] =
 	{0, 0, {0, 0, 0}, 0, 0, 0, 0, 0}
 };
 
-int	main(int ac, char **av)
+int		main(int ac, char **av)
 {
 	t_data	data;
 	t_error err_id;

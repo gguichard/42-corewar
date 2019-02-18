@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:25:14 by wta               #+#    #+#             */
-/*   Updated: 2019/02/18 04:39:57 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 05:26:52 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,13 @@ int			get_filter(char *str, t_filter *filter, t_lexer lex_id);
 int			get_tab_size(char **tab);
 
 t_lexer		check_if_valid(char *str, char **inst);
+t_error		check_first_line(int fd);
+t_error		check_endline(char *str);
 int			is_int(char *str);
 t_filter	*is_label(char *str, t_list *head);
+char		*get_dquote(char *str);
+t_error		skip_useless(int fd, char **line);
+char		*skip_tab_n_space(char *str);
 
 void		init_inst(t_data *data);
 
@@ -99,7 +104,12 @@ void		swap_bytes(unsigned char *str, int size);
 void		write_magic(uint8_t *ptr, int fd, int len);
 void		write_encoding_byte(t_op *op, int fd);
 
+t_error		fill_prog_name(t_data *data, int fd, char **str, char **line);
+t_error		get_name(t_data *data, int fd, char **line);
+t_error		fill_comment(t_data *data, int fd, char **str, char **line);
+
 char		*get_file_name(char *str);
+t_error		get_comment(t_data *data, int fd, char **line);
 void		fill_header(t_data *data, int fd);
 void		fill_instruction(t_data *data, int fd);
 

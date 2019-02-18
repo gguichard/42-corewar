@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:39:09 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/18 01:20:10 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 05:13:19 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,7 @@
 #include "lexer.h"
 #include "asm.h"
 
-extern t_op		g_op_tab[17];
-
-int			is_int(char *str)
-{
-	int		i;
-
-	i = 0;
-	if (((str[i] == '-' || str[i] == '+') && ft_isdigit(str[i + 1]))
-			|| (ft_isdigit(str[i])))
-		i++;
-	else
-		return (0);
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int			get_tab_size(char **tab)
-{
-	int		n;
-	int		i;
-
-	i = 0;
-	n = 0;
-	while (tab[i])
-	{
-		if (tab[i][0] != '#')
-			n++;
-		i++;
-	}
-	return (n);
-}
+extern t_op	g_op_tab[17];
 
 int			check_label(char *str)
 {
