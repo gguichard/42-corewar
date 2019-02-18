@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:03 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/18 07:25:48 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 00:01:01 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,8 @@ static void			run_vm(t_env *env)
 		idx++;
 	}
 //	print_arena(env->arena, MEM_SIZE);
-	run_cycles_loop(env);
+	if (env->dump_cycles != 0)
+		run_cycles_loop(env);
 	print_winner(env);
 }
 
@@ -121,7 +122,7 @@ int					main(int argc, char **argv)
 	t_error	err_id;
 
 	ft_memset(&env, 0, sizeof(t_env));
-	env.cur_cycle = 1;
+	env.cur_cycle = 0;
 	env.cycle_to_die = CYCLE_TO_DIE;
 	env.cycle_before_die = env.cycle_to_die;
 	env.dump_cycles = -1;

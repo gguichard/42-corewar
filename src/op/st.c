@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 00:15:06 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/19 00:26:40 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/19 00:46:26 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ int	st(t_env *env, t_process *cur_process, uint8_t *bytes)
 		reg = (int)decode.tab[0].value;
 		value = (int)buffer;
 		ft_printf("st r%d %d\n", reg, value);
-		if (decode.tab[1].type == REG_CODE)
+		if (decode.tab[1].type != REG_CODE)
+			write_in_arena(env, (uint8_t *)&cur_process->reg[reg - 1], 4
+				, cur_process->pc + value % IDX_MOD);
+		else
 		{
 			value = (int)decode.tab[1].value;
 			cur_process->reg[value - 1] = cur_process->reg[reg - 1];
 		}
-		else
-			write_in_arena(env, (uint8_t *)&cur_process->reg[reg - 1], 4
-				, cur_process->pc + value % IDX_MOD);
 	}
 	return (ret + 2);
 }

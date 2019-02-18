@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/18 23:45:27 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 00:13:35 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_op	g_op[] = {
 	{aff, 2}
 };
 
-static void	print_registers(t_process *process)
+/*static void	print_registers(t_process *process)
 {
 	int	idx;
 
@@ -45,7 +45,7 @@ static void	print_registers(t_process *process)
 		ft_printf("REG[%d]=%d\n", idx, process->reg[idx]);
 		idx++;
 	}
-}
+}*/
 
 static int	kill_old_process(t_env *env)
 {
@@ -71,7 +71,7 @@ static int	kill_old_process(t_env *env)
 				env->process_lst = cur->next;
 			else
 				prev->next = cur->next;
-			print_registers(process);
+			//print_registers(process);
 			free(cur->content);
 			free(cur);
 			cur = prev;
@@ -125,9 +125,9 @@ static void	inst_process(t_env *env)
 	while (cur != NULL)
 	{
 		process = (t_process *)cur->content;
-		if (process->cycles_left > 0)
+		if (process->cycles_left > 1)
 			process->cycles_left -= 1;
-		if (process->cycles_left == 0)
+		else
 		{
 			exec_inst(env, process);
 			setup_new_inst(env, process);
@@ -146,7 +146,7 @@ void		run_cycles_loop(t_env *env)
 		else
 		{
 			kill_old_process(env);
-			env->cycle_to_die -= CYCLE_DELTA;
+			//	env->cycle_to_die -= CYCLE_DELTA;
 			env->cycle_before_die = env->cycle_to_die;
 		}
 		inst_process(env);
