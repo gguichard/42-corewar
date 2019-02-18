@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 04:07:07 by wta               #+#    #+#             */
-/*   Updated: 2019/02/17 04:14:36 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 04:28:08 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,17 @@ t_list	*lstnew_mallocfree(void *content)
 		elem->content_size = sizeof(content);
 	}
 	return (elem);
+}
+
+void	lst_free(t_list_ref *list)
+{
+	t_list	*ref;
+
+	ref = list->head;
+	while (ref != NULL)
+	{
+		ref = ref->next;
+		free(list->head);
+		list->head = ref;
+	}
 }
