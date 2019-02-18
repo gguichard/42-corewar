@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:23:11 by wta               #+#    #+#             */
-/*   Updated: 2019/02/18 04:13:00 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 05:02:28 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,15 @@ int	main(int ac, char **av)
 
 	err_id = ERR_NOERROR;
 	if (ac != 2)
-		return (1);
+		return (0);
 	ft_memset(&data, 0, sizeof(t_data));
-	if ((err_id = read_file(av[1], &data)) != ERR_NOERROR)
-		return (-1);
-	if ((err_id = check_valid_tab(&data)) != ERR_NOERROR)
-		return (-1);
-	if ((err_id = create_cor(&data, av[1])) != ERR_NOERROR)
-		return(-1);
+	err_id = read_file(av[1], &data);
+	if (err_id == ERR_NOERROR)
+		err_id = check_valid_tab(&data);
+	if (err_id == ERR_NOERROR)
+		err_id = create_cor(&data, av[1]);
+	ft_printf("err %d\n", err_id);
+	ft_printf("prog size %d\n", data.header.prog_size);
 	free(data.filter);
 	return (0);
 }

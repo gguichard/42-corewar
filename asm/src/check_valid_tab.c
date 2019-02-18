@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 20:19:44 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/18 04:21:57 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 05:05:05 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static t_error	set_label_size(t_data *data)
 		data->filter[i].index = size;
 		if (data->filter[i].label == LX_LABEL)
 		{
-			if ((node = lstnew_mallocfree(&data->filter[i].op)))
+			if ((node = lstnew_mallocfree(&data->filter[i].op)) == NULL)
 				return (ERR_MALLOC);
 			lst_pushback(&data->label_lst, node);
 		}
@@ -111,7 +111,7 @@ static t_error	set_label_size(t_data *data)
 	return (ERR_NOERROR);
 }
 
-t_error		check_valid_tab(t_data *data)
+t_error			check_valid_tab(t_data *data)
 {
 	int		idx;
 	int		jdx;
@@ -133,6 +133,5 @@ t_error		check_valid_tab(t_data *data)
 	}
 	if (check_is_label(data) != ERR_NOERROR)
 		return (ERR_BADFMT);
-	set_label_size(data);
-	return (ERR_NOERROR);
+	return (set_label_size(data));
 }

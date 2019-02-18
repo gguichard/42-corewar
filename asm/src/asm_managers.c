@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 04:42:53 by wta               #+#    #+#             */
-/*   Updated: 2019/02/18 04:43:50 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 04:51:53 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ int			manage_inst(t_filter *inst, t_data *data, int fd)
 
 	arg = inst + 1;
 	idx = 0;
-	(void)data;
 	write(fd, &inst->op.opcode, 1);
 	if (inst->op.encoding == 1)
 		write_encoding_byte(&inst->op, fd);

@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 00:55:22 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/18 04:36:11 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 04:50:53 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 #include <inttypes.h>
 #include "libft.h"
 #include "asm.h"
-
-
 
 t_error		create_cor(t_data *data, char *str)
 {
