@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 05:21:48 by wta               #+#    #+#             */
-/*   Updated: 2019/02/18 05:26:52 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 07:44:22 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_error	get_name(t_data *data, int fd, char **line)
 	if ((str = skip_tab_n_space(*line)) == NULL)
 		return (ERR_BADFMT);
 	if ((ft_strnequ(str, NAME_CMD_STRING, 5) == 0)
-			|| ((str = get_dquote((str) + 5)) == NULL))
+			|| ((str = get_dquote(str + 5)) == NULL))
 		err_id = ERR_BADFMT;
 	while (err_id == ERR_NOERROR && (needle = ft_strchr(str, '"')) == NULL)
 		err_id = fill_prog_name(data, fd, &str, line);
@@ -85,8 +85,8 @@ t_error	get_comment(t_data *data, int fd, char **line)
 	err_id = ERR_NOERROR;
 	if ((str = skip_tab_n_space(*line)) == NULL)
 		return (ERR_BADFMT);
-	if ((ft_strnequ(*line, COMMENT_CMD_STRING, 8) == 0)
-			|| ((str = get_dquote((*line) + 8)) == NULL))
+	if ((ft_strnequ(str, COMMENT_CMD_STRING, 8) == 0)
+			|| ((str = get_dquote(str + 8)) == NULL))
 		err_id = ERR_BADFMT;
 	while (err_id == ERR_NOERROR && (needle = ft_strchr(str, '"')) == NULL)
 		err_id = fill_comment(data, fd, &str, line);

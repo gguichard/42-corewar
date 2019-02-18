@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 05:16:04 by wta               #+#    #+#             */
-/*   Updated: 2019/02/18 05:21:34 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/18 07:24:30 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ t_error	check_first_line(int fd)
 
 	if ((ret = read(fd, buf, 1)) < 1)
 		return ((ret == -1) ? ERR_ERRNO : ERR_BADFMT);
-	if (buf[0] != '\n' && buf[0] != '\t' && buf[0] != '#' && buf[0] != '.')
+	if (buf[0] != '\n' && buf[0] != '\t' && buf[0] != '#' && buf[0] != '.'
+			&& buf[0] != ';' && buf[0] != ' ')
 		return (ERR_BADFMT);
 	if ((ret = lseek(fd, 0, SEEK_SET)) == -1)
 		return (ERR_ERRNO);
@@ -54,7 +55,7 @@ t_error	skip_useless(int fd, char **line)
 	while ((ret = get_next_line(fd, line)) > 0)
 	{
 		if (((str = skip_tab_n_space(*line)) != NULL)
-				&& (str[0] != '#' && str[0] != '\0'))
+				&& (str[0] != '#' && str[0] != '\0' && str[0] != ';'))
 			break ;
 		free(*line);
 	}
@@ -92,7 +93,7 @@ t_error	check_endline(char *str)
 		else
 			break ;
 	}
-	if (str[i] != '#' && str[i] != '\0')
+	if (str[i] != '#' && str[i] != '\0' && str[i] != ';')
 		return (ERR_BADFMT);
 	return (ERR_NOERROR);
 }
