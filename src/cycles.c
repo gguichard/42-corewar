@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/19 03:05:52 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 03:54:05 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,48 +83,37 @@ static void	kill_old_process(t_env *env)
 
 static void	exec_inst(t_env *env, t_process *process)
 {
-	int		opcode;
-	int		ret;
+	t_op	op;
+	int		result;
 
-	opcode = env->arena[process->pc];
-	if (opcode < 1 || opcode > 16)
-		process->pc += 1;
-	else
+	if (process->queued_inst[0] != 0)
 	{
-		fill_buff_from_arena(env, process->queued_inst, MAX_INST_SIZE,
-				process->pc);
-		ret = g_op[opcode - 1].fn(env, process, process->queued_inst);
-		if (g_op[opcode - 1].fn != zjmp || process->carry == 0)
-			ft_printf("ADV %d\n", ret);
-		process->pc += ret;
-		/*if (g_op[opcode - 1].fn == zjmp)
-		{
-			ft_printf("under byte %d", *(env->arena + process->pc));
-			ft_printf(" %.2x", *(env->arena + process->pc + 1));
-			ft_printf("%.2x", *(env->arena + process->pc + 2));
-			ft_printf(" %.2x", *(env->arena + process->pc + 3));
-			ft_printf("%.2x", *(env->arena + process->pc + 4));
-			ft_printf(" %.2x", *(env->arena + process->pc + 5));
-			ft_printf("%.2x", *(env->arena + process->pc + 6));
-			ft_printf(" %.2x", *(env->arena + process->pc + 7));
-			ft_printf("%.2x\n", *(env->arena + process->pc + 8));
-		}*/
+		op = g_op[process->queued_inst[0] - 1];
+		result = op.fn(env, process, process->queued_inst);
+		process->pc += result;
+		if (process->pc < 0)
+			process->pc += MEM_SIZE;
+		if (process->pc >= MEM_SIZE)
+			process->pc %= MEM_SIZE;
 	}
-	if (process->pc < 0)
-		process->pc += MEM_SIZE;
-	if (process->pc >= MEM_SIZE)
-		process->pc %= MEM_SIZE;
 }
 
-void		setup_new_inst(t_env *env, t_process *process)
+static void	setup_new_inst(t_env *env, t_process *process)
 {
 	int	opcode;
 
 	opcode = env->arena[process->pc];
 	if (opcode < 1 || opcode > 16)
-		process->cycles_left = 1;
+	{
+		process->pc = (process->pc + 1) % MEM_SIZE;
+		ft_memset(process->queued_inst, 0, MAX_INST_SIZE);
+	}
 	else
+	{
+		fill_buff_from_arena(env, process->queued_inst, MAX_INST_SIZE
+				, process->pc);
 		process->cycles_left = g_op[opcode - 1].cycles;
+	}
 }
 
 static void	inst_process(t_env *env)
