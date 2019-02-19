@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:22 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/19 06:46:09 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 23:52:57 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "func_op.h"
 #include "op.h"
 
-void	swap_bytes(uint8_t *str, int size)
+void		swap_bytes(uint8_t *str, int size)
 {
 	int		idx;
 	uint8_t	tmp;
@@ -36,7 +36,7 @@ void	swap_bytes(uint8_t *str, int size)
 ** ATTENTION : N'applique pas de swap_bytes.
 */
 
-void	fill_buff_from_arena(t_env *env, uint8_t *buffer, size_t size
+void		fill_buff_from_arena(t_env *env, uint8_t *buffer, size_t size
 		, int offset)
 {
 	if (offset < 0)
@@ -58,7 +58,7 @@ void	fill_buff_from_arena(t_env *env, uint8_t *buffer, size_t size
 ** ATTENTION : Les donnes sont swap avant d'etre ecrites.
 */
 
-void	write_in_arena(t_env *env, uint8_t *bytes, size_t size, int offset)
+void		write_in_arena(t_env *env, uint8_t *bytes, size_t size, int offset)
 {
 	if (offset < 0)
 		offset += MEM_SIZE;
@@ -76,52 +76,55 @@ void	write_in_arena(t_env *env, uint8_t *bytes, size_t size, int offset)
 	swap_bytes(bytes, size);
 }
 
+static int	decode_arg(t_arg *arg, uint8_t *args, uint8_t encoding_byte
+		, int dir_size)
+{
+	if ((encoding_byte & 0xC0) == 0x40)
+	{
+		arg->type = REG_CODE;
+		arg->value = *((int8_t *)args);
+		if ((int)arg->value < 1 || (int)arg->value > 16)
+			arg->type = BAD_REG;
+		return (1);
+	}
+	else if ((encoding_byte & 0xC0) == 0xC0
+			|| ((encoding_byte & 0xC0) == 0x80 && dir_size == SHORT_DIR))
+	{
+		arg->type = ((encoding_byte & 0xC0) == 0xC0) ? IND_CODE : DIR_CODE;
+		swap_bytes(args, 2);
+		arg->value = *((int16_t *)args);
+		return (2);
+	}
+	else if ((encoding_byte & 0xC0) == 0x80)
+	{
+		arg->type = DIR_CODE;
+		swap_bytes(args, 4);
+		arg->value = *((int32_t *)args);
+		return (4);
+	}
+	return (0);
+}
+
 /*
 ** Parse les arguments d'une instruction grace a l'octet d'encodage envoye
 ** en deuxieme parametre. Permet de specifier une taille pour les types DIR.
 ** Renvoie le nombre d'octets correspondant a l'encoding byte.
 */
 
-int		decode_args(t_decode *decode, uint8_t *args, uint8_t encoding_byte
+int			decode_args(t_decode *decode, uint8_t *args, uint8_t encoding_byte
 		, int dir_size)
 {
 	int	idx;
 	int	ret;
+	int	arg_ret;
 
 	idx = 0;
 	ret = 0;
 	while (idx < decode->max_args)
 	{
-		if ((encoding_byte & 0xC0) == 0x40)
-		{
-			decode->tab[idx].type = REG_CODE;
-			decode->tab[idx].value = *((int8_t *)args);
-			if ((int)decode->tab[idx].value < 1
-					|| (int)decode->tab[idx].value > 16)
-				decode->tab[idx].type = BAD_REG;
-			ret += 1;
-			args += 1;
-		}
-		else if ((encoding_byte & 0xC0) == 0xC0
-				|| ((encoding_byte & 0xC0) == 0x80 && dir_size == SHORT_DIR))
-		{
-			decode->tab[idx].type = ((encoding_byte & 0xC0) == 0xC0)
-				? IND_CODE : DIR_CODE;
-			swap_bytes(args, 2);
-			decode->tab[idx].value = *((int16_t *)args);
-			ret += 2;
-			args += 2;
-		}
-		else if ((encoding_byte & 0xC0) == 0x80)
-		{
-			decode->tab[idx].type = DIR_CODE;
-			swap_bytes(args, 4);
-			decode->tab[idx].value = *((int32_t *)args);
-			ret += 4;
-			args += 4;
-		}
-		else
-			break ;
+		arg_ret = decode_arg(decode->tab + idx, args, encoding_byte, dir_size);
+		ret += arg_ret;
+		args += arg_ret;
 		encoding_byte <<= 2;
 		idx++;
 	}

@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/19 06:25:59 by vifonne          ###   ########.fr        #
+#    Updated: 2019/02/19 23:01:05 by gguichar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ main.c					\
 read.c					\
 champs.c				\
 cycles.c				\
+process_exec.c			\
 errors.c				\
 print_arena.c			\
 op/op_utils.c			\
