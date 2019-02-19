@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:39:09 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/18 09:59:45 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/19 01:27:01 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int			set_arg(char *str, t_filter *filter)
 	else if (ret == -1)
 		filter->label = LX_ERROR;
 	else if (*str == 'r' && is_int(str + 1) == 1
-			&& (ret = ft_atoi(str + 1)) <= 16 && ret >= 0)
+			&& (ret = ft_atoi(str + 1)) <= 99 && ret >= 0)
 		filter->label = LX_REG;
 	else if (ft_strnequ("%:", str, 2) == 1)
 		filter->label = LX_DIRE;
