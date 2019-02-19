@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 03:54:14 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/19 03:33:34 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/19 06:44:39 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,7 @@ int	aff(t_env *env, t_process *cur_process, uint8_t *bytes)
 		c = ((int)cur_process->reg[reg - 1]) % 256;
 		ft_putchar(c);
 	}
+	if (env->debug == DEBUG_ON)
+		debug_mode("aff", decode, 1);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:13:03 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/19 03:22:35 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/19 07:15:52 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@
 # include "process.h"
 # include "op.h"
 
-# define BAD_REG 0
-# define SHORT_DIR 2
-# define REG_DIR 4
+# define BAD_REG	0
+# define SHORT_DIR	2
+# define REG_DIR	4
+# define DEBUG_ON	1
 
 typedef struct	s_arg
 {
@@ -87,5 +88,11 @@ void			fill_decode(t_env *env, t_process *process, t_decode *decode
 		,	int value);
 void			store_multitype(uint32_t *buffer, t_decode decode, t_arg arg
 		, int is_long);
+void			debug_mode(char *op, t_decode decode, int nb_args);
+void			debug_mode_value(char *op, t_decode decode, int nb_args
+		, int value);
+void			debug_mode_nodecode(char *op, int *args, int nb_args);
+void			debug_mode_nodecode_val(char *op, int *args, int nb_args
+		, int value);
 
 #endif

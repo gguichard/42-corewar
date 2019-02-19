@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 21:28:28 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/19 04:46:34 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 07:10:46 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ldi(t_env *env, t_process *cur_process, uint8_t *bytes)
 {
 	int				ret;
 	t_decode		decode;
-	uint32_t		args[2];
+	uint32_t		args[3];
 	int				address;
 	uint32_t		value;
 
@@ -33,11 +33,13 @@ int	ldi(t_env *env, t_process *cur_process, uint8_t *bytes)
 		store_multitype(args, decode, decode.tab[0], 0);
 		store_multitype(args + 1, decode, decode.tab[1], 0);
 		address = ((int)args[0] + (int)args[1]) % IDX_MOD;
-		ft_printf("ldi %d %d r%d (pc %d)\n", args[0], args[1], (int)decode.tab[2].value, cur_process->pc + address);
+		args[2] = (int)decode.tab[2].value;
 		fill_buff_from_arena(env, (uint8_t *)&value, 4
 				, cur_process->pc + address);
 		swap_bytes((uint8_t *)&value, 4);
 		cur_process->reg[(int)decode.tab[2].value - 1] = (uint64_t)value;
 	}
+	if (env->debug == DEBUG_ON)
+		debug_mode_nodecode_val("ldi", (int*)args, 3, cur_process->pc + address);
 	return (ret);
 }

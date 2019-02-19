@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:43 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/19 06:14:21 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 07:16:15 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ struct			s_env
 	t_list		*champ_lst;
 	t_list		*process_lst;
 	uint8_t		arena[MEM_SIZE];
+	int			debug;
 	int			cur_cycle;
 	int			dump_cycles;
 	int			cycle_to_die;
