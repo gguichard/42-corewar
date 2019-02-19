@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:43 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/19 07:16:15 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/19 07:17:19 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ enum			e_error
 	ERR_WRONGNOPT,
 	ERR_WRONGDUMPOPT,
 	ERR_CHAMPREAD,
-	ERR_NOCHAMPS
+	ERR_NOCHAMPS,
+	ERR_TOOMANYCHAMPS
 };
 
 struct			s_env

@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:15:16 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/18 23:40:52 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 07:57:00 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,19 @@
 static int	get_next_champ_id(t_env *env)
 {
 	int		id;
-	t_list	*cur_process;
+	t_list	*cur_champ;
 
-	id = 0;
-	cur_process = env->process_lst;
-	while (cur_process != NULL)
+	id = 1;
+	cur_champ = env->champ_lst;
+	while (cur_champ != NULL)
 	{
-		if (id == ((t_process *)cur_process)->champ_id)
+		if (id == ((t_champ *)cur_champ->content)->id)
 		{
 			id++;
-			cur_process = env->process_lst;
+			cur_champ = env->champ_lst;
 			continue ;
 		}
-		cur_process = cur_process->next;
+		cur_champ = cur_champ->next;
 	}
 	return (id);
 }
@@ -48,10 +48,10 @@ static int	get_champ_id(t_env *env, char **argv, int *cur_arg)
 	{
 		*cur_arg += 1;
 		if (argv[*cur_arg] == NULL)
-			return (-5);
+			return (-1);
 		id = ft_strtol(argv[*cur_arg], &endptr, 10);
-		if (*endptr != '\0' || id < INT_MIN || id > INT_MAX)
-			return (-5);
+		if (*endptr != '\0' || id < 0 || id > INT_MAX)
+			return (-1);
 		*cur_arg += 1;
 	}
 	return (id);
@@ -62,10 +62,14 @@ t_error		create_champs(t_env *env, char **argv, int argc, int cur_arg)
 	int		id;
 	t_champ	champ;
 	t_list	*node;
+	int		total;
 
+	total = 0;
 	while (cur_arg < argc)
 	{
-		if ((id = get_champ_id(env, argv, &cur_arg)) < -4)
+		if (total > MAX_PLAYERS)
+			return (ERR_TOOMANYCHAMPS);
+		else if ((id = get_champ_id(env, argv, &cur_arg)) < 0)
 			return (ERR_WRONGNOPT);
 		else if (argv[cur_arg] == NULL)
 			return (ERR_NOCHAMPNAME);
@@ -77,6 +81,7 @@ t_error		create_champs(t_env *env, char **argv, int argc, int cur_arg)
 		((t_champ *)node->content)->id = id;
 		ft_lstpush(&env->champ_lst, node);
 		cur_arg++;
+		total++;
 	}
 	return (ERR_NOERROR);
 }

@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:03 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/19 06:47:12 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 07:46:47 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ int					main(int argc, char **argv)
 	t_error	err_id;
 
 	ft_memset(&env, 0, sizeof(t_env));
+	env.debug = 1;
 	env.cur_cycle = 1;
 	env.cycle_to_die = CYCLE_TO_DIE;
 	env.cycle_before_die = env.cycle_to_die;
@@ -133,6 +134,11 @@ int					main(int argc, char **argv)
 	{
 		if (err_id != ERR_CHAMPREAD)
 			ft_printf("corewar: error: %s\n", str_to_error(err_id));
+		ft_printf("USAGE: %s [options] <champions>\n", argv[0]);
+		ft_printf("You can load at most %d champions\n\n", MAX_PLAYERS);
+		ft_printf("OPTIONS:\n");
+		ft_printf("  -dump <cycle>\tDumps memory at specified cycle then "
+				"exits\n");
 		return (1);
 	}
 	run_vm(&env);
