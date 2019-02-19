@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 06:03:00 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/18 07:29:12 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 02:22:06 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ struct	s_process
 	uint8_t		queued_inst[MAX_INST_SIZE];
 	int			cycles_left;
 	int			lives;
+	int			last_live;
 };
 
 #endif

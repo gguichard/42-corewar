@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:32 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/19 00:48:17 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 02:22:23 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	live(t_env *env, t_process *cur_process, uint8_t *bytes)
 	t_decode	decode;
 	t_list		*champ;
 
-	ret = decode_args(&decode, bytes + 1, DIR_CODE << 6, REG_DIR);
+	ret = decode_args(&decode, bytes + 1, DIR_CODE << 6, REG_DIR) + 1;
 	fill_decode(env, cur_process, &decode);
 	champ = env->champ_lst;
 	ft_printf("live %d\n", decode.tab[0].value);
@@ -37,5 +37,6 @@ int	live(t_env *env, t_process *cur_process, uint8_t *bytes)
 		champ = champ->next;
 	}
 	cur_process->lives += 1;
-	return (ret + 1);
+	cur_process->last_live = env->cur_cycle;
+	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:03 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/19 00:01:01 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 01:21:19 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int					main(int argc, char **argv)
 	t_error	err_id;
 
 	ft_memset(&env, 0, sizeof(t_env));
-	env.cur_cycle = 0;
+	env.cur_cycle = 1;
 	env.cycle_to_die = CYCLE_TO_DIE;
 	env.cycle_before_die = env.cycle_to_die;
 	env.dump_cycles = -1;

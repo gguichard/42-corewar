@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/19 00:13:35 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 02:51:36 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,25 +36,24 @@ t_op	g_op[] = {
 };
 
 /*static void	print_registers(t_process *process)
-{
-	int	idx;
+  {
+  int	idx;
 
-	idx = 0;
-	while (idx < 16)
-	{
-		ft_printf("REG[%d]=%d\n", idx, process->reg[idx]);
-		idx++;
-	}
-}*/
+  idx = 0;
+  while (idx < 16)
+  {
+  ft_printf("REG[%d]=%d\n", idx, process->reg[idx]);
+  idx++;
+  }
+  }*/
 
-static int	kill_old_process(t_env *env)
+static void	kill_old_process(t_env *env)
 {
-	int			lives;
 	t_list		*prev;
 	t_list		*cur;
+	t_list		*next;
 	t_process	*process;
 
-	lives = 0;
 	prev = NULL;
 	cur = env->process_lst;
 	while (cur != NULL)
@@ -62,43 +61,58 @@ static int	kill_old_process(t_env *env)
 		process = (t_process *)cur->content;
 		if (process->lives > 0)
 		{
-			lives += process->lives;
 			process->lives = 0;
+			prev = cur;
+			cur = cur->next;
 		}
 		else
 		{
+			next = cur->next;
 			if (prev == NULL)
-				env->process_lst = cur->next;
+				env->process_lst = next;
 			else
-				prev->next = cur->next;
+				prev->next = next;
+			ft_printf("process hasn't lived for %d cycles\n", env->cur_cycle - process->last_live);
 			//print_registers(process);
 			free(cur->content);
 			free(cur);
-			cur = prev;
+			cur = next;
 		}
-		prev = cur;
-		if (cur != NULL)
-			cur = cur->next;
 	}
-	return (lives);
 }
 
 static void	exec_inst(t_env *env, t_process *process)
 {
-	t_op	op;
-	int		result;
+	int		opcode;
+	int		ret;
 
-	if (process->queued_inst[0] != 0)
+	opcode = env->arena[process->pc];
+	if (opcode < 1 || opcode > 16)
+		process->pc += 1;
+	else
 	{
-		op = g_op[process->queued_inst[0] - 1];
-		result = op.fn(env, process, process->queued_inst);
-		process->pc += result;
-		if (process->pc < 0)
-			process->pc += MEM_SIZE;
-		if (process->pc >= MEM_SIZE)
-			process->pc %= MEM_SIZE;
-		ft_memset(process->queued_inst, 0, MAX_INST_SIZE);
+		fill_buff_from_arena(env, process->queued_inst, MAX_INST_SIZE,
+				process->pc);
+		ret = g_op[opcode - 1].fn(env, process, process->queued_inst);
+		ft_printf("ADV %d\n", ret);
+		process->pc += ret;
+		/*if (g_op[opcode - 1].fn == zjmp)
+		{
+			ft_printf("under byte %d", *(env->arena + process->pc));
+			ft_printf(" %.2x", *(env->arena + process->pc + 1));
+			ft_printf("%.2x", *(env->arena + process->pc + 2));
+			ft_printf(" %.2x", *(env->arena + process->pc + 3));
+			ft_printf("%.2x", *(env->arena + process->pc + 4));
+			ft_printf(" %.2x", *(env->arena + process->pc + 5));
+			ft_printf("%.2x", *(env->arena + process->pc + 6));
+			ft_printf(" %.2x", *(env->arena + process->pc + 7));
+			ft_printf("%.2x\n", *(env->arena + process->pc + 8));
+		}*/
 	}
+	if (process->pc < 0)
+		process->pc += MEM_SIZE;
+	if (process->pc >= MEM_SIZE)
+		process->pc %= MEM_SIZE;
 }
 
 void		setup_new_inst(t_env *env, t_process *process)
@@ -107,13 +121,9 @@ void		setup_new_inst(t_env *env, t_process *process)
 
 	opcode = env->arena[process->pc];
 	if (opcode < 1 || opcode > 16)
-		process->pc = (process->pc + 1) % MEM_SIZE;
+		process->cycles_left = 1;
 	else
-	{
-		fill_buff_from_arena(env, process->queued_inst, MAX_INST_SIZE
-				, process->pc);
 		process->cycles_left = g_op[opcode - 1].cycles;
-	}
 }
 
 static void	inst_process(t_env *env)
@@ -125,13 +135,11 @@ static void	inst_process(t_env *env)
 	while (cur != NULL)
 	{
 		process = (t_process *)cur->content;
-		if (process->cycles_left > 1)
-			process->cycles_left -= 1;
-		else
-		{
-			exec_inst(env, process);
+		if (process->cycles_left == 0)
 			setup_new_inst(env, process);
-		}
+		process->cycles_left -= 1;
+		if (process->cycles_left == 0)
+			exec_inst(env, process);
 		cur = cur->next;
 	}
 }
@@ -143,7 +151,7 @@ void		run_cycles_loop(t_env *env)
 		ft_printf("It is now cycle %d\n", env->cur_cycle);
 		if (env->cycle_before_die > 0)
 			env->cycle_before_die -= 1;
-		else
+		if (env->cycle_before_die == 0)
 		{
 			kill_old_process(env);
 			//	env->cycle_to_die -= CYCLE_DELTA;
