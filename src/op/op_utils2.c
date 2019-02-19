@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 05:22:48 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/18 10:12:15 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 03:35:51 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,13 @@ void	increase_pc(t_process *process, int value)
 		process->pc -= MEM_SIZE;
 }
 
-void	fill_decode(t_env *env, t_process *process, t_decode *decode)
+void	fill_decode(t_env *env, t_process *process, t_decode *decode
+		, int nb_arg)
 {
+	ft_memset(decode, 0, sizeof(t_decode));
 	decode->env = env;
 	decode->process = process;
+	decode->max_args = nb_arg;
 }
 
 void	store_multitype(uint32_t *buffer, t_decode decode, t_arg arg

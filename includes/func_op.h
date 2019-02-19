@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:13:03 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/18 10:10:34 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 03:22:35 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct	s_arg
 typedef struct	s_decode
 {
 	t_env		*env;
+	int			max_args;
 	t_process	*process;
 	t_arg		tab[MAX_ARGS_NUMBER];
 }				t_decode;
@@ -82,7 +83,8 @@ void			write_in_arena(t_env *env, uint8_t *bytes, size_t size
 int			decode_args(t_decode *decode, uint8_t *args, uint8_t encoding_byte
 		, int dir_size);
 void			increase_pc(t_process *process, int value);
-void			fill_decode(t_env *env, t_process *process, t_decode *decode);
+void			fill_decode(t_env *env, t_process *process, t_decode *decode
+		,	int value);
 void			store_multitype(uint32_t *buffer, t_decode decode, t_arg arg
 		, int is_long);
 

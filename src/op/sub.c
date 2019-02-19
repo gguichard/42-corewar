@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 23:39:23 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/19 00:47:30 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 03:34:59 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	sub(t_env *env, t_process *cur_process, uint8_t *bytes)
 	int			idx;
 	int			value;
 
-	(void)env;
+	fill_decode(env, cur_process, &decode, 3);
 	ret = decode_args(&decode, bytes + 2, *(bytes + 1), 0) + 2;
 	idx = 0;
 	while (idx < 3)

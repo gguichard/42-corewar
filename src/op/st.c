@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 00:15:06 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/19 00:46:26 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 03:34:47 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	st(t_env *env, t_process *cur_process, uint8_t *bytes)
 	int			reg;
 	int			value;
 
+	fill_decode(env, cur_process, &decode, 2);
 	ret = decode_args(&decode, bytes + 2, *(bytes + 1), REG_DIR);
-	fill_decode(env, cur_process, &decode);
 	if ((decode.tab[1].type == REG_CODE || decode.tab[1].type == IND_CODE)
 			&& decode.tab[0].type == REG_CODE)
 	{

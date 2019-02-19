@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:22 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/18 22:42:41 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 03:41:21 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,7 @@ int		decode_args(t_decode *decode, uint8_t *args, uint8_t encoding_byte
 
 	idx = 0;
 	ret = 0;
-	ft_memset(decode, 0, sizeof(t_decode));
-	while (idx < MAX_ARGS_NUMBER)
+	while (idx < decode->max_args)
 	{
 		if ((encoding_byte & 0xC0) == 0x40)
 		{

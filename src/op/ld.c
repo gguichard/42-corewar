@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:24 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/19 00:47:41 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 03:34:11 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	ld(t_env *env, t_process *cur_process, uint8_t *bytes)
 	uint32_t	value;
 	int			reg;
 
+	fill_decode(env, cur_process, &decode, 2);
 	ret = decode_args(&decode, bytes + 2, *(bytes + 1), REG_DIR);
-	fill_decode(env, cur_process, &decode);
 	if ((decode.tab[0].type == IND_CODE || decode.tab[0].type == DIR_CODE)
 			&& decode.tab[1].type == REG_CODE)
 	{
