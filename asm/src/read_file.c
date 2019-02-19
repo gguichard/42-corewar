@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:10 by wta               #+#    #+#             */
-/*   Updated: 2019/02/18 09:34:05 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/19 02:32:16 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,28 @@ t_error	split_input(char *inst, char ***split)
 t_error	get_first_part(t_data *data, int fd, char **line)
 {
 	t_error	err_id;
+	char	*research;
+	int		trig;
 
 	err_id = ERR_NOERROR;
+	trig = 1;
 	if (err_id == ERR_NOERROR)
 		err_id = check_first_line(fd);
 	if (err_id == ERR_NOERROR)
 		err_id = skip_useless(fd, line);
-	if (err_id == ERR_NOERROR)
+	research = ft_strchr(*line, '.');
+	if (ft_strnequ(research, NAME_CMD_STRING, 5))
+		trig = 0;
+	if (err_id == ERR_NOERROR && trig == 0)
 		err_id = get_name(data, fd, line);
+	else
+		err_id = get_comment(data, fd, line);
 	if (err_id == ERR_NOERROR)
 		err_id = skip_useless(fd, line);
-	if (err_id == ERR_NOERROR)
-		return (get_comment(data, fd, line));
+	if (err_id == ERR_NOERROR && trig == 0)
+		err_id = get_comment(data, fd, line);
+	else
+		err_id = get_name(data, fd, line);
 	return (err_id);
 }
 
