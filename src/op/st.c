@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 00:15:06 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/19 07:42:37 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 08:09:32 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ int	st(t_env *env, t_process *cur_process, uint8_t *bytes)
 			&& decode.tab[0].type == REG_CODE)
 	{
 		store_multitype(args, decode, decode.tab[1], 0);
-		args[1] = decode.tab[0].value;
+		args[1] = decode.tab[0].value - 1;
 		if (decode.tab[1].type != REG_CODE)
-			write_in_arena(env, (uint8_t *)&cur_process->reg[(int)args[1] - 1], 4
-				, cur_process->pc + (int)args[0] % IDX_MOD);
+			write_in_arena(env, (uint8_t *)&cur_process->reg[(int)args[1]]
+					, 4, cur_process->pc + (int)args[0] % IDX_MOD);
 		else
 		{
 			args[0] = decode.tab[1].value;
-			cur_process->reg[(int)args[0] - 1] = cur_process->reg[(int)args[1] - 1];
+			cur_process->reg[(int)args[0] - 1] = cur_process->reg[(int)args[1]];
 		}
 	}
 	if (env->debug == DEBUG_ON)

@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:32 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/19 07:19:31 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 08:00:28 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ int	live(t_env *env, t_process *cur_process, uint8_t *bytes)
 		if (((t_champ *)champ->content)->id == (int)decode.tab[0].value)
 		{
 			((t_champ *)champ->content)->live_cycle = env->cur_cycle;
-			ft_printf("%s is living\n", ((t_champ *)champ->content)->header.prog_name);
+			ft_printf("%s is living\n"
+					, ((t_champ *)champ->content)->header.prog_name);
 			break ;
 		}
 		champ = champ->next;
