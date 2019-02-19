@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 05:18:00 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/19 03:33:56 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/19 04:47:18 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	ft_lfork(t_env *env, t_process *cur_process, unsigned char *bytes)
 		ft_memset(&process->queued_inst, 0, MAX_INST_SIZE);
 		increase_pc(process, (int)decode.tab[0].value);
 		ft_printf("lfork %d (%d)\n", decode.tab[0].value, process->pc);
-		//setup_new_inst(env, process);
 		ft_lstadd(&env->process_lst, node);
 	}
 	return (ret);

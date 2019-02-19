@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/19 03:54:05 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 04:59:07 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,6 @@ t_op	g_op[] = {
 	{aff, 2}
 };
 
-/*static void	print_registers(t_process *process)
-  {
-  int	idx;
-
-  idx = 0;
-  while (idx < 16)
-  {
-  ft_printf("REG[%d]=%d\n", idx, process->reg[idx]);
-  idx++;
-  }
-  }*/
-
 static void	kill_old_process(t_env *env)
 {
 	t_list		*prev;
@@ -73,7 +61,6 @@ static void	kill_old_process(t_env *env)
 			else
 				prev->next = next;
 			ft_printf("process hasn't lived for %d cycles\n", env->cur_cycle - process->last_live);
-			//print_registers(process);
 			free(cur->content);
 			free(cur);
 			cur = next;
@@ -83,19 +70,23 @@ static void	kill_old_process(t_env *env)
 
 static void	exec_inst(t_env *env, t_process *process)
 {
-	t_op	op;
-	int		result;
+	int		opcode;
+	int		ret;
 
-	if (process->queued_inst[0] != 0)
+	opcode = process->queued_inst[0];
+	if (opcode < 1 || opcode > 16)
+		process->pc += 1;
+	else
 	{
-		op = g_op[process->queued_inst[0] - 1];
-		result = op.fn(env, process, process->queued_inst);
-		process->pc += result;
-		if (process->pc < 0)
-			process->pc += MEM_SIZE;
-		if (process->pc >= MEM_SIZE)
-			process->pc %= MEM_SIZE;
+		ret = g_op[opcode - 1].fn(env, process, process->queued_inst);
+		if (g_op[opcode - 1].fn != zjmp || process->carry == 0)
+			ft_printf("ADV %d (%#.4x -> %#.4x)\n", ret, process->pc, process->pc + ret);
+		process->pc += ret;
 	}
+	if (process->pc < 0)
+		process->pc += MEM_SIZE;
+	if (process->pc >= MEM_SIZE)
+		process->pc %= MEM_SIZE;
 }
 
 static void	setup_new_inst(t_env *env, t_process *process)
@@ -104,10 +95,7 @@ static void	setup_new_inst(t_env *env, t_process *process)
 
 	opcode = env->arena[process->pc];
 	if (opcode < 1 || opcode > 16)
-	{
-		process->pc = (process->pc + 1) % MEM_SIZE;
-		ft_memset(process->queued_inst, 0, MAX_INST_SIZE);
-	}
+		process->cycles_left = 1;
 	else
 	{
 		fill_buff_from_arena(env, process->queued_inst, MAX_INST_SIZE
