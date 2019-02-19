@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:22 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/19 04:53:19 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 06:46:09 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	swap_bytes(uint8_t *str, int size)
 ** Rempli un buffer depuis un zone de l'arene.
 ** ATTENTION : N'applique pas de swap_bytes.
 */
+
 void	fill_buff_from_arena(t_env *env, uint8_t *buffer, size_t size
 		, int offset)
 {
@@ -52,10 +53,11 @@ void	fill_buff_from_arena(t_env *env, uint8_t *buffer, size_t size
 	}
 }
 
-/**
+/*
 ** Ecrit de facon circulaire dans l'arene.
 ** ATTENTION : Les donnes sont swap avant d'etre ecrites.
 */
+
 void	write_in_arena(t_env *env, uint8_t *bytes, size_t size, int offset)
 {
 	if (offset < 0)
@@ -79,6 +81,7 @@ void	write_in_arena(t_env *env, uint8_t *bytes, size_t size, int offset)
 ** en deuxieme parametre. Permet de specifier une taille pour les types DIR.
 ** Renvoie le nombre d'octets correspondant a l'encoding byte.
 */
+
 int		decode_args(t_decode *decode, uint8_t *args, uint8_t encoding_byte
 		, int dir_size)
 {

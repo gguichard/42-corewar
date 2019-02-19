@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:03 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/19 01:21:19 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 06:47:12 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void			print_winner(t_env *env)
 	cur_champ = env->champ_lst;
 	while (cur_champ != NULL)
 	{
-		if (last_cycle < (int)((t_champ *)cur_champ->content)->live_cycle)
+		if (last_cycle <= (int)((t_champ *)cur_champ->content)->live_cycle)
 		{
 			last_cycle = (int)((t_champ *)cur_champ->content)->live_cycle;
 			best_champ = cur_champ;
@@ -88,9 +88,8 @@ static void			print_winner(t_env *env)
 		cur_champ = cur_champ->next;
 	}
 	if (best_champ != NULL)
-	{
-		ft_printf("Winner is %s\n", ((t_champ *)best_champ->content)->header.prog_name);
-	}
+		ft_printf("Winner is %s\n"
+				, ((t_champ *)best_champ->content)->header.prog_name);
 }
 
 static void			run_vm(t_env *env)
@@ -109,7 +108,6 @@ static void			run_vm(t_env *env)
 		cur_champ = cur_champ->next;
 		idx++;
 	}
-//	print_arena(env->arena, MEM_SIZE);
 	if (env->dump_cycles != 0)
 		run_cycles_loop(env);
 	print_winner(env);

@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/19 04:59:07 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 06:44:01 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,15 @@ t_op	g_op[] = {
 	{aff, 2}
 };
 
-static void	kill_old_process(t_env *env)
+static int	kill_old_process(t_env *env)
 {
+	int			lives;
 	t_list		*prev;
 	t_list		*cur;
 	t_list		*next;
 	t_process	*process;
 
+	lives = 0;
 	prev = NULL;
 	cur = env->process_lst;
 	while (cur != NULL)
@@ -49,6 +51,7 @@ static void	kill_old_process(t_env *env)
 		process = (t_process *)cur->content;
 		if (process->lives > 0)
 		{
+			lives += process->lives;
 			process->lives = 0;
 			prev = cur;
 			cur = cur->next;
@@ -60,12 +63,13 @@ static void	kill_old_process(t_env *env)
 				env->process_lst = next;
 			else
 				prev->next = next;
-			ft_printf("process hasn't lived for %d cycles\n", env->cur_cycle - process->last_live);
+			ft_printf("Process hasn't lived for %d cycles\n", env->cur_cycle - process->last_live);
 			free(cur->content);
 			free(cur);
 			cur = next;
 		}
 	}
+	return (lives);
 }
 
 static void	exec_inst(t_env *env, t_process *process)
@@ -80,9 +84,10 @@ static void	exec_inst(t_env *env, t_process *process)
 	{
 		ret = g_op[opcode - 1].fn(env, process, process->queued_inst);
 		if (g_op[opcode - 1].fn != zjmp || process->carry == 0)
-			ft_printf("ADV %d (%#.4x -> %#.4x)\n", ret, process->pc, process->pc + ret);
+			ft_printf("ADV %d %d (%#.4x -> %#.4x)\n", ret, opcode, process->pc, process->pc + ret);
 		process->pc += ret;
 	}
+	ft_memset(process->queued_inst, 0, MAX_INST_SIZE);
 	if (process->pc < 0)
 		process->pc += MEM_SIZE;
 	if (process->pc >= MEM_SIZE)
@@ -131,9 +136,25 @@ void		run_cycles_loop(t_env *env)
 			env->cycle_before_die -= 1;
 		if (env->cycle_before_die == 0)
 		{
-			kill_old_process(env);
-			//	env->cycle_to_die -= CYCLE_DELTA;
+			if (kill_old_process(env) >= NBR_LIVE)
+			{
+				env->cycle_to_die -= CYCLE_DELTA;
+				env->cycle_checks_no_decr = 0;
+				ft_printf("Cycle to die is now %d\n", env->cycle_to_die);
+			}
+			else
+			{
+				env->cycle_checks_no_decr++;
+				if (env->cycle_checks_no_decr == MAX_CHECKS)
+				{
+					env->cycle_to_die -= CYCLE_DELTA;
+					env->cycle_checks_no_decr = 0;
+					ft_printf("Cycle to die is now %d\n", env->cycle_to_die);
+				}
+			}
 			env->cycle_before_die = env->cycle_to_die;
+			if (env->cycle_before_die <= 0)
+				break ;
 		}
 		inst_process(env);
 		if (env->cur_cycle == env->dump_cycles)
