@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/19 02:51:36 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 03:05:52 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ static void	exec_inst(t_env *env, t_process *process)
 		fill_buff_from_arena(env, process->queued_inst, MAX_INST_SIZE,
 				process->pc);
 		ret = g_op[opcode - 1].fn(env, process, process->queued_inst);
-		ft_printf("ADV %d\n", ret);
+		if (g_op[opcode - 1].fn != zjmp || process->carry == 0)
+			ft_printf("ADV %d\n", ret);
 		process->pc += ret;
 		/*if (g_op[opcode - 1].fn == zjmp)
 		{
