@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 05:16:04 by wta               #+#    #+#             */
-/*   Updated: 2019/02/18 07:24:30 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/19 03:58:16 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ t_error	skip_useless(int fd, char **line)
 		if (((str = skip_tab_n_space(*line)) != NULL)
 				&& (str[0] != '#' && str[0] != '\0' && str[0] != ';'))
 			break ;
-		free(*line);
+		ft_strdel(line);
 	}
 	if (ret <= 0)
 		return (ERR_BADFMT);

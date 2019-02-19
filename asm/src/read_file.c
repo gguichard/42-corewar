@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:10 by wta               #+#    #+#             */
-/*   Updated: 2019/02/19 02:32:16 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/19 05:08:24 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_error	get_post_header(int fd, char **line, char **inst)
 				err_id = ERR_MALLOC;
 			free(tmp);
 		}
-		free(*line);
+		ft_strdel(line);
 	}
 	return (ret == -1 ? ERR_BADFMT : err_id);
 }
@@ -56,7 +56,7 @@ t_error	split_input(char *inst, char ***split)
 	if (err_id == ERR_NOERROR
 			&& (*split = split_by_str(inst, " \t,")) == NULL)
 		err_id = ERR_MALLOC;
-	free(inst);
+	ft_strdel(&inst);
 	return (err_id);
 }
 
@@ -68,23 +68,23 @@ t_error	get_first_part(t_data *data, int fd, char **line)
 
 	err_id = ERR_NOERROR;
 	trig = 1;
+	research = NULL;
 	if (err_id == ERR_NOERROR)
 		err_id = check_first_line(fd);
 	if (err_id == ERR_NOERROR)
 		err_id = skip_useless(fd, line);
-	research = ft_strchr(*line, '.');
-	if (ft_strnequ(research, NAME_CMD_STRING, 5))
+	if (*line == NULL || (research = ft_strchr(*line, '.')) == NULL)
+		err_id = ERR_BADFMT;
+	if (*line != NULL && ft_strnequ(research, NAME_CMD_STRING, 5))
 		trig = 0;
-	if (err_id == ERR_NOERROR && trig == 0)
-		err_id = get_name(data, fd, line);
-	else
-		err_id = get_comment(data, fd, line);
+	if (err_id == ERR_NOERROR)
+		err_id = (trig == 0 ? get_name(data, fd, line)
+				: get_comment(data, fd, line));
 	if (err_id == ERR_NOERROR)
 		err_id = skip_useless(fd, line);
-	if (err_id == ERR_NOERROR && trig == 0)
-		err_id = get_comment(data, fd, line);
-	else
-		err_id = get_name(data, fd, line);
+	if (err_id == ERR_NOERROR)
+		err_id = (trig == 0 ? get_comment(data, fd, line)
+				: get_name(data, fd, line));
 	return (err_id);
 }
 

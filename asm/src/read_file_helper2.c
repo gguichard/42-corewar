@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 05:21:48 by wta               #+#    #+#             */
-/*   Updated: 2019/02/18 10:05:55 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/19 05:01:37 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_error	fill_prog_name(t_data *data, int fd, char **str, char **line)
 		err_id = ERR_BADFMT;
 	ft_strcat(data->header.prog_name, *str);
 	ft_strcat(data->header.prog_name, "\n");
-	free(*line);
+	ft_strdel(line);
 	if (get_next_line(fd, line) <= 0)
 		err_id = ERR_BADFMT;
 	*str = *line;
@@ -35,29 +35,29 @@ t_error	fill_prog_name(t_data *data, int fd, char **str, char **line)
 t_error	get_name(t_data *data, int fd, char **line)
 {
 	t_error	err_id;
-	char	*needle;
-	char	*str;
+	char	*ndl;
+	char	*s;
 
+	s = NULL;
+	ndl = NULL;
 	err_id = ERR_NOERROR;
-	if ((str = skip_tab_n_space(*line)) == NULL)
+	if (*line != NULL && (s = skip_tab_n_space(*line)) == NULL)
 		return (ERR_BADFMT);
-	if ((ft_strnequ(str, NAME_CMD_STRING, 5) == 0)
-			|| ((str = get_dquote(str + 5)) == NULL))
+	if ((ft_strnequ(s, ".name", 5) == 0) || ((s = get_dquote(s + 5)) == NULL))
 		err_id = ERR_BADFMT;
-	while (err_id == ERR_NOERROR && (needle = ft_strchr(str, '"')) == NULL)
-		err_id = fill_prog_name(data, fd, &str, line);
-	str = (str == NULL) ? *line : str;
+	while (err_id == ERR_NOERROR && (ndl = ft_strchr(s, '"')) == NULL)
+		err_id = fill_prog_name(data, fd, &s, line);
+	s = (s == NULL) ? *line : s;
 	if (err_id == ERR_NOERROR && (ft_strlen(data->header.prog_name)
-				+ (needle - str) > PROG_NAME_LENGTH))
+				+ (ndl - s) > PROG_NAME_LENGTH))
 		err_id = ERR_NAME;
-	else if (ft_strlen(data->header.prog_name)
-			+ (needle - str) <= PROG_NAME_LENGTH)
-		ft_strncat(data->header.prog_name, str, needle - str);
+	else if (ft_strlen(data->header.prog_name) + (ndl - s) <= PROG_NAME_LENGTH)
+		ft_strncat(data->header.prog_name, s, ndl - s);
 	else
 		err_id = ERR_BADFMT;
-	if (err_id == ERR_NOERROR && needle != NULL)
-		err_id = check_endline(needle + 1);
-	free(*line);
+	if (err_id == ERR_NOERROR && ndl != NULL)
+		err_id = check_endline(ndl + 1);
+	ft_strdel(line);
 	return (err_id);
 }
 
@@ -71,7 +71,7 @@ t_error	fill_comment(t_data *data, int fd, char **str, char **line)
 		err_id = ERR_BADFMT;
 	ft_strcat(data->header.comment, *str);
 	ft_strcat(data->header.comment, "\n");
-	free(*line);
+	ft_strdel(line);
 	if (get_next_line(fd, line) <= 0)
 		err_id = ERR_BADFMT;
 	*str = *line;
@@ -82,26 +82,27 @@ t_error	get_comment(t_data *data, int fd, char **line)
 {
 	t_error	err_id;
 	char	*needle;
-	char	*str;
+	char	*s;
 
+	s = NULL;
+	needle = NULL;
 	err_id = ERR_NOERROR;
-	if ((str = skip_tab_n_space(*line)) == NULL)
+	if (*line != NULL && (s = skip_tab_n_space(*line)) == NULL)
 		return (ERR_BADFMT);
-	if ((ft_strnequ(str, COMMENT_CMD_STRING, 8) == 0)
-			|| ((str = get_dquote(str + 8)) == NULL))
+	if ((ft_strnequ(s, ".comment", 8) == 0) || (s = get_dquote(s + 8)) == NULL)
 		err_id = ERR_BADFMT;
-	while (err_id == ERR_NOERROR && (needle = ft_strchr(str, '"')) == NULL)
-		err_id = fill_comment(data, fd, &str, line);
-	str = (str == NULL) ? *line : str;
+	while (err_id == ERR_NOERROR && (needle = ft_strchr(s, '"')) == NULL)
+		err_id = fill_comment(data, fd, &s, line);
+	s = (s == NULL) ? *line : s;
 	if (err_id == ERR_NOERROR && (ft_strlen(data->header.comment)
-				+ (needle - str) > COMMENT_LENGTH))
+				+ (needle - s) > COMMENT_LENGTH))
 		err_id = ERR_NAME;
-	else if (ft_strlen(data->header.comment) + (needle - str) <= COMMENT_LENGTH)
-		ft_strncat(data->header.comment, str, needle - str);
+	else if (ft_strlen(data->header.comment) + (needle - s) <= COMMENT_LENGTH)
+		ft_strncat(data->header.comment, s, needle - s);
 	else
 		err_id = ERR_BADFMT;
 	if (err_id == ERR_NOERROR && needle != NULL)
 		err_id = check_endline(needle + 1);
-	free(*line);
+	ft_strdel(line);
 	return (err_id);
 }
