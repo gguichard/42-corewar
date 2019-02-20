@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 02:21:10 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/20 03:30:52 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/20 03:55:20 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ int			sti(t_env *env, t_process *cur_process, uint8_t *bytes)
 		}
 		addr = ((int)args[1] + (int)args[2]) % IDX_MOD;
 		write_in_arena(env, (uint8_t *)args, 4, cur_process->pc + addr);
+		if (env->debug == DEBUG_ON)
+			debug_mode((int)decode.tab[0].value, (int)args[1], (int)args[2]
+					, cur_process->pc + addr);
 	}
-	if (env->debug == DEBUG_ON)
-		debug_mode((int)decode.tab[0].value, (int)args[1], (int)args[2]
-				, cur_process->pc + addr);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:24 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/20 02:01:22 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/20 03:53:56 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ int			ld(t_env *env, t_process *cur_process, uint8_t *bytes)
 		args[1] = decode.tab[1].value;
 		cur_process->reg[(int)args[1] - 1] = args[0];
 		cur_process->carry = (args[0] == 0);
+		if (env->debug == DEBUG_ON)
+			debug_mode((int)args[0], (int)args[1]);
 	}
-	if (env->debug == DEBUG_ON)
-		debug_mode((int)args[0], (int)args[1]);
 	return (ret);
 }

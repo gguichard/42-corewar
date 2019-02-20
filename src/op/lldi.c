@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 02:58:20 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/20 03:30:40 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/20 03:54:56 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ int			lldi(t_env *env, t_process *cur_process, unsigned char *bytes)
 		swap_bytes((uint8_t *)&value, 4);
 		cur_process->reg[(int)decode.tab[2].value - 1] = (uint64_t)value;
 		cur_process->carry = (value == 0);
+		if (env->debug == DEBUG_ON)
+			debug_mode((int)args[0], (int)args[1], (int)decode.tab[2].value
+					, cur_process->pc + addr);
 	}
-	if (env->debug == DEBUG_ON)
-		debug_mode((int)args[0], (int)args[1], (int)decode.tab[2].value
-				, cur_process->pc + addr);
 	return (ret);
 }
