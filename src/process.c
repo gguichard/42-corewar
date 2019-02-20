@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_exec.c                                     :+:      :+:    :+:   */
+/*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 22:53:43 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/20 05:50:04 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/20 06:26:32 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,21 @@ t_op		g_op[] = {
 	{aff, 2}
 };
 
+t_process	*create_process(t_env *env, t_champ *champ)
+{
+	t_process	process;
+	t_list		*node;
+
+	ft_memset(&process, 0, sizeof(t_process));
+	node = ft_lstnew(&process, sizeof(t_process));
+	if (node == NULL)
+		return (NULL);
+	((t_process *)node->content)->champ_id = champ->id;
+	((t_process *)node->content)->reg[0] = champ->id;
+	ft_lstadd(&env->process_lst, node);
+	return ((t_process *)node->content);
+}
+
 static void	exec_inst(t_env *env, t_process *process)
 {
 	int		opcode;
@@ -47,7 +62,7 @@ static void	exec_inst(t_env *env, t_process *process)
 	{
 		opcode -= 1;
 		ret = g_op[opcode].fn(env, process, inst);
-		if (g_op[opcode].fn != zjmp || process->carry == 0)
+		if (env->debug == DEBUG_ON)
 			ft_printf("ADV %d (%#.4x -> %#.4x)\n", ret, process->pc
 					, process->pc + ret);
 		process->pc += ret;

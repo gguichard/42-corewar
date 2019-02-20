@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:22 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/20 05:28:50 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/20 06:08:20 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ int			decode_args(t_decode *decode, uint8_t *args, uint8_t encoding_byte
 
 	idx = 0;
 	ret = 0;
-	ft_printf("OCP is %#x\n", encoding_byte);
 	while (idx < decode->max_args)
 	{
 		arg_ret = decode_arg(decode->tab + idx, args, encoding_byte, dir_size);

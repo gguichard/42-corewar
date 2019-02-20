@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/20 04:56:13 by gguichar         ###   ########.fr        #
+#    Updated: 2019/02/20 06:26:39 by gguichar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,11 @@ NAME	=	corewar
 SRC_DIR	=	src
 SRC		=				\
 main.c					\
+options.c				\
 read.c					\
 champs.c				\
 cycles.c				\
-process_exec.c			\
+process.c				\
 errors.c				\
 print_arena.c			\
 pc_utils.c				\

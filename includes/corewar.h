@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:43 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/20 04:50:47 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/20 06:24:12 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@
 # include <inttypes.h>
 # include "libft.h"
 # include "op.h"
+# include "champion.h"
 # include "process.h"
+
+# define DEBUG_ON	1
 
 typedef enum e_error	t_error;
 typedef struct s_env	t_env;
@@ -53,6 +56,11 @@ typedef struct	s_op
 }				t_op;
 
 t_error			create_champs(t_env *env, char **argv, int argc, int cur_arg);
+void			setup_champ(t_env *env, t_champ *champ, int pc);
+void			print_winner_champ(t_env *env);
+
+t_error			parse_opts(t_env *env, char **argv, int *cur_arg);
+t_process		*create_process(t_env *env, t_champ *champ);
 
 void			fix_pc_offset(int *offset);
 void			increase_pc(t_process *process, int value);

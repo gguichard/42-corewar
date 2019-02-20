@@ -6,29 +6,29 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:15:16 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/19 23:46:50 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/20 06:25:37 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <limits.h>
 #include "libft.h"
-#include "parsing.h"
-#include "process.h"
 #include "corewar.h"
+#include "parsing.h"
+#include "champion.h"
+#include "process.h"
 
 static int	get_next_champ_id(t_env *env)
 {
 	int		id;
 	t_list	*cur_champ;
 
-	id = 1;
+	id = -1;
 	cur_champ = env->champ_lst;
 	while (cur_champ != NULL)
 	{
 		if (id == ((t_champ *)cur_champ->content)->id)
 		{
-			id++;
+			id--;
 			cur_champ = env->champ_lst;
 			continue ;
 		}
@@ -37,24 +37,25 @@ static int	get_next_champ_id(t_env *env)
 	return (id);
 }
 
-static int	get_champ_id(t_env *env, char **argv, int *cur_arg)
+static int	set_champ_id(t_env *env, char **argv, int *cur_arg, int *id)
 {
-	int		id;
+	long	parsed_id;
 	char	*endptr;
 
 	if (!ft_strequ("-n", argv[*cur_arg]))
-		id = get_next_champ_id(env);
+		*id = get_next_champ_id(env);
 	else
 	{
 		*cur_arg += 1;
 		if (argv[*cur_arg] == NULL)
-			return (-5);
-		id = ft_strtol(argv[*cur_arg], &endptr, 10);
-		if (*endptr != '\0' || id < -4 || id > INT_MAX)
-			return (-5);
+			return (0);
+		parsed_id = ft_strtol(argv[*cur_arg], &endptr, 10);
+		if (*endptr != '\0' || parsed_id < INT_MIN || parsed_id > INT_MAX)
+			return (0);
+		*id = parsed_id;
 		*cur_arg += 1;
 	}
-	return (id);
+	return (1);
 }
 
 t_error		create_champs(t_env *env, char **argv, int argc, int cur_arg)
@@ -69,7 +70,7 @@ t_error		create_champs(t_env *env, char **argv, int argc, int cur_arg)
 	{
 		if (total > MAX_PLAYERS)
 			return (ERR_TOOMANYCHAMPS);
-		else if ((id = get_champ_id(env, argv, &cur_arg)) < -4)
+		else if (!set_champ_id(env, argv, &cur_arg, &id))
 			return (ERR_WRONGNOPT);
 		else if (argv[cur_arg] == NULL)
 			return (ERR_NOCHAMPNAME);
@@ -84,4 +85,44 @@ t_error		create_champs(t_env *env, char **argv, int argc, int cur_arg)
 		total++;
 	}
 	return (ERR_NOERROR);
+}
+
+void		setup_champ(t_env *env, t_champ *champ, int pc)
+{
+	t_process	*process;
+
+	ft_memcpy(&env->arena[pc], champ->prog, champ->header.prog_size);
+	ft_printf("Champion \"%s\" (%d bytes) has been loaded\n"
+			, champ->header.prog_name
+			, champ->header.prog_size);
+	process = create_process(env, champ);
+	if (process != NULL)
+		process->pc = pc;
+	else
+		ft_dprintf(2, "corewar: error: Unable to create process for \"%s\""
+				, champ->header.prog_name);
+}
+
+void		print_winner_champ(t_env *env)
+{
+	int		last_cycle;
+	t_list	*best_champ;
+	t_list	*cur_champ;
+
+	last_cycle = -1;
+	best_champ = NULL;
+	cur_champ = env->champ_lst;
+	while (cur_champ != NULL)
+	{
+		if (last_cycle <= (int)((t_champ *)cur_champ->content)->live_cycle)
+		{
+			last_cycle = (int)((t_champ *)cur_champ->content)->live_cycle;
+			best_champ = cur_champ;
+		}
+		cur_champ = cur_champ->next;
+	}
+	if (best_champ != NULL)
+		ft_printf("Le joueur %d \"%s\" a gagne\n"
+				, ((t_champ *)best_champ->content)->id
+				, ((t_champ *)best_champ->content)->header.prog_name);
 }

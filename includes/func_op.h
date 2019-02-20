@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:13:03 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/20 04:50:43 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/20 06:11:21 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # define BAD_REG	0
 # define SHORT_DIR	2
 # define REG_DIR	4
-# define DEBUG_ON	1
 
 typedef struct	s_arg
 {
@@ -40,6 +39,7 @@ typedef struct	s_decode
 /*
 ** FONCTIONS VMs.
 */
+
 int				live(t_env *env, t_process *cur_process
 		, uint8_t *bytes);
 int				ld(t_env *env, t_process *cur_process
@@ -76,15 +76,16 @@ int				aff(t_env *env, t_process *cur_process
 /*
 **	UTILS
 */
+
 void			swap_bytes(uint8_t *str, int size);
 void			fill_buff_from_arena(t_env *env, uint8_t *buffer, size_t size
 		, int offset);
 void			write_in_arena(t_env *env, uint8_t *bytes, size_t size
 		, int offset);
-int			decode_args(t_decode *decode, uint8_t *args, uint8_t encoding_byte
-		, int dir_size);
+int				decode_args(t_decode *decode, uint8_t *args
+		, uint8_t encoding_byte, int dir_size);
 void			fill_decode(t_env *env, t_process *process, t_decode *decode
-		,	int value);
+		, int value);
 void			store_multitype(uint32_t *buffer, t_decode decode, t_arg arg
 		, int is_long);
 

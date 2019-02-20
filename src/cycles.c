@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/20 05:14:16 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/20 06:29:45 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,9 @@ static int	kill_old_process(t_env *env)
 				env->process_lst = next;
 			else
 				prev->next = next;
-			ft_printf("Process hasn't lived for %d cycles\n"
-					, env->cur_cycle - process->last_live);
+			if (env->debug == DEBUG_ON)
+				ft_printf("Process hasn't lived for %d cycles\n"
+						, env->cur_cycle - process->last_live);
 			free(cur->content);
 			free(cur);
 			cur = next;
@@ -78,7 +79,8 @@ void		run_cycles_loop(t_env *env)
 {
 	while (env->process_lst != NULL)
 	{
-		ft_printf("It is now cycle %d\n", env->cur_cycle);
+		if (env->debug == DEBUG_ON)
+			ft_printf("It is now cycle %d\n", env->cur_cycle);
 		process_instructions(env);
 		if (env->cur_cycle == env->dump_cycles)
 		{
@@ -89,7 +91,7 @@ void		run_cycles_loop(t_env *env)
 			env->cycle_before_die -= 1;
 		if (env->cycle_before_die <= 0)
 		{
-			if (decrease_cycle_to_die(env))
+			if (decrease_cycle_to_die(env) && env->debug == DEBUG_ON)
 				ft_printf("Cycle to die is now %d\n", env->cycle_to_die);
 			env->cycle_before_die = env->cycle_to_die;
 		}

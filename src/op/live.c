@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:32 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/20 04:02:12 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/20 06:16:02 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int			live(t_env *env, t_process *cur_process, uint8_t *bytes)
 		if (((t_champ *)champ->content)->id == (int)decode.tab[0].value)
 		{
 			((t_champ *)champ->content)->live_cycle = env->cur_cycle;
-			ft_printf("%s is living\n"
+			ft_printf("Un processus dit que le joueur \"%s\" est en vie\n"
 					, ((t_champ *)champ->content)->header.prog_name);
 			break ;
 		}
