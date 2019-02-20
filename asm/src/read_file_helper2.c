@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 05:21:48 by wta               #+#    #+#             */
-/*   Updated: 2019/02/20 02:57:52 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/20 03:39:52 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ t_error	fill_comment(t_data *data, int fd, char **str, char **line)
 	{
 		ft_strcat(data->header.comment, *str);
 		ft_strcat(data->header.comment, "\n");
+		ft_strdel(line);
 		if (get_next_line(fd, line) <= 0)
 			err_id = ERR_BADFMT;
 		*str = *line;
