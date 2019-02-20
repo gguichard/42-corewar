@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process.h                                          :+:      :+:    :+:   */
+/*   pc_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/13 06:03:00 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/20 05:51:20 by gguichar         ###   ########.fr       */
+/*   Created: 2019/02/20 04:48:17 by gguichar          #+#    #+#             */
+/*   Updated: 2019/02/20 04:50:25 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PROCESS_H
-# define PROCESS_H
+#include "corewar.h"
 
-# include <inttypes.h>
-# include "op.h"
-
-# define MAX_INST_SIZE 32
-
-typedef struct s_process	t_process;
-
-struct	s_process
+void	fix_pc_offset(int *offset)
 {
-	int			champ_id;
-	uint32_t	reg[REG_NUMBER];
-	int			pc;
-	int			carry;
-	int			queued_op;
-	int			cycles_left;
-	int			lives;
-	int			last_live;
-};
+	while (*offset < 0)
+		*offset += MEM_SIZE;
+	if (*offset >= MEM_SIZE)
+		*offset %= MEM_SIZE;
+}
 
-#endif
+void	increase_pc(t_process *process, int value)
+{
+	process->pc += value;
+	fix_pc_offset(&process->pc);
+}

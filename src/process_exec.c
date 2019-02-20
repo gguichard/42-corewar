@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 22:53:43 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/19 23:38:55 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/20 05:50:04 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 t_op		g_op[] = {
 	{live, 10},
 	{ld, 5},
-	{st, 4},
+	{st, 5},
 	{add, 10},
 	{sub, 10},
 	{ft_and, 6},
@@ -37,23 +37,23 @@ static void	exec_inst(t_env *env, t_process *process)
 {
 	int		opcode;
 	int		ret;
+	uint8_t	inst[MAX_INST_SIZE];
 
-	opcode = process->queued_inst[0];
+	opcode = process->queued_op;
+	fill_buff_from_arena(env, inst, MAX_INST_SIZE, process->pc);
 	if (opcode < 1 || opcode > 16)
 		process->pc += 1;
 	else
 	{
-		ret = g_op[opcode - 1].fn(env, process, process->queued_inst);
-		if (g_op[opcode - 1].fn != zjmp || process->carry == 0)
-			ft_printf("ADV %d %d (%#.4x -> %#.4x)\n", ret, opcode, process->pc
+		opcode -= 1;
+		ret = g_op[opcode].fn(env, process, inst);
+		if (g_op[opcode].fn != zjmp || process->carry == 0)
+			ft_printf("ADV %d (%#.4x -> %#.4x)\n", ret, process->pc
 					, process->pc + ret);
 		process->pc += ret;
 	}
-	ft_memset(process->queued_inst, 0, MAX_INST_SIZE);
-	if (process->pc < 0)
-		process->pc += MEM_SIZE;
-	if (process->pc >= MEM_SIZE)
-		process->pc %= MEM_SIZE;
+	fix_pc_offset(&process->pc);
+	process->queued_op = 0;
 }
 
 static void	setup_new_inst(t_env *env, t_process *process)
@@ -65,8 +65,7 @@ static void	setup_new_inst(t_env *env, t_process *process)
 		process->cycles_left = 1;
 	else
 	{
-		fill_buff_from_arena(env, process->queued_inst, MAX_INST_SIZE
-				, process->pc);
+		process->queued_op = opcode;
 		process->cycles_left = g_op[opcode - 1].cycles;
 	}
 }

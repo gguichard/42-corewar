@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:43 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/19 23:02:58 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/20 04:50:47 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ typedef struct	s_op
 
 t_error			create_champs(t_env *env, char **argv, int argc, int cur_arg);
 
+void			fix_pc_offset(int *offset);
+void			increase_pc(t_process *process, int value);
 
 void			process_instructions(t_env *env);
 void			run_cycles_loop(t_env *env);

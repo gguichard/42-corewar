@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/19 23:40:02 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/20 05:14:16 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,21 +79,19 @@ void		run_cycles_loop(t_env *env)
 	while (env->process_lst != NULL)
 	{
 		ft_printf("It is now cycle %d\n", env->cur_cycle);
-		if (env->cycle_before_die > 0)
-			env->cycle_before_die -= 1;
-		if (env->cycle_before_die == 0)
-		{
-			if (decrease_cycle_to_die(env))
-				ft_printf("Cycle to die is now %d\n", env->cycle_to_die);
-			env->cycle_before_die = env->cycle_to_die;
-			if (env->cycle_before_die <= 0)
-				break ;
-		}
 		process_instructions(env);
 		if (env->cur_cycle == env->dump_cycles)
 		{
 			print_arena(env);
 			break ;
+		}
+		if (env->cycle_before_die > 0)
+			env->cycle_before_die -= 1;
+		if (env->cycle_before_die <= 0)
+		{
+			if (decrease_cycle_to_die(env))
+				ft_printf("Cycle to die is now %d\n", env->cycle_to_die);
+			env->cycle_before_die = env->cycle_to_die;
 		}
 		env->cur_cycle += 1;
 	}

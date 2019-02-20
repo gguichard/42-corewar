@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/20 01:27:53 by vifonne          ###   ########.fr        #
+#    Updated: 2019/02/20 04:56:13 by gguichar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ cycles.c				\
 process_exec.c			\
 errors.c				\
 print_arena.c			\
+pc_utils.c				\
 op/op_utils.c			\
 op/op_utils2.c			\
 op/live.c				\
@@ -45,7 +46,7 @@ OBJ		=	$(SRC:.c=.o)
 DEP		=	$(OBJ:.o=.d)
 INC_DIR	=	includes
 
-CC		=	gcc -g -fsanitize=address
+CC		=	gcc
 CFLAGS	=	-Wall -Wextra -Werror -I libft/includes -I $(INC_DIR)
 
 LIBFT	=	libft/libft.a

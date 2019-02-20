@@ -6,12 +6,11 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 05:12:44 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/20 03:53:18 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/20 04:55:00 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <inttypes.h>
-#include "libft.h"
 #include "corewar.h"
 #include "func_op.h"
 #include "op.h"
@@ -39,7 +38,7 @@ int			ft_fork(t_env *env, t_process *cur_process, uint8_t *bytes)
 		if (node == NULL)
 			return (-1);
 		process = (t_process *)node->content;
-		ft_memset(&process->queued_inst, 0, MAX_INST_SIZE);
+		process->queued_op = 0;
 		increase_pc(process, (int)decode.tab[0].value % IDX_MOD);
 		ft_lstadd(&env->process_lst, node);
 		if (env->debug == DEBUG_ON)

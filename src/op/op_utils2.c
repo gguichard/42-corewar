@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 05:22:48 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/19 03:35:51 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/20 04:49:41 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,6 @@
 #include "process.h"
 #include "func_op.h"
 #include "op.h"
-
-void	increase_pc(t_process *process, int value)
-{
-	process->pc += value;
-	if (process->pc < 0)
-		process->pc += MEM_SIZE;
-	if (process->pc >= MEM_SIZE)
-		process->pc -= MEM_SIZE;
-}
 
 void	fill_decode(t_env *env, t_process *process, t_decode *decode
 		, int nb_arg)

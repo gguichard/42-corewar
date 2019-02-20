@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:22 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/19 23:52:57 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/20 05:28:50 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ void		swap_bytes(uint8_t *str, int size)
 void		fill_buff_from_arena(t_env *env, uint8_t *buffer, size_t size
 		, int offset)
 {
-	if (offset < 0)
-		offset += MEM_SIZE;
-	if (offset > MEM_SIZE)
-		offset %= MEM_SIZE;
+	fix_pc_offset(&offset);
 	if ((offset + size) <= MEM_SIZE)
 		ft_memcpy(buffer, env->arena + offset, size);
 	else
@@ -60,10 +57,7 @@ void		fill_buff_from_arena(t_env *env, uint8_t *buffer, size_t size
 
 void		write_in_arena(t_env *env, uint8_t *bytes, size_t size, int offset)
 {
-	if (offset < 0)
-		offset += MEM_SIZE;
-	if (offset > MEM_SIZE)
-		offset %= MEM_SIZE;
+	fix_pc_offset(&offset);
 	swap_bytes(bytes, size);
 	if ((offset + size) <= MEM_SIZE)
 		ft_memcpy(env->arena + offset, bytes, size);
@@ -120,6 +114,7 @@ int			decode_args(t_decode *decode, uint8_t *args, uint8_t encoding_byte
 
 	idx = 0;
 	ret = 0;
+	ft_printf("OCP is %#x\n", encoding_byte);
 	while (idx < decode->max_args)
 	{
 		arg_ret = decode_arg(decode->tab + idx, args, encoding_byte, dir_size);
