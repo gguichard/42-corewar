@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 20:19:44 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/20 00:51:59 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/20 22:44:48 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ static t_error	set_label_size(t_data *data)
 		{
 			if ((node = lstnew_mallocfree(&data->filter[i].op)) == NULL)
 				return (ERR_MALLOC);
-			lst_pushback(&data->label_lst, node);
+			if (lst_lab_check(&data->label_lst, node) != ERR_NOERROR)
+				return (ERR_BADFMT);
 		}
 		else if (data->filter[i].label == LX_ERROR)
 			return (ERR_BADFMT);

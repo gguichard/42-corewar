@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:25:14 by wta               #+#    #+#             */
-/*   Updated: 2019/02/20 02:52:46 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/20 22:17:28 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ t_error			create_cor(t_data *data, char *str);
 
 void			lst_pushback(t_list_ref *list, t_list *node);
 t_list			*lstnew_mallocfree(void *content);
+t_error			lst_lab_check(t_list_ref *list, t_list *node);
 
 void			swap_bytes(unsigned char *str, int size);
 void			write_magic(uint8_t *ptr, int fd, int len);
