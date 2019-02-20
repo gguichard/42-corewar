@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:10 by wta               #+#    #+#             */
-/*   Updated: 2019/02/20 01:28:44 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/20 01:36:30 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ t_error	read_file(char *file, t_data *data)
 
 	split = NULL;
 	inst = NULL;
+	line = NULL;
 	err_id = ERR_NOERROR;
 	if ((fd = open(file, O_RDONLY)) == -1)
 		return (ERR_ERRNO);
