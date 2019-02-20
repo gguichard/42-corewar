@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:10 by wta               #+#    #+#             */
-/*   Updated: 2019/02/20 03:47:00 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/20 21:19:19 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,7 @@ void	free_split_n_line(char **line, char ***split, int fd)
 {
 	ft_strdel(line);
 	ft_strtab_free(*split);
-	while (get_next_line(fd, line) > 0)
-		ft_strdel(line);
-	ft_strdel(line);
+	get_next_line(fd, NULL);
 }
 
 t_error	read_file(char *file, t_data *data)
