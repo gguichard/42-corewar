@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 05:21:48 by wta               #+#    #+#             */
-/*   Updated: 2019/02/20 02:49:20 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/20 02:57:52 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_error	get_name(t_data *data, int fd, char **line)
 	if (err_id == ERR_NOERROR && (ft_strlen(data->header.prog_name)
 				+ (ndl - s) > PROG_NAME_LENGTH))
 		err_id = ERR_NAME;
-	else if (ft_strlen(data->header.prog_name) + (ndl - s) < PROG_NAME_LENGTH)
+	else if (ft_strlen(data->header.prog_name) + (ndl - s) <= PROG_NAME_LENGTH)
 		ft_strncat(data->header.prog_name, s, ndl - s);
 	else
 		err_id = ERR_BADFMT;
@@ -102,7 +102,7 @@ t_error	get_comment(t_data *data, int fd, char **line)
 	if (err_id == ERR_NOERROR && (ft_strlen(data->header.comment)
 				+ (needle - s) > COMMENT_LENGTH))
 		err_id = ERR_NAME;
-	else if (ft_strlen(data->header.comment) + (needle - s) < COMMENT_LENGTH)
+	else if (ft_strlen(data->header.comment) + (needle - s) <= COMMENT_LENGTH)
 		ft_strncat(data->header.comment, s, needle - s);
 	else
 		err_id = ERR_BADFMT;
