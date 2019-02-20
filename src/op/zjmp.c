@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 02:17:41 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/20 02:01:47 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/20 03:32:06 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	debug_mode(int value, int carry)
 	ft_printf("%-5s: %d (carry %d)\n"
 			, "zjmp"
 			, value
-			, carry);
+			, (carry == 1 ? "OK" : "KO"));
 }
 
 int			zjmp(t_env *env, t_process *cur_process, uint8_t *bytes)
