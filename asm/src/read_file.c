@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:10 by wta               #+#    #+#             */
-/*   Updated: 2019/02/20 02:21:36 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/20 02:52:29 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,12 @@ t_error	get_first_part(t_data *data, int fd, char **line)
 	return (err_id);
 }
 
-void		free_split_n_line(char **line, char ***split)
+void		free_split_n_line(char **line, char ***split, int fd)
 {
 	ft_strdel(line);
 	ft_strtab_free(*split);
+	get_next_line(fd, line);
+	ft_strdel(line);
 }
 
 t_error	read_file(char *file, t_data *data)
@@ -118,7 +120,7 @@ t_error	read_file(char *file, t_data *data)
 		err_id = ERR_BADFMT;
 	if (err_id == ERR_NOERROR)
 		err_id = classify(data, split);
-	free_split_n_line(&line, &split);
+	free_split_n_line(&line, &split, fd);
 	close(fd);
 	return (err_id);
 }

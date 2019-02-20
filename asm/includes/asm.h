@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:25:14 by wta               #+#    #+#             */
-/*   Updated: 2019/02/20 02:15:37 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/20 02:52:46 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,6 @@ char			*strjoin_add_c(char const *s1, char const *s2, char c);
 char			**split_by_str(char *str, char *delim);
 int				cnt_space_to_add(char *str);
 
-void			free_split_n_line(char **line, char ***split);
+void			free_split_n_line(char **line, char ***split, int fd);
 void			err_handler(t_error err_id);
 #endif
