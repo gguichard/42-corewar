@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/19 06:12:27 by wta              ###   ########.fr        #
+#    Updated: 2019/02/20 02:11:54 by wta              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ DEP		=	$(OBJ:.o=.d)
 
 INC_DIR	=	includes
 
-CC		=	gcc
+CC		=	gcc -g
 CFLAGS	=	-Wall -Wextra -Werror -I ../libft/includes -I $(INC_DIR)
 
 LIBFT	=	../libft/libft.a

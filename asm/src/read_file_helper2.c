@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 05:21:48 by wta               #+#    #+#             */
-/*   Updated: 2019/02/19 05:01:37 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/20 02:40:51 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,15 @@ t_error	fill_prog_name(t_data *data, int fd, char **str, char **line)
 	if (ft_strlen(*str) + 1 + ft_strlen(data->header.prog_name)
 			> PROG_NAME_LENGTH)
 		err_id = ERR_BADFMT;
-	ft_strcat(data->header.prog_name, *str);
-	ft_strcat(data->header.prog_name, "\n");
-	ft_strdel(line);
-	if (get_next_line(fd, line) <= 0)
-		err_id = ERR_BADFMT;
-	*str = *line;
+	if (err_id == ERR_NOERROR)
+	{
+		ft_strcat(data->header.prog_name, *str);
+		ft_strcat(data->header.prog_name, "\n");
+		ft_strdel(line);
+		if (get_next_line(fd, line) <= 0)
+			err_id = ERR_BADFMT;
+		*str = *line;
+	}
 	return (err_id);
 }
 
@@ -51,7 +54,7 @@ t_error	get_name(t_data *data, int fd, char **line)
 	if (err_id == ERR_NOERROR && (ft_strlen(data->header.prog_name)
 				+ (ndl - s) > PROG_NAME_LENGTH))
 		err_id = ERR_NAME;
-	else if (ft_strlen(data->header.prog_name) + (ndl - s) <= PROG_NAME_LENGTH)
+	else if (ft_strlen(data->header.prog_name) + (ndl - s) < PROG_NAME_LENGTH)
 		ft_strncat(data->header.prog_name, s, ndl - s);
 	else
 		err_id = ERR_BADFMT;
@@ -69,12 +72,15 @@ t_error	fill_comment(t_data *data, int fd, char **str, char **line)
 	if (ft_strlen(*str) + 1 + ft_strlen(data->header.comment)
 			> COMMENT_LENGTH)
 		err_id = ERR_BADFMT;
-	ft_strcat(data->header.comment, *str);
-	ft_strcat(data->header.comment, "\n");
-	ft_strdel(line);
-	if (get_next_line(fd, line) <= 0)
-		err_id = ERR_BADFMT;
-	*str = *line;
+	if (err_id == ERR_NOERROR)
+	{
+		ft_strcat(data->header.comment, *str);
+		ft_strcat(data->header.comment, "\n");
+		ft_strdel(line);
+		if (get_next_line(fd, line) <= 0)
+			err_id = ERR_BADFMT;
+		*str = *line;
+	}
 	return (err_id);
 }
 
@@ -97,7 +103,7 @@ t_error	get_comment(t_data *data, int fd, char **line)
 	if (err_id == ERR_NOERROR && (ft_strlen(data->header.comment)
 				+ (needle - s) > COMMENT_LENGTH))
 		err_id = ERR_NAME;
-	else if (ft_strlen(data->header.comment) + (needle - s) <= COMMENT_LENGTH)
+	else if (ft_strlen(data->header.comment) + (needle - s) < COMMENT_LENGTH)
 		ft_strncat(data->header.comment, s, needle - s);
 	else
 		err_id = ERR_BADFMT;
