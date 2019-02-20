@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:39:09 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/20 01:28:40 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/20 23:36:04 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int			check_label(char *str)
 	len = ft_strlen(str) - 1;
 	if (str[len] != ':')
 		return (0);
+	if (len == 0)
+		return (-1);
 	while (str[i] && i < len)
 	{
 		n = 0;
