@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 20:19:44 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/18 09:59:40 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/20 00:51:59 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ t_error			check_valid_tab(t_data *data)
 	{
 		if (data->filter[idx].label == LX_INST)
 		{
-			if ((jdx = check_arg(data, idx)) == -1)
+			if (idx + 1 >= data->f_size || (jdx = check_arg(data, idx)) == -1)
 				return (ERR_BADFMT);
 			idx += jdx;
 		}

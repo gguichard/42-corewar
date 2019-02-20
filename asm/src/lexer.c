@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:39:09 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/19 01:27:01 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/20 01:28:40 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ t_error		classify(t_data *data, char **split)
 
 	i = 0;
 	data->f_size = get_tab_size(split);
+	if (data->f_size <= 0)
+		return (ERR_BADFMT);
 	if (!(data->filter = (t_filter*)malloc(sizeof(t_filter) * data->f_size)))
 		return (ERR_MALLOC);
 	ft_memset(data->filter, 0, sizeof(t_filter));
