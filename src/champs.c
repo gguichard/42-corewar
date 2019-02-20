@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:15:16 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/20 06:25:37 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/21 00:10:08 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ t_error		create_champs(t_env *env, char **argv, int argc, int cur_arg)
 	t_list	*node;
 	int		total;
 
+	ft_memset(&champ, 0, sizeof(t_champ));
 	total = 0;
 	while (cur_arg < argc)
 	{
@@ -105,18 +106,18 @@ void		setup_champ(t_env *env, t_champ *champ, int pc)
 
 void		print_winner_champ(t_env *env)
 {
-	int		last_cycle;
+	int		best_cycle;
 	t_list	*best_champ;
 	t_list	*cur_champ;
 
-	last_cycle = -1;
+	best_cycle = -1;
 	best_champ = NULL;
 	cur_champ = env->champ_lst;
 	while (cur_champ != NULL)
 	{
-		if (last_cycle <= (int)((t_champ *)cur_champ->content)->live_cycle)
+		if (best_cycle <= ((t_champ *)cur_champ->content)->live_cycle)
 		{
-			last_cycle = (int)((t_champ *)cur_champ->content)->live_cycle;
+			best_cycle = ((t_champ *)cur_champ->content)->live_cycle;
 			best_champ = cur_champ;
 		}
 		cur_champ = cur_champ->next;
