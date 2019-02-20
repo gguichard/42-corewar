@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/20 06:51:24 by vifonne          ###   ########.fr        #
+#    Updated: 2019/02/20 23:03:02 by gguichar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,8 +40,7 @@ op/ft_fork.c			\
 op/lld.c				\
 op/lldi.c				\
 op/ft_lfork.c			\
-op/aff.c				\
-visual/print.c
+op/aff.c
 
 OBJ_DIR	=	.obj
 OBJ		=	$(SRC:.c=.o)

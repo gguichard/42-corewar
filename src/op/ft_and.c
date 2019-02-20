@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 00:01:29 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/20 03:53:00 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/20 22:52:26 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 #include "func_op.h"
 #include "op.h"
 
-static void	debug_mode(uint32_t *args, int r1)
+static void	debug_mode(uint32_t *args, int reg)
 {
 	ft_printf("%-5s: %d & %d r%d\n"
 			, "and"
 			, (int)args[0]
 			, (int)args[1]
-			, r1);
+			, reg);
 }
 
 int			ft_and(t_env *env, t_process *cur_process, uint8_t *bytes)
@@ -34,18 +34,20 @@ int			ft_and(t_env *env, t_process *cur_process, uint8_t *bytes)
 
 	fill_decode(env, cur_process, &decode, 3);
 	ret = decode_args(&decode, bytes + 2, *(bytes + 1), 0) + 2;
-	idx = 0;
-	while (idx < 2)
+	if (decode.tab[0].type != BAD_REG && decode.tab[1].type != BAD_REG
+			&& decode.tab[2].type == REG_CODE)
 	{
-		if (decode.tab[idx].type == BAD_REG)
-			return (ret);
-		store_multitype(args + idx, decode, decode.tab[idx], 0);
-		idx++;
+		idx = 0;
+		while (idx < 2)
+		{
+			store_multitype(args + idx, decode, decode.tab[idx], 0);
+			idx++;
+		}
+		tmp = args[0] & args[1];
+		cur_process->reg[(int)decode.tab[2].value - 1] = tmp;
+		cur_process->carry = (tmp == 0);
+		if (env->debug == DEBUG_ON)
+			debug_mode(args, (int)decode.tab[2].value);
 	}
-	tmp = args[0] & args[1];
-	cur_process->reg[(int)decode.tab[2].value - 1] = tmp;
-	cur_process->carry = (tmp == 0);
-	if (env->debug == DEBUG_ON)
-		debug_mode(args, (int)decode.tab[2].value);
 	return (ret);
 }

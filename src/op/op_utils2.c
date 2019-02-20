@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 05:22:48 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/20 04:49:41 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/20 23:34:52 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	store_multitype(uint32_t *buffer, t_decode decode, t_arg arg
 	int			address;
 
 	if (arg.type == REG_CODE)
-		*buffer = decode.process->reg[arg.value - 1];
+		*buffer = decode.process->reg[(int)arg.value - 1];
 	else if (arg.type == DIR_CODE)
 		*buffer = arg.value;
 	else if (arg.type == IND_CODE)

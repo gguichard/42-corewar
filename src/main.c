@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:03 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/20 06:51:10 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/20 23:04:33 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int			main(int argc, char **argv)
 	env.cycle_to_die = CYCLE_TO_DIE;
 	env.cycle_before_die = env.cycle_to_die;
 	env.dump_cycles = -1;
+	env.debug = DEBUG_ON;
 	err_id = parse_opts(&env, argv, &cur_arg);
 	if (err_id == ERR_NOERROR)
 		err_id = create_champs(&env, argv, argc, cur_arg);
@@ -70,6 +71,5 @@ int			main(int argc, char **argv)
 		return (1);
 	}
 	run_vm(&env);
-	init_screen(&env);
 	return (0);
 }

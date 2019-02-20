@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 02:21:10 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/20 03:55:20 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/20 21:22:22 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,8 @@ int			sti(t_env *env, t_process *cur_process, uint8_t *bytes)
 
 	fill_decode(env, cur_process, &decode, 3);
 	ret = decode_args(&decode, bytes + 2, *(bytes + 1), SHORT_DIR) + 2;
-	if (decode.tab[0].type == REG_CODE && decode.tab[1].type != BAD_REG
-			&& (decode.tab[2].type == REG_CODE
-				|| decode.tab[2].type == DIR_CODE))
+	if ((decode.tab[2].type == REG_CODE || decode.tab[2].type == DIR_CODE)
+			&& decode.tab[0].type == REG_CODE && decode.tab[1].type != BAD_REG)
 	{
 		idx = 0;
 		while (idx < 3)
