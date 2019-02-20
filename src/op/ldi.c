@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 21:28:28 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/20 01:31:28 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/20 03:29:26 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int			ldi(t_env *env, t_process *cur_process, uint8_t *bytes)
 		cur_process->reg[(int)decode.tab[2].value - 1] = (uint64_t)value;
 	}
 	if (env->debug == DEBUG_ON)
-		debug_mode((int)args[0], (int)args[1], (int)decode.tab[2].value
-				, cur_process->pc + address);
+		debug_mode((int)decode.tab[0].value, (int)args[1]
+				, (int)decode.tab[2].value, cur_process->pc + address);
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 02:58:20 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/20 01:28:34 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/20 03:30:40 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int			lldi(t_env *env, t_process *cur_process, unsigned char *bytes)
 		cur_process->carry = (value == 0);
 	}
 	if (env->debug == DEBUG_ON)
-		debug_mode((int)args[0], (int)args[1], (int)args[2]
+		debug_mode((int)args[0], (int)args[1], (int)decode.tab[2].value
 				, cur_process->pc + addr);
 	return (ret);
 }
