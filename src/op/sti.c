@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 02:21:10 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/19 08:03:36 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/20 02:01:09 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,17 @@
 #include "func_op.h"
 #include "op.h"
 
-int	sti(t_env *env, t_process *cur_process, uint8_t *bytes)
+static void	debug_mode(int reg, int arg1, int arg2, int addr)
+{
+	ft_printf("%-5s: r%d %d %d (pc %d)\n"
+			, "sti"
+			, reg
+			, arg1
+			, arg2
+			, addr);
+}
+
+int			sti(t_env *env, t_process *cur_process, uint8_t *bytes)
 {
 	int			ret;
 	t_decode	decode;
@@ -40,7 +50,7 @@ int	sti(t_env *env, t_process *cur_process, uint8_t *bytes)
 		write_in_arena(env, (uint8_t *)args, 4, cur_process->pc + addr);
 	}
 	if (env->debug == DEBUG_ON)
-		debug_mode_nodecode_val("sti", (int *)args, 3
+		debug_mode((int)args[0], (int)args[1], (int)args[2]
 				, cur_process->pc + addr);
 	return (ret);
 }

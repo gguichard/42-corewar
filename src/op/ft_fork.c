@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 05:12:44 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/19 06:47:28 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/20 01:01:31 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,15 @@
 #include "func_op.h"
 #include "op.h"
 
-int	ft_fork(t_env *env, t_process *cur_process, uint8_t *bytes)
+static void	debug_mode(int param, int pc)
+{
+	ft_printf("%-5s: %d (pc %d)\n"
+			, "fork"
+			, param
+			, pc);
+}
+
+int			ft_fork(t_env *env, t_process *cur_process, uint8_t *bytes)
 {
 	int			ret;
 	t_decode	decode;
@@ -36,6 +44,6 @@ int	ft_fork(t_env *env, t_process *cur_process, uint8_t *bytes)
 		ft_lstadd(&env->process_lst, node);
 	}
 	if (env->debug == DEBUG_ON)
-		debug_mode_value("fork", decode, 1, process->pc);
+		debug_mode(decode.tab[0].value, process->pc);
 	return (ret);
 }

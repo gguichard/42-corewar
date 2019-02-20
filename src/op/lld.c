@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 21:25:00 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/19 07:11:46 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/20 01:21:33 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,15 @@
 #include "func_op.h"
 #include "op.h"
 
-int	lld(t_env *env, t_process *cur_process, unsigned char *bytes)
+static void	debug_mode(int value, int reg)
+{
+	ft_printf("%-5s: %d r%d\n"
+			, "lld"
+			, value
+			, reg);
+}
+
+int			lld(t_env *env, t_process *cur_process, unsigned char *bytes)
 {
 	int			ret;
 	t_decode	decode;
@@ -33,6 +41,6 @@ int	lld(t_env *env, t_process *cur_process, unsigned char *bytes)
 		cur_process->carry = (args[0] == 0);
 	}
 	if (env->debug == DEBUG_ON)
-		debug_mode_nodecode("lld", (int *)args, 2);
+		debug_mode((int)args[1], (int)args[0]);
 	return (ret);
 }

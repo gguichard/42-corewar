@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 23:39:23 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/19 07:14:36 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/20 02:01:37 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,16 @@
 #include "func_op.h"
 #include "op.h"
 
-int	sub(t_env *env, t_process *cur_process, uint8_t *bytes)
+static void	debug_mode(t_decode decode)
+{
+	ft_printf("%-5s: r%d r%d r%d\n"
+			, "sub"
+			, (int)decode.tab[0].value
+			, (int)decode.tab[1].value
+			, (int)decode.tab[2].value);
+}
+
+int			sub(t_env *env, t_process *cur_process, uint8_t *bytes)
 {
 	int			ret;
 	t_decode	decode;
@@ -36,6 +45,6 @@ int	sub(t_env *env, t_process *cur_process, uint8_t *bytes)
 	cur_process->reg[(int)decode.tab[2].value - 1] = (uint32_t)value;
 	cur_process->carry = (value == 0);
 	if (env->debug == DEBUG_ON)
-		debug_mode("sub", decode, 3);
+		debug_mode(decode);
 	return (ret);
 }

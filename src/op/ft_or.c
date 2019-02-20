@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 01:03:59 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/19 06:48:18 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/20 02:00:41 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,16 @@
 #include "func_op.h"
 #include "op.h"
 
-int	ft_or(t_env *env, t_process *cur_process, uint8_t *bytes)
+static void	debug_mode(uint32_t *args, int r1)
+{
+	ft_printf("%-5s: %d | %d r%d\n"
+			, "or"
+			, (int)args[0]
+			, (int)args[1]
+			, r1);
+}
+
+int			ft_or(t_env *env, t_process *cur_process, uint8_t *bytes)
 {
 	int			ret;
 	t_decode	decode;
@@ -37,6 +46,6 @@ int	ft_or(t_env *env, t_process *cur_process, uint8_t *bytes)
 	cur_process->reg[(int)decode.tab[2].value - 1] = tmp;
 	cur_process->carry = (tmp == 0);
 	if (env->debug == DEBUG_ON)
-		debug_mode("or", decode, 3);
+		debug_mode(args, (int)decode.tab[2].value);
 	return (ret);
 }

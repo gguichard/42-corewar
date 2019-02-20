@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 21:28:28 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/19 08:00:56 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/20 01:31:28 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,17 @@
 #include "func_op.h"
 #include "op.h"
 
-int	ldi(t_env *env, t_process *cur_process, uint8_t *bytes)
+static void	debug_mode(int arg1, int arg2, int reg, int addr)
+{
+	ft_printf("%-5s: %d %d r%d (pc %d)\n"
+			, "ldi"
+			, arg1
+			, arg2
+			, reg
+			, addr);
+}
+
+int			ldi(t_env *env, t_process *cur_process, uint8_t *bytes)
 {
 	int				ret;
 	t_decode		decode;
@@ -40,7 +50,7 @@ int	ldi(t_env *env, t_process *cur_process, uint8_t *bytes)
 		cur_process->reg[(int)decode.tab[2].value - 1] = (uint64_t)value;
 	}
 	if (env->debug == DEBUG_ON)
-		debug_mode_nodecode_val("ldi", (int*)args, 3
+		debug_mode((int)args[0], (int)args[1], (int)decode.tab[2].value
 				, cur_process->pc + address);
 	return (ret);
 }

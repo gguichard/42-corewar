@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 03:54:14 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/19 06:44:39 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/20 00:53:56 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,12 @@
 #include "func_op.h"
 #include "op.h"
 
-int	aff(t_env *env, t_process *cur_process, uint8_t *bytes)
+static void	debug_mode(int r1)
+{
+	ft_printf("%-5s: r%d\n", "aff", r1);
+}
+
+int			aff(t_env *env, t_process *cur_process, uint8_t *bytes)
 {
 	int			ret;
 	t_decode	decode;
@@ -31,6 +36,6 @@ int	aff(t_env *env, t_process *cur_process, uint8_t *bytes)
 		ft_putchar(c);
 	}
 	if (env->debug == DEBUG_ON)
-		debug_mode("aff", decode, 1);
+		debug_mode((int)decode.tab[0].value);
 	return (ret);
 }

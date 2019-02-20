@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:15:16 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/19 07:57:00 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/19 23:46:50 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ static int	get_champ_id(t_env *env, char **argv, int *cur_arg)
 	{
 		*cur_arg += 1;
 		if (argv[*cur_arg] == NULL)
-			return (-1);
+			return (-5);
 		id = ft_strtol(argv[*cur_arg], &endptr, 10);
-		if (*endptr != '\0' || id < 0 || id > INT_MAX)
-			return (-1);
+		if (*endptr != '\0' || id < -4 || id > INT_MAX)
+			return (-5);
 		*cur_arg += 1;
 	}
 	return (id);
@@ -69,7 +69,7 @@ t_error		create_champs(t_env *env, char **argv, int argc, int cur_arg)
 	{
 		if (total > MAX_PLAYERS)
 			return (ERR_TOOMANYCHAMPS);
-		else if ((id = get_champ_id(env, argv, &cur_arg)) < 0)
+		else if ((id = get_champ_id(env, argv, &cur_arg)) < -4)
 			return (ERR_WRONGNOPT);
 		else if (argv[cur_arg] == NULL)
 			return (ERR_NOCHAMPNAME);

@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 02:17:41 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/19 08:04:29 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/20 02:01:47 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,15 @@
 #include "func_op.h"
 #include "op.h"
 
-int	zjmp(t_env *env, t_process *cur_process, uint8_t *bytes)
+static void	debug_mode(int value, int carry)
+{
+	ft_printf("%-5s: %d (carry %d)\n"
+			, "zjmp"
+			, value
+			, carry);
+}
+
+int			zjmp(t_env *env, t_process *cur_process, uint8_t *bytes)
 {
 	int			ret;
 	t_decode	decode;
@@ -23,7 +31,7 @@ int	zjmp(t_env *env, t_process *cur_process, uint8_t *bytes)
 	fill_decode(env, cur_process, &decode, 1);
 	ret = decode_args(&decode, bytes + 1, DIR_CODE << 6, SHORT_DIR) + 1;
 	if (env->debug == DEBUG_ON)
-		debug_mode_value("zjmp", decode, 0, (int)decode.tab[0].value % IDX_MOD);
+		debug_mode((int)decode.tab[0].value % IDX_MOD, (int)cur_process->carry);
 	if (decode.tab[0].type != DIR_CODE || cur_process->carry != 1)
 		return (ret);
 	else

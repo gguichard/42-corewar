@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 00:15:06 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/19 08:09:32 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/20 02:01:30 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,15 @@
 #include "func_op.h"
 #include "op.h"
 
-int	st(t_env *env, t_process *cur_process, uint8_t *bytes)
+static void	debug_mode(int reg, int param)
+{
+	ft_printf("%-5s: r%d %d\n"
+			, "st"
+			, reg
+			, param);
+}
+
+int			st(t_env *env, t_process *cur_process, uint8_t *bytes)
 {
 	int			ret;
 	t_decode	decode;
@@ -39,6 +47,6 @@ int	st(t_env *env, t_process *cur_process, uint8_t *bytes)
 		}
 	}
 	if (env->debug == DEBUG_ON)
-		debug_mode_nodecode("st", (int *)args, 2);
+		debug_mode((int)args[1], (int)args[0]);
 	return (ret);
 }
