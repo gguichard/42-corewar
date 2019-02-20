@@ -6,13 +6,15 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:03 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/20 06:32:21 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/20 06:51:10 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "corewar.h"
 #include "champion.h"
+#include "parsing.h"
+#include "visual.h"
 
 static void	show_help(char **argv)
 {
@@ -68,5 +70,6 @@ int			main(int argc, char **argv)
 		return (1);
 	}
 	run_vm(&env);
+	init_screen(&env);
 	return (0);
 }

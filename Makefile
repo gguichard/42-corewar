@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/20 06:26:39 by gguichar         ###   ########.fr        #
+#    Updated: 2019/02/20 06:51:24 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,8 @@ op/ft_fork.c			\
 op/lld.c				\
 op/lldi.c				\
 op/ft_lfork.c			\
-op/aff.c
+op/aff.c				\
+visual/print.c
 
 OBJ_DIR	=	.obj
 OBJ		=	$(SRC:.c=.o)
@@ -55,7 +56,7 @@ LIBFT	=	libft/libft.a
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(addprefix $(OBJ_DIR)/,$(OBJ))
-	$(CC) -o $@ $^
+	$(CC) -lncurses -o $@ $^
 
 $(LIBFT):
 	$(MAKE) -C libft
@@ -68,6 +69,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 $(OBJ_DIR):
 	/bin/mkdir $@
 	/bin/mkdir $@/op
+	/bin/mkdir $@/visual
 
 clean:
 	$(MAKE) -C libft clean
