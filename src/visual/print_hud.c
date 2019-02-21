@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 03:20:25 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/21 07:48:15 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/21 15:39:27 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ void	print_init_hud(t_env *env)
 		mvwprintw(g_data.hud, pos.y, pos.x, "Champ %d"
 				, ((t_champ *)cur_champ->content)->id);
 		wattroff(g_data.hud, COLOR_PAIR(color));
-		mvwprintw(g_data.hud, pos.y, pos.x + 16, "%.25s | %d"
-				, ((t_champ *)cur_champ->content)->header.prog_name
-				, ((t_champ *)cur_champ->content)->lives);
+		mvwprintw(g_data.hud, pos.y, pos.x + 16, "%.25s"
+				, ((t_champ *)cur_champ->content)->header.prog_name);
 		champ++;
 		cur_champ = cur_champ->next;
 	}
 	mvwprintw(g_data.hud, 5 * TXT_HUD_PADD - 2, X_HUD_PADD, "Lifebar:");
+	mvwprintw(g_data.hud, 7 * TXT_HUD_PADD - 2, X_HUD_PADD, "**RUNNING**");
 }
 
 void	print_winner_visu(t_champ *winner)

@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 03:14:43 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/21 07:39:09 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/21 15:41:23 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,19 @@ int		key_hook(void)
 		g_data.time += 7000;
 	else if (ch == 27)
 		return (0);
+	else if (ch == ' ')
+	{
+		mvwprintw(g_data.hud, 7 * TXT_HUD_PADD - 2, X_HUD_PADD, "**PAUSED**");
+		wrefresh(g_data.hud);
+		while ((ch = getch()))
+			if (ch == ' ')
+			{
+				mvwprintw(g_data.hud, 7 * TXT_HUD_PADD - 2, X_HUD_PADD, "**RUNNING**");
+				wrefresh(g_data.hud);
+				break ;
+			}
+			else if (ch == 27)
+				return (0);
+	}
 	return (1);
 }
