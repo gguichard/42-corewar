@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:03 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/20 23:04:33 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/21 03:08:28 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,12 @@ int			main(int argc, char **argv)
 	t_error	err_id;
 
 	ft_memset(&env, 0, sizeof(t_env));
+	env.visu = 1;
 	env.cur_cycle = 1;
 	env.cycle_to_die = CYCLE_TO_DIE;
 	env.cycle_before_die = env.cycle_to_die;
 	env.dump_cycles = -1;
-	env.debug = DEBUG_ON;
+	env.debug = 0;
 	err_id = parse_opts(&env, argv, &cur_arg);
 	if (err_id == ERR_NOERROR)
 		err_id = create_champs(&env, argv, argc, cur_arg);
@@ -70,6 +71,8 @@ int			main(int argc, char **argv)
 		show_help(argv);
 		return (1);
 	}
+	init_screen(&env);
 	run_vm(&env);
+	loop_screen(&env);
 	return (0);
 }

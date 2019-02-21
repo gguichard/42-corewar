@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:15:16 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/21 00:10:08 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/21 03:07:53 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "parsing.h"
 #include "champion.h"
 #include "process.h"
+#include "visual.h"
 
 static int	get_next_champ_id(t_env *env)
 {
@@ -81,6 +82,7 @@ t_error		create_champs(t_env *env, char **argv, int argc, int cur_arg)
 		if (node == NULL)
 			return (ERR_UNEXPECTED);
 		((t_champ *)node->content)->id = id;
+		g_data.champ[total] = id;
 		ft_lstpush(&env->champ_lst, node);
 		cur_arg++;
 		total++;
@@ -93,15 +95,19 @@ void		setup_champ(t_env *env, t_champ *champ, int pc)
 	t_process	*process;
 
 	ft_memcpy(&env->arena[pc], champ->prog, champ->header.prog_size);
-	ft_printf("Champion \"%s\" (%d bytes) has been loaded\n"
-			, champ->header.prog_name
-			, champ->header.prog_size);
+	if (env->visu != VISU_ON)
+		ft_printf("Champion \"%s\" (%d bytes) has been loaded\n"
+				, champ->header.prog_name
+				, champ->header.prog_size);
 	process = create_process(env, champ);
 	if (process != NULL)
 		process->pc = pc;
 	else
-		ft_dprintf(2, "corewar: error: Unable to create process for \"%s\""
-				, champ->header.prog_name);
+	{
+		if (env->visu != VISU_ON)
+			ft_dprintf(2, "corewar: error: Unable to create process for \"%s\""
+					, champ->header.prog_name);
+	}
 }
 
 void		print_winner_champ(t_env *env)
@@ -123,7 +129,10 @@ void		print_winner_champ(t_env *env)
 		cur_champ = cur_champ->next;
 	}
 	if (best_champ != NULL)
-		ft_printf("Le joueur %d \"%s\" a gagne\n"
-				, ((t_champ *)best_champ->content)->id
-				, ((t_champ *)best_champ->content)->header.prog_name);
+	{
+		if (env->visu != VISU_ON)
+			ft_printf("Le joueur %d \"%s\" a gagne\n"
+					, ((t_champ *)best_champ->content)->id
+					, ((t_champ *)best_champ->content)->header.prog_name);
+	}
 }

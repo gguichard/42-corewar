@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 02:21:10 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/21 02:54:43 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/21 03:01:31 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "corewar.h"
 #include "process.h"
 #include "func_op.h"
+#include "visual.h"
 #include "op.h"
 
 static void	debug_mode(int reg, int arg1, int arg2, int addr)
@@ -47,6 +48,9 @@ int			sti(t_env *env, t_process *cur_process, uint8_t *bytes)
 		}
 		addr = ((int)args[1] + (int)args[2]) % IDX_MOD;
 		write_in_arena(env, (uint8_t *)&args[0], 4, cur_process->pc + addr);
+		if (env->visu == VISU_ON)
+			write_ncurses((uint8_t *)args, cur_process->champ_id, 4
+					, cur_process->pc + addr);
 		if (env->debug == DEBUG_ON)
 			debug_mode((int)decode.tab[0].value, (int)args[1], (int)args[2]
 					, cur_process->pc + addr);

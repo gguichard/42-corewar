@@ -6,11 +6,12 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 00:15:06 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/21 01:06:41 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/21 03:07:07 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <inttypes.h>
+#include "visual.h"
 #include "corewar.h"
 #include "process.h"
 #include "func_op.h"
@@ -42,6 +43,9 @@ int			st(t_env *env, t_process *cur_process, uint8_t *bytes)
 		{
 			write_in_arena(env, (uint8_t *)&value, 4
 					, cur_process->pc + (int)decode.tab[1].value % IDX_MOD);
+			if (env->visu == VISU_ON)
+				write_ncurses((uint8_t *)&value, cur_process->champ_id, 4
+						, cur_process->pc + (int)decode.tab[1].value % IDX_MOD);
 		}
 		if (env->debug == DEBUG_ON)
 			debug_mode(decode.tab[0].value, decode.tab[1].value);
