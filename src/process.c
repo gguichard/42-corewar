@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 22:53:43 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/21 01:41:10 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/21 08:31:36 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ static void	exec_inst(t_env *env, t_process *process)
 	uint8_t	inst[MAX_INST_SIZE];
 
 	opcode = process->queued_op;
-	fill_buff_from_arena(env, inst, MAX_INST_SIZE, process->pc);
 	if (opcode < 1 || opcode > 16)
 		process->pc += 1;
 	else
 	{
 		opcode -= 1;
+		fill_buff_from_arena(env, inst, MAX_INST_SIZE, process->pc);
 		ret = g_op[opcode].fn(env, process, inst);
 		if (env->debug == DEBUG_ON)
 			ft_printf("ADV %d (%#.4x -> %#.4x)\n", ret, process->pc
