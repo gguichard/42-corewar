@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 01:51:02 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/21 03:50:56 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/21 07:39:03 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	print_champ(t_env *env)
 	champ = 0;
 	while (cur_champ)
 	{
-		idx = 0; 
+		idx = 0;
 		attron(COLOR_PAIR(champ_color(((t_champ *)cur_champ->content)->id)));
 		cursor = (t_int2){0, (champ * (MEM_SIZE / len)) / 64};
 		while (idx < ((t_champ *)cur_champ->content)->header.prog_size)

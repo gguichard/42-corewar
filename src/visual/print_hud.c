@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 03:20:25 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/21 05:09:14 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/21 07:48:15 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,13 @@ void	print_init_hud(t_env *env)
 		mvwprintw(g_data.hud, pos.y, pos.x, "Champ %d"
 				, ((t_champ *)cur_champ->content)->id);
 		wattroff(g_data.hud, COLOR_PAIR(color));
-		mvwprintw(g_data.hud, pos.y, pos.x + 16, "%.25s"
-				, ((t_champ *)cur_champ->content)->header.prog_name);
+		mvwprintw(g_data.hud, pos.y, pos.x + 16, "%.25s | %d"
+				, ((t_champ *)cur_champ->content)->header.prog_name
+				, ((t_champ *)cur_champ->content)->lives);
 		champ++;
 		cur_champ = cur_champ->next;
 	}
+	mvwprintw(g_data.hud, 5 * TXT_HUD_PADD - 2, X_HUD_PADD, "Lifebar:");
 }
 
 void	print_winner_visu(t_champ *winner)
@@ -48,8 +50,55 @@ void	print_winner_visu(t_champ *winner)
 
 	getmaxyx(g_data.hud, dim.y, dim.x);
 	mvwprintw(g_data.hud, 40
-			, (dim.x / 2) - (ft_strlen(winner->header.prog_name) + 10) / 2
-			, "%s has won !"
+			, (dim.x / 2 - (ft_strlen(winner->header.prog_name) + 10) / 2)
+			, "%s has won!"
 			, winner->header.prog_name);
-	delwin(g_data.hud);
+	wrefresh(g_data.hud);
+}
+
+static int	total_lives(t_list *champ_lst)
+{
+	t_list	*cur_champ;
+	int		total;
+
+	total = 0;
+	cur_champ = champ_lst;
+	while (cur_champ != NULL)
+	{
+		total += ((t_champ *)cur_champ->content)->lives;
+		cur_champ = cur_champ->next;
+	}
+	return (total);
+}
+
+void	print_bar(t_list *champ_lst)
+{
+	int		idx;
+	int		color;
+	t_int2	pos;
+	int		total;
+	t_list	*cur_champ;
+
+	init_champ_color();
+	cur_champ = champ_lst;
+	total = total_lives(champ_lst);
+	idx = 0;
+	mvwprintw(g_data.hud, 5 * TXT_HUD_PADD, idx + X_HUD_PADD -1, "|");
+	while (total != 0 && cur_champ != NULL)
+	{
+		pos = (t_int2){idx + X_HUD_PADD, 5 * TXT_HUD_PADD};
+		idx = 0;
+		color = champ_color(((t_champ *)cur_champ->content)->id);
+		wattron(g_data.hud, COLOR_PAIR(color));
+		while (idx < ((t_champ *)cur_champ->content)->lives / (float)total * 40)
+		{
+			mvwprintw(g_data.hud, pos.y, pos.x, "-");
+			idx++;
+			pos.x += 1;
+		}
+		wattroff(g_data.hud, COLOR_PAIR(color));
+		wrefresh(g_data.hud);
+		cur_champ = cur_champ->next;
+	}
+	mvwprintw(g_data.hud, 5 * TXT_HUD_PADD, 41 + X_HUD_PADD, "|");
 }

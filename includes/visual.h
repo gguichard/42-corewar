@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 04:01:13 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/21 05:05:25 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/21 07:48:17 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # define HEIGHT			64
 # define X_PADD			4
 # define Y_PADD			2
-# define X_HUD_PADD		2
-# define Y_HUD_PADD		1
+# define X_HUD_PADD		4
+# define Y_HUD_PADD		2
 # define TXT_HUD_PADD	5
 
 typedef struct	s_int2
@@ -50,6 +50,8 @@ void	write_ncurses(uint8_t *bytes_ptr, int id, int size, int index);
 void	print_champ(t_env *env);
 void	init_champ_color(void);
 void	print_winner_visu(t_champ *winner);
+void	print_bar(t_list *champ_lst);
 int		champ_color(int id);
-void	key_hook(void);
+int		key_hook(void);
+
 #endif

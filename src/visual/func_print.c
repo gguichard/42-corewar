@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 03:14:43 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/21 05:09:13 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/21 07:39:09 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,22 @@
 #include <ncurses.h>
 #include "corewar.h"
 #include "visual.h"
+#include <stdio.h>
 
 t_data	g_data;
 
 void	loop_screen(void)
 {
-	getch();
-	endwin();
+	int	ch;
+
+	nodelay(g_data.win, FALSE);
+	while ((ch = getch()))
+		if (ch == 27)
+		{
+			delwin(g_data.hud);
+			endwin();
+			break ;
+		}
 }
 
 int		champ_color(int id)
@@ -63,7 +72,7 @@ void	write_ncurses(uint8_t *bytes_ptr, int id, int size, int index)
 	attroff(COLOR_PAIR(color));
 }
 
-void	key_hook(void)
+int		key_hook(void)
 {
 	int	ch;
 
@@ -77,4 +86,7 @@ void	key_hook(void)
 	}
 	else if (ch == 'q')
 		g_data.time += 7000;
+	else if (ch == 27)
+		return (0);
+	return (1);
 }

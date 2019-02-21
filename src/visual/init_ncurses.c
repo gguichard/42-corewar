@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 03:11:42 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/21 05:09:13 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/21 07:48:15 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	init_screen(t_env *env)
 	start_color();
 	use_default_colors();
 	ioctl(0, TIOCGSIZE, &win);
+	curs_set(0);
 	g_data.hud = subwin(stdscr, win.ws_row - 2,
 			win.ws_col - HUD_COL, 1, HUD_COL - 2);
 	wborder(stdscr, '|', '|', '-', '-', '+', '+', '+', '+');

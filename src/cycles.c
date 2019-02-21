@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/21 05:02:37 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/21 07:25:08 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,12 @@ void		run_cycles_loop(t_env *env)
 			env->cycle_before_die = env->cycle_to_die;
 		}
 		if (env->visu == VISU_ON)
-			key_hook();
+		{
+			print_init_hud(env);
+			print_bar(env->champ_lst);
+			if (!key_hook())
+				break ;
+		}
 		env->cur_cycle += 1;
 	}
 }
