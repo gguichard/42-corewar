@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 03:20:25 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/21 16:22:19 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/21 16:38:22 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,11 @@ void	refresh_champ_lives(t_env *env)
 		champ++;
 		cur_champ = cur_champ->next;
 	}
+	champ++;
+	pos = (t_int2){X_HUD_PADD, Y_HUD_PADD + champ * TXT_HUD_PADD + 1};
+	mvwprintw(g_data.hud, pos.y - 5, pos.x, "Cycle : %d", env->cur_cycle);
+	mvwprintw(g_data.hud, pos.y - 4, pos.x, "Cycle to die : %d", env->cycle_to_die);
+	mvwprintw(g_data.hud, pos.y - 3, pos.x, "Cycle : %d", env->cur_cycle);
 }
 
 void	print_winner_visu(t_champ *winner)
