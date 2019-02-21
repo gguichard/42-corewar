@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 21:28:28 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/20 03:54:08 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/21 01:54:15 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int			ldi(t_env *env, t_process *cur_process, uint8_t *bytes)
 {
 	int				ret;
 	t_decode		decode;
-	uint32_t		args[3];
-	int				address;
+	uint32_t		args[2];
+	int				addr;
 	uint32_t		value;
 
 	fill_decode(env, cur_process, &decode, 3);
@@ -40,17 +40,15 @@ int			ldi(t_env *env, t_process *cur_process, uint8_t *bytes)
 			&& decode.tab[2].type == REG_CODE
 			&& decode.tab[0].type != BAD_REG)
 	{
-		store_multitype(args, decode, decode.tab[0], 0);
-		store_multitype(args + 1, decode, decode.tab[1], 0);
-		address = ((int)args[0] + (int)args[1]) % IDX_MOD;
-		args[2] = (int)decode.tab[2].value;
-		fill_buff_from_arena(env, (uint8_t *)&value, 4
-				, cur_process->pc + address);
+		store_multitype(&args[0], decode, decode.tab[0], 0);
+		store_multitype(&args[1], decode, decode.tab[1], 0);
+		addr = cur_process->pc + ((int)args[0] + (int)args[1]) % IDX_MOD;
+		fill_buff_from_arena(env, (uint8_t *)&value, 4, addr);
 		swap_bytes((uint8_t *)&value, 4);
 		cur_process->reg[(int)decode.tab[2].value - 1] = (uint64_t)value;
 		if (env->debug == DEBUG_ON)
-			debug_mode((int)decode.tab[0].value, (int)args[1]
-					, (int)decode.tab[2].value, cur_process->pc + address);
+			debug_mode((int)args[0], (int)args[1], (int)decode.tab[2].value
+					, addr);
 	}
 	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 02:58:20 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/20 03:54:56 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/21 02:45:07 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,30 +26,29 @@ static void	debug_mode(int arg1, int arg2, int reg, int addr)
 			, addr);
 }
 
-int			lldi(t_env *env, t_process *cur_process, unsigned char *bytes)
+int			lldi(t_env *env, t_process *cur_process, uint8_t *bytes)
 {
 	int				ret;
 	t_decode		decode;
-	uint32_t		args[3];
+	uint32_t		args[2];
 	int				addr;
 	uint32_t		value;
 
 	fill_decode(env, cur_process, &decode, 3);
 	ret = decode_args(&decode, bytes + 2, *(bytes + 1), SHORT_DIR) + 2;
 	if ((decode.tab[1].type == DIR_CODE || decode.tab[1].type == REG_CODE)
-			&& decode.tab[2].type == REG_CODE && decode.tab[0].type != BAD_REG)
+			&& decode.tab[2].type == REG_CODE
+			&& decode.tab[0].type != BAD_REG)
 	{
-		store_multitype(args, decode, decode.tab[0], 0);
-		store_multitype(args + 1, decode, decode.tab[1], 0);
-		addr = (int)args[0] + (int)args[1];
-		args[2] = (int)decode.tab[2].value;
-		fill_buff_from_arena(env, (uint8_t *)&value, 4, cur_process->pc + addr);
+		store_multitype(&args[0], decode, decode.tab[0], 0);
+		store_multitype(&args[1], decode, decode.tab[1], 0);
+		addr = cur_process->pc + (int)args[0] + (int)args[1];
+		fill_buff_from_arena(env, (uint8_t *)&value, 4, addr);
 		swap_bytes((uint8_t *)&value, 4);
 		cur_process->reg[(int)decode.tab[2].value - 1] = (uint64_t)value;
-		cur_process->carry = (value == 0);
 		if (env->debug == DEBUG_ON)
 			debug_mode((int)args[0], (int)args[1], (int)decode.tab[2].value
-					, cur_process->pc + addr);
+					, addr);
 	}
 	return (ret);
 }

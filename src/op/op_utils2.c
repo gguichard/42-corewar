@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 05:22:48 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/20 23:34:52 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/21 01:37:17 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	fill_decode(t_env *env, t_process *process, t_decode *decode
 void	store_multitype(uint32_t *buffer, t_decode decode, t_arg arg
 		, int is_long)
 {
-	int			address;
+	int	addr;
 
 	if (arg.type == REG_CODE)
 		*buffer = decode.process->reg[(int)arg.value - 1];
@@ -35,11 +35,12 @@ void	store_multitype(uint32_t *buffer, t_decode decode, t_arg arg
 		*buffer = arg.value;
 	else if (arg.type == IND_CODE)
 	{
-		address = decode.process->pc;
+		addr = decode.process->pc;
 		if (is_long)
-			address += arg.value;
+			addr += (int)arg.value;
 		else
-			address += arg.value % IDX_MOD;
-		fill_buff_from_arena(decode.env, (uint8_t *)buffer, 4, address);
+			addr += (int)arg.value % IDX_MOD;
+		fill_buff_from_arena(decode.env, (uint8_t *)buffer, 4, addr);
+		swap_bytes((uint8_t *)buffer, 4);
 	}
 }
