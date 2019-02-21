@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:39:09 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/18 09:59:45 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/20 23:36:04 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int			check_label(char *str)
 	len = ft_strlen(str) - 1;
 	if (str[len] != ':')
 		return (0);
+	if (len == 0)
+		return (-1);
 	while (str[i] && i < len)
 	{
 		n = 0;
@@ -53,7 +55,7 @@ int			set_arg(char *str, t_filter *filter)
 	else if (ret == -1)
 		filter->label = LX_ERROR;
 	else if (*str == 'r' && is_int(str + 1) == 1
-			&& (ret = ft_atoi(str + 1)) <= 16 && ret >= 0)
+			&& (ret = ft_atoi(str + 1)) <= 99 && ret >= 0)
 		filter->label = LX_REG;
 	else if (ft_strnequ("%:", str, 2) == 1)
 		filter->label = LX_DIRE;
@@ -97,6 +99,8 @@ t_error		classify(t_data *data, char **split)
 
 	i = 0;
 	data->f_size = get_tab_size(split);
+	if (data->f_size <= 0)
+		return (ERR_BADFMT);
 	if (!(data->filter = (t_filter*)malloc(sizeof(t_filter) * data->f_size)))
 		return (ERR_MALLOC);
 	ft_memset(data->filter, 0, sizeof(t_filter));

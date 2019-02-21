@@ -6,13 +6,36 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 04:07:07 by wta               #+#    #+#             */
-/*   Updated: 2019/02/18 04:28:08 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/20 22:45:32 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "libft.h"
 #include "asm.h"
+
+t_error	lst_lab_check(t_list_ref *list, t_list *node)
+{
+	t_list *tmp;
+
+	tmp = NULL;
+	if (list->head != NULL)
+	{
+		tmp = list->head;
+		while (tmp != NULL)
+		{
+			if (ft_strequ(((t_op*)node->content)->name,
+						((t_op*)tmp->content)->name) == 1)
+			{
+				free(node);
+				return (ERR_BADFMT);
+			}
+			tmp = tmp->next;
+		}
+	}
+	lst_pushback(list, node);
+	return (ERR_NOERROR);
+}
 
 void	lst_pushback(t_list_ref *list, t_list *node)
 {
