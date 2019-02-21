@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 03:20:25 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/21 15:39:27 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/21 16:22:19 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,24 @@ void	print_init_hud(t_env *env)
 	}
 	mvwprintw(g_data.hud, 5 * TXT_HUD_PADD - 2, X_HUD_PADD, "Lifebar:");
 	mvwprintw(g_data.hud, 7 * TXT_HUD_PADD - 2, X_HUD_PADD, "**RUNNING**");
+	mvwprintw(g_data.hud, 5* TXT_HUD_PADD, X_HUD_PADD + 82, "|");
+}
+
+void	refresh_champ_lives(t_env *env)
+{
+	t_list	*cur_champ;
+	t_int2	pos;
+	int		champ;
+
+	champ = 0;
+	cur_champ = env->champ_lst;
+	while (cur_champ)
+	{
+		pos = (t_int2){X_HUD_PADD, Y_HUD_PADD + champ * TXT_HUD_PADD + 1};
+		mvwprintw(g_data.hud, pos.y, pos.x, "lives : %d", ((t_champ *)cur_champ->content)->lives);
+		champ++;
+		cur_champ = cur_champ->next;
+	}
 }
 
 void	print_winner_visu(t_champ *winner)
@@ -83,14 +101,14 @@ void	print_bar(t_list *champ_lst)
 	cur_champ = champ_lst;
 	total = total_lives(champ_lst);
 	idx = 0;
-	mvwprintw(g_data.hud, 5 * TXT_HUD_PADD, idx + X_HUD_PADD -1, "|");
+	mvwprintw(g_data.hud, 5 * TXT_HUD_PADD, X_HUD_PADD, "|");
 	while (total != 0 && cur_champ != NULL)
 	{
-		pos = (t_int2){idx + X_HUD_PADD, 5 * TXT_HUD_PADD};
+		pos = (t_int2){idx + X_HUD_PADD + 1, 5 * TXT_HUD_PADD};
 		idx = 0;
 		color = champ_color(((t_champ *)cur_champ->content)->id);
 		wattron(g_data.hud, COLOR_PAIR(color));
-		while (idx < ((t_champ *)cur_champ->content)->lives / (float)total * 40)
+		while (idx < (((t_champ *)cur_champ->content)->lives / (float)total) * 80)
 		{
 			mvwprintw(g_data.hud, pos.y, pos.x, "-");
 			idx++;
@@ -100,5 +118,4 @@ void	print_bar(t_list *champ_lst)
 		wrefresh(g_data.hud);
 		cur_champ = cur_champ->next;
 	}
-	mvwprintw(g_data.hud, 5 * TXT_HUD_PADD, 41 + X_HUD_PADD, "|");
 }

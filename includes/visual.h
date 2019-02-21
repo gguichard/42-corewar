@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 04:01:13 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/21 07:48:17 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/21 16:19:27 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	print_init_hud(t_env *env);
 void	print_init_state(t_env *env);
 void	write_ncurses(uint8_t *bytes_ptr, int id, int size, int index);
 void	print_champ(t_env *env);
+void	refresh_champ_lives(t_env *env);
 void	init_champ_color(void);
 void	print_winner_visu(t_champ *winner);
 void	print_bar(t_list *champ_lst);
