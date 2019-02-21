@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:35 by wta               #+#    #+#             */
-/*   Updated: 2019/02/21 06:07:45 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/21 06:29:08 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,6 @@ void	err_handler(t_error err_id)
 		ft_strcat(buf, "Malloc error");
 	else if (err_id == ERR_ERRNO)
 		ft_strcat(buf, strerror(errno));
-	else if (err_id == ERR_NAME_LENGTH)
-		ft_strcat(buf, "Program name too long");
-	else if (err_id == ERR_COMMENT_LENGTH)
-		ft_strcat(buf, "Comment name too long");
 	else if (err_id == ERR_HEADER)
 		ft_strcat(buf, "Header bad format");
 	else if (err_id == ERR_NOINST)

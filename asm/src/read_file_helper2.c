@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 05:21:48 by wta               #+#    #+#             */
-/*   Updated: 2019/02/21 05:09:08 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/21 06:32:09 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_error	fill_prog_name(t_data *data, int fd, char **str, char **line)
 	err_id = ERR_NOERROR;
 	if (ft_strlen(*str) + 1 + ft_strlen(data->header.prog_name)
 			> PROG_NAME_LENGTH)
-		err_id = ERR_NAME_LENGTH;
+		err_id = ERR_HEADER;
 	if (err_id == ERR_NOERROR)
 	{
 		ft_strcat(data->header.prog_name, *str);
@@ -53,11 +53,11 @@ t_error	get_name(t_data *data, int fd, char **line)
 	s = (s == NULL) ? *line : s;
 	if (err_id == ERR_NOERROR && (ft_strlen(data->header.prog_name)
 				+ (ndl - s) > PROG_NAME_LENGTH))
-		err_id = ERR_NAME_LENGTH;
+		err_id = ERR_HEADER;
 	else if (ft_strlen(data->header.prog_name) + (ndl - s) <= PROG_NAME_LENGTH)
 		ft_strncat(data->header.prog_name, s, ndl - s);
 	else
-		err_id = ERR_NAME_LENGTH;
+		err_id = ERR_HEADER;
 	if (err_id == ERR_NOERROR && ndl != NULL)
 		err_id = check_endline(ndl + 1);
 	ft_strdel(line);
@@ -71,7 +71,7 @@ t_error	fill_comment(t_data *data, int fd, char **str, char **line)
 	err_id = ERR_NOERROR;
 	if (ft_strlen(*str) + 1 + ft_strlen(data->header.comment)
 			> COMMENT_LENGTH)
-		err_id = ERR_COMMENT_LENGTH;
+		err_id = ERR_HEADER;
 	if (err_id == ERR_NOERROR)
 	{
 		ft_strcat(data->header.comment, *str);
@@ -102,11 +102,11 @@ t_error	get_comment(t_data *data, int fd, char **line)
 	s = (s == NULL) ? *line : s;
 	if (err_id == ERR_NOERROR && (ft_strlen(data->header.comment)
 				+ (needle - s) > COMMENT_LENGTH))
-		err_id = ERR_COMMENT_LENGTH;
+		err_id = ERR_HEADER;
 	else if (ft_strlen(data->header.comment) + (needle - s) <= COMMENT_LENGTH)
 		ft_strncat(data->header.comment, s, needle - s);
 	else
-		err_id = ERR_COMMENT_LENGTH;
+		err_id = ERR_HEADER;
 	if (err_id == ERR_NOERROR && needle != NULL)
 		err_id = check_endline(needle + 1);
 	ft_strdel(line);
