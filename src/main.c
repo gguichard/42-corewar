@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:03 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/21 03:08:28 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/21 04:59:54 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int			main(int argc, char **argv)
 	}
 	init_screen(&env);
 	run_vm(&env);
-	loop_screen(&env);
+	key_hook();
+	loop_screen();
 	return (0);
 }

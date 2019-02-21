@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:15:16 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/21 03:07:53 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/21 04:27:18 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,5 +134,7 @@ void		print_winner_champ(t_env *env)
 			ft_printf("Le joueur %d \"%s\" a gagne\n"
 					, ((t_champ *)best_champ->content)->id
 					, ((t_champ *)best_champ->content)->header.prog_name);
+		else
+			print_winner_visu((t_champ *)best_champ->content);
 	}
 }

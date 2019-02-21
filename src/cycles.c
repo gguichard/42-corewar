@@ -6,13 +6,14 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/21 03:08:09 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/21 05:02:37 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "corewar.h"
 #include "process.h"
+#include "visual.h"
 #include "op.h"
 
 static int	kill_old_process(t_env *env)
@@ -95,6 +96,8 @@ void		run_cycles_loop(t_env *env)
 				ft_printf("Cycle to die is now %d\n", env->cycle_to_die);
 			env->cycle_before_die = env->cycle_to_die;
 		}
+		if (env->visu == VISU_ON)
+			key_hook();
 		env->cur_cycle += 1;
 	}
 }

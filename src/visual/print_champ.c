@@ -6,14 +6,13 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 01:51:02 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/21 02:58:16 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/21 03:50:56 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <ncurses.h>
 #include "corewar.h"
 #include "visual.h"
-#include <ncurses.h>
 
 t_data	g_data;
 
@@ -25,8 +24,6 @@ void	print_champ(t_env *env)
 	int				champ;
 	int				len;
 
-	start_color();
-	use_default_colors();
 	init_champ_color();
 	cur_champ = env->champ_lst;
 	len = ft_lstsize(cur_champ);
@@ -34,7 +31,6 @@ void	print_champ(t_env *env)
 	while (cur_champ)
 	{
 		idx = 0; 
-		printf("OK\n");
 		attron(COLOR_PAIR(champ_color(((t_champ *)cur_champ->content)->id)));
 		cursor = (t_int2){0, (champ * (MEM_SIZE / len)) / 64};
 		while (idx < ((t_champ *)cur_champ->content)->header.prog_size)

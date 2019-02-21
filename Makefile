@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/21 03:03:14 by vifonne          ###   ########.fr        #
+#    Updated: 2019/02/21 03:23:38 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,9 @@ op/lld.c				\
 op/lldi.c				\
 op/ft_lfork.c			\
 op/aff.c				\
-visual/print.c			\
+visual/func_print.c		\
+visual/init_ncurses.c	\
+visual/print_hud.c		\
 visual/print_champ.c
 
 OBJ_DIR	=	.obj
