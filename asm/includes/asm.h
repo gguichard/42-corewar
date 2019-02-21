@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:25:14 by wta               #+#    #+#             */
-/*   Updated: 2019/02/20 22:17:28 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/21 05:30:36 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,13 @@ typedef	enum	e_error
 	ERR_NOERROR,
 	ERR_ERRNO,
 	ERR_BADFMT,
+	ERR_NOINST,
+	ERR_NOLABEL,
 	ERR_GNL,
-	ERR_NAME,
+	ERR_NAME_LENGTH,
+	ERR_COMMENT_LENGTH,
+	ERR_DUPLABEL,
+	ERR_HEADER,
 	ERR_MALLOC
 }				t_error;
 
@@ -137,4 +142,6 @@ int				cnt_space_to_add(char *str);
 
 void			free_split_n_line(char **line, char ***split, int fd);
 void			err_handler(t_error err_id);
+t_error			err_print(char *str, t_error err_id);
+
 #endif

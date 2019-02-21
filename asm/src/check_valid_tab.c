@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 20:19:44 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/20 22:44:48 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/21 06:08:05 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,29 @@
 
 static int		check_arg(t_data *data, int i)
 {
-	t_filter	*inst;
 	t_filter	*arg;
 	t_lexer		id;
 	char		*endptr;
 	int			n;
 
-	n = 0;
-	inst = &data->filter[i];
-	while (n < data->filter[i].op.argc)
+	n = -1;
+	while (++n < data->filter[i].op.argc)
 	{
 		arg = &data->filter[i + 1 + n];
 		id = arg->label;
 		if (id == LX_DIRE)
-			arg->op.direct = inst->op.direct;
-		if ((id & inst->op.type[n]) == 0)
+			arg->op.direct = data->filter[i].op.direct;
+		if ((id & data->filter[i].op.type[n]) == 0)
+		{
+			ft_dprintf(2, "Error bad type: \"%s\" from instruction \"%s\"\n",
+					arg->op.name, data->filter[i].op.name);
 			return (-1);
-		inst->op.type[n] &= id;
+		}
+		data->filter[i].op.type[n] &= id;
 		if (id == LX_DIRE || id == LX_REG)
 			arg->value = (int)ft_strtol(arg->op.name + 1, &endptr, 10);
 		else if (id == LX_INDIR)
 			arg->value = (int)ft_strtol(arg->op.name, &endptr, 10);
-		n += 1;
 	}
 	return (n + 1);
 }
@@ -64,7 +65,7 @@ static t_error	check_is_label(t_data *data)
 			}
 		}
 		if (jdx == data->f_size)
-			return (ERR_BADFMT);
+			return (err_print(name, ERR_NOLABEL));
 	}
 	return (ERR_NOERROR);
 }
@@ -101,11 +102,11 @@ static t_error	set_label_size(t_data *data)
 		{
 			if ((node = lstnew_mallocfree(&data->filter[i].op)) == NULL)
 				return (ERR_MALLOC);
-			if (lst_lab_check(&data->label_lst, node) != ERR_NOERROR)
-				return (ERR_BADFMT);
+			if (lst_lab_check(&data->label_lst, node) == ERR_DUPLABEL)
+				return (err_print(data->filter[i].op.name, ERR_DUPLABEL));
 		}
 		else if (data->filter[i].label == LX_ERROR)
-			return (ERR_BADFMT);
+			return (err_print(data->filter[i].op.name, ERR_BADFMT));
 		set_size(&data->filter[i]);
 		size += data->filter[i].size;
 		i++;
@@ -132,9 +133,9 @@ t_error			check_valid_tab(t_data *data)
 		else if (data->filter[idx].label == LX_LABEL)
 			idx += 1;
 		else
-			return (ERR_BADFMT);
+			return (err_print(data->filter[idx].op.name, ERR_BADFMT));
 	}
 	if (check_is_label(data) != ERR_NOERROR)
-		return (ERR_BADFMT);
+		return (ERR_NOLABEL);
 	return (set_label_size(data));
 }

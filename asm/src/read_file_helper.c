@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 05:16:04 by wta               #+#    #+#             */
-/*   Updated: 2019/02/19 03:58:16 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/21 05:03:33 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_error	check_first_line(int fd)
 		return ((ret == -1) ? ERR_ERRNO : ERR_BADFMT);
 	if (buf[0] != '\n' && buf[0] != '\t' && buf[0] != '#' && buf[0] != '.'
 			&& buf[0] != ';' && buf[0] != ' ')
-		return (ERR_BADFMT);
+		return (ERR_HEADER);
 	if ((ret = lseek(fd, 0, SEEK_SET)) == -1)
 		return (ERR_ERRNO);
 	return (ERR_NOERROR);
@@ -60,7 +60,7 @@ t_error	skip_useless(int fd, char **line)
 		ft_strdel(line);
 	}
 	if (ret <= 0)
-		return (ERR_BADFMT);
+		return (ERR_HEADER);
 	return (ERR_NOERROR);
 }
 
@@ -94,6 +94,6 @@ t_error	check_endline(char *str)
 			break ;
 	}
 	if (str[i] != '#' && str[i] != '\0' && str[i] != ';')
-		return (ERR_BADFMT);
+		return (ERR_HEADER);
 	return (ERR_NOERROR);
 }

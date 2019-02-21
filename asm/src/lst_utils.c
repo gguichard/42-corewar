@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 04:07:07 by wta               #+#    #+#             */
-/*   Updated: 2019/02/20 22:45:32 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/21 05:21:37 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_error	lst_lab_check(t_list_ref *list, t_list *node)
 						((t_op*)tmp->content)->name) == 1)
 			{
 				free(node);
-				return (ERR_BADFMT);
+				return (ERR_DUPLABEL);
 			}
 			tmp = tmp->next;
 		}

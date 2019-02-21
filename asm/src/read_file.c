@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:10 by wta               #+#    #+#             */
-/*   Updated: 2019/02/20 21:19:19 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/21 05:53:11 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_error	get_first_part(t_data *data, int fd, char **line)
 	if (err_id == ERR_NOERROR)
 		err_id = skip_useless(fd, line);
 	if (*line == NULL || (research = ft_strchr(*line, '.')) == NULL)
-		err_id = ERR_BADFMT;
+		err_id = ERR_HEADER;
 	if (*line != NULL && ft_strnequ(research, NAME_CMD_STRING, 5))
 		trig = 0;
 	if (err_id == ERR_NOERROR)
@@ -115,8 +115,8 @@ t_error	read_file(char *file, t_data *data)
 		err_id = get_post_header(fd, &line, &inst);
 	if (inst != NULL && err_id == ERR_NOERROR)
 		err_id = split_input(inst, &split);
-	else
-		err_id = ERR_BADFMT;
+	else if (inst == NULL && err_id == ERR_NOERROR)
+		err_id = ERR_NOINST;
 	if (err_id == ERR_NOERROR)
 		err_id = classify(data, split);
 	free_split_n_line(&line, &split, fd);
