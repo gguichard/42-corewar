@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:23:27 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/21 07:24:46 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/21 07:32:04 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ static int	read_name(int fd, t_champ *champ)
 		ft_dprintf(2, "corewar: error: Bad name\n");
 		return (0);
 	}
-	ft_memmove(champ->header.prog_name, buf, PROG_NAME_LENGTH);
-	lseek(fd, 4, SEEK_CUR);
-	if ((ret = read(fd, buf, 4)) != 4)
+	ft_memcpy(champ->header.prog_name, buf, PROG_NAME_LENGTH);
+	champ->header.prog_name[ret] = '\0';
+	if (lseek(fd, 4, SEEK_CUR) < 0 || (ret = read(fd, buf, 4)) != 4)
 	{
 		ft_dprintf(2, "corewar: error: Bad champ size\n");
 		return (0);
@@ -80,9 +80,13 @@ static int	read_comment(int fd, t_champ *champ)
 		ft_dprintf(2, "corewar: error: Bad comment\n");
 		return (0);
 	}
-	ft_memmove(champ->header.comment, buf, COMMENT_LENGTH);
+	ft_memcpy(champ->header.comment, buf, COMMENT_LENGTH);
 	champ->header.comment[ret] = '\0';
-	lseek(fd, 4, SEEK_CUR);
+	if (lseek(fd, 4, SEEK_CUR) < 0)
+	{
+		ft_dprintf(2, "corewar: error: %s\n", strerror(errno));
+		return (0);
+	}
 	return (1);
 }
 
