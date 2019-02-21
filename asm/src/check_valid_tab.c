@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 20:19:44 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/21 06:08:05 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/21 07:44:48 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int		check_arg(t_data *data, int i)
 			arg->op.direct = data->filter[i].op.direct;
 		if ((id & data->filter[i].op.type[n]) == 0)
 		{
-			ft_dprintf(2, "Error bad type: \"%s\" from instruction \"%s\"\n",
+			ft_dprintf(2, "Error: arg bad type: \"%s\" from inst \"%s\"\n",
 					arg->op.name, data->filter[i].op.name);
 			return (-1);
 		}
