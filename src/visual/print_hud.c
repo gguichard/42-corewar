@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 03:20:25 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/21 16:38:22 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 00:00:50 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	print_init_hud(t_env *env)
 	mvwprintw(g_data.hud, 5 * TXT_HUD_PADD - 2, X_HUD_PADD, "Lifebar:");
 	mvwprintw(g_data.hud, 7 * TXT_HUD_PADD - 2, X_HUD_PADD, "**RUNNING**");
 	mvwprintw(g_data.hud, 5* TXT_HUD_PADD, X_HUD_PADD + 82, "|");
+	print_ascii_art();
 }
 
 void	refresh_champ_lives(t_env *env)
@@ -123,4 +124,22 @@ void	print_bar(t_list *champ_lst)
 		wrefresh(g_data.hud);
 		cur_champ = cur_champ->next;
 	}
+}
+
+void	print_ascii_art(void)
+{
+	t_int2	dim;
+
+	getmaxyx(g_data.hud, dim.y, dim.x);
+	mvwprintw(g_data.hud, 25, dim.x / 4, "%S", L" ▄████▄   ▒█████   ██▀███  ▓█████  █     █░ ▄▄▄       ██▀███   ");
+	mvwprintw(g_data.hud ,25, dim.x / 4, "%S", L" ▒██▀ ▀█  ▒██▒  ██▒▓██ ▒ ██▒▓█   ▀ ▓█░ █ ░█░▒████▄    ▓██ ▒ ██▒");
+	mvwprintw(g_data.hud ,25, dim.x / 4, "%S", L" ▒▓█    ▄ ▒██░  ██▒▓██ ░▄█ ▒▒███   ▒█░ █ ░█ ▒██  ▀█▄  ▓██ ░▄█ ▒");
+	mvwprintw(g_data.hud ,25, dim.x / 4, "%S", L" ▒▓▓▄ ▄██▒▒██   ██░▒██▀▀█▄  ▒▓█  ▄ ░█░ █ ░█ ░██▄▄▄▄██ ▒██▀▀█▄  ");
+	mvwprintw(g_data.hud ,25, dim.x / 4, "%S", L" ▒ ▓███▀ ░░ ████▓▒░░██▓ ▒██▒░▒████▒░░██▒██▓  ▓█   ▓██▒░██▓ ▒██▒");
+	mvwprintw(g_data.hud ,25, dim.x / 4, "%S", L" ░ ░▒ ▒  ░░ ▒░▒░▒░ ░ ▒▓ ░▒▓░░░ ▒░ ░░ ▓░▒ ▒   ▒▒   ▓▒█░░ ▒▓ ░▒▓░");
+	mvwprintw(g_data.hud ,25, dim.x / 4, "%S", L"   ░  ▒     ░ ▒ ▒░   ░▒ ░ ▒░ ░ ░  ░  ▒ ░ ░    ▒   ▒▒ ░  ░▒ ░ ▒░");
+	mvwprintw(g_data.hud ,25, dim.x / 4, "%S", L" ░        ░ ░ ░ ▒    ░░   ░    ░     ░   ░    ░   ▒     ░░   ░ ");
+	mvwprintw(g_data.hud ,25, dim.x / 4, "%S", L" ░ ░          ░ ░     ░        ░  ░    ░          ░  ░   ░     ");
+	mvwprintw(g_data.hud ,25, dim.x / 4, "%S", L" ░                                                             ");
+	delwin(g_data.hud);
 }

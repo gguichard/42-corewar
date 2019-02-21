@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 04:01:13 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/21 16:19:27 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/21 23:52:02 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ void	print_winner_visu(t_champ *winner);
 void	print_bar(t_list *champ_lst);
 int		champ_color(int id);
 int		key_hook(void);
+void	print_ascii_art(void);
 
 #endif
