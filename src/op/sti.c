@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 02:21:10 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/22 04:03:29 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 07:04:49 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static void	debug_mode(int reg, int *args, int addr, int lvl)
 	if (lvl == DEBUG_FIRST_LVL)
 		ft_printf("%-5s\n", "sti");
 	else if (lvl <= DEBUG_THIRD_LVL)
-		ft_printf("%-5s: r%d %d %d (pc %d)\n", "sti", reg, args[0], args[1], addr);
+		ft_printf("%-5s: r%d %d %d (pc %d)\n", "sti", reg, args[0], args[1]
+				, addr);
 }
 
 int			sti(t_env *env, t_process *cur_process, uint8_t *bytes)
@@ -38,12 +39,9 @@ int			sti(t_env *env, t_process *cur_process, uint8_t *bytes)
 	if ((decode.tab[2].type == REG_CODE || decode.tab[2].type == DIR_CODE)
 			&& decode.tab[1].type != BAD_REG && decode.tab[0].type == REG_CODE)
 	{
-		idx = 0;
-		while (idx < 3)
-		{
+		idx = -1;
+		while (++idx < 3)
 			store_multitype(&args[idx], decode, decode.tab[idx], 0);
-			idx++;
-		}
 		addr = ((int)args[1] + (int)args[2]) % IDX_MOD;
 		write_in_arena(env, (uint8_t *)&args[0], 4, cur_process->pc + addr);
 		if (env->visu == VISU_ON)

@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 01:03:59 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/22 03:51:43 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 07:05:13 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,9 @@ int			ft_or(t_env *env, t_process *cur_process, uint8_t *bytes)
 			&& decode.tab[1].type != BAD_REG
 			&& decode.tab[2].type == REG_CODE)
 	{
-		idx = 0;
-		while (idx < 2)
-		{
+		idx = -1;
+		while (++idx < 2)
 			store_multitype(&args[idx], decode, decode.tab[idx], 0);
-			idx++;
-		}
 		tmp = args[0] | args[1];
 		cur_process->reg[(int)decode.tab[2].value - 1] = tmp;
 		cur_process->carry = (tmp == 0);

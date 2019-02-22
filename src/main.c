@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:03 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/22 06:39:34 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/22 07:13:23 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,6 @@ static void	show_help(char **argv)
 	ft_printf("  --debug <level>\tEnable debug mode (levels: 1, 2 or 3)\n");
 	ft_printf("  -v\t\t\tEnable visual mode\n");
 }
-
-/*static void	debug_mode_welcome(t_env *env)
-  {
-  if (env->debug == DEBUG_ON)
-  {
-  ft_printf("Welcome into Debug mode v1.0 :\n");
-  ft_printf("3 levels are available :\n");
-  ft_printf("\t- 1 : Display only instructions\n");
-  ft_printf("\t- 2 : Display instructions with their parameters\n");
-  ft_printf("\t- 3 : Same as 2 but with amount of bytes that each PC increase.\n");
-  }
-  }*/
 
 static void	run_vm(t_env *env)
 {
