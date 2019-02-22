@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 03:11:42 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/22 06:08:26 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 06:50:57 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	init_screen(t_env *env)
 	nodelay(stdscr, TRUE);
 	noecho();
 	g_data.win = stdscr;
-	g_data.time = 5000;
+	g_data.time = SPEED;
 	print_init_state(env);
 	print_champ(env);
 	print_init_hud(env);
@@ -52,7 +52,6 @@ void	init_champ_color(void)
 	init_pair(6, -1, COLOR_BLUE);
 	init_pair(7, -1, COLOR_GREEN);
 	init_pair(8, -1, COLOR_YELLOW);
-
 }
 
 void	print_init_state(t_env *env)

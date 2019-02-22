@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 03:20:25 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/22 05:56:07 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 06:50:56 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void	print_init_hud(t_env *env)
 	}
 	mvwprintw(g_data.hud, 5 * TXT_HUD_PADD - 2,X_HUD_PADD, "Lifebar:");
 	mvwprintw(g_data.hud, 7 * TXT_HUD_PADD - 2, X_HUD_PADD, "**RUNNING**");
+	mvwprintw(g_data.hud, 8 * TXT_HUD_PADD - 2, X_HUD_PADD, "Speed : %d"
+			, MAX_SPEED - SPEED);
 	print_bottom();
 }
 

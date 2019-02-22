@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 03:14:43 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/22 06:12:05 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 06:50:58 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 t_data	g_data;
 
-void	loop_screen(void)
+void		loop_screen(void)
 {
 	int	ch;
 
@@ -31,7 +31,7 @@ void	loop_screen(void)
 		}
 }
 
-int		champ_color(int id)
+int			champ_color(int id)
 {
 	int	idx;
 
@@ -53,10 +53,9 @@ static void	print_curs(t_int2 pos, uint8_t *bytes_ptr, int color, int idx)
 	attron(COLOR_PAIR(color));
 	wrefresh(g_data.win);
 	usleep(g_data.time);
-
 }
 
-void	write_ncurses(uint8_t *bytes_ptr, int id, int size, int index)
+void		write_ncurses(uint8_t *bytes_ptr, int id, int size, int index)
 {
 	t_int2	pos;
 	int		idx;
@@ -66,7 +65,7 @@ void	write_ncurses(uint8_t *bytes_ptr, int id, int size, int index)
 	init_champ_color();
 	color = champ_color(id);
 	fix_pc_offset(&index);
-	pos = (t_int2) {index % WIDTH , index / HEIGHT};
+	pos = (t_int2) {index % WIDTH, index / HEIGHT};
 	attron(COLOR_PAIR(color));
 	while (idx < size)
 	{
@@ -76,43 +75,12 @@ void	write_ncurses(uint8_t *bytes_ptr, int id, int size, int index)
 			, bytes_ptr[idx]);
 		index += 1;
 		fix_pc_offset(&index);
-		pos = (t_int2) {index % WIDTH , index / HEIGHT};
+		pos = (t_int2) {index % WIDTH, index / HEIGHT};
 		idx++;
+		mvwprintw(g_data.hud, 8 * TXT_HUD_PADD - 2, X_HUD_PADD, "Speed : %d"
+				,  MAX_SPEED - g_data.time);
 		usleep(g_data.time);
 		wrefresh(g_data.win);
 	}
 	attroff(COLOR_PAIR(color));
-}
-
-int		key_hook(void)
-{
-	int	ch;
-
-	ch = getch();
-	if (ch == 'r')
-	{
-		if (g_data.time <= 7000)
-			g_data.time = 1000;
-		else
-			g_data.time -= 7000;
-	}
-	else if (ch == 'q')
-		g_data.time += 7000;
-	else if (ch == 27)
-		return (0);
-	else if (ch == ' ')
-	{
-		mvwprintw(g_data.hud, 7 * TXT_HUD_PADD - 2, X_HUD_PADD, "**PAUSED**");
-		wrefresh(g_data.hud);
-		while ((ch = getch()))
-			if (ch == ' ')
-			{
-				mvwprintw(g_data.hud, 7 * TXT_HUD_PADD - 2, X_HUD_PADD, "**RUNNING**");
-				wrefresh(g_data.hud);
-				break ;
-			}
-			else if (ch == 27)
-				return (0);
-	}
-	return (1);
 }

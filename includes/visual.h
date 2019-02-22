@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 04:01:13 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/22 05:29:18 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 06:48:30 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@
 # define X_HUD_PADD		4
 # define Y_HUD_PADD		2
 # define TXT_HUD_PADD	5
+# define SPEED			50000
+# define MAX_SPEED		1000000
+# define MIN_SPEED		500
+# define SPEED_INC		3000
 
 typedef struct	s_int2
 {
