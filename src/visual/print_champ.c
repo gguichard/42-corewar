@@ -6,13 +6,14 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 01:51:02 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/22 04:54:46 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 05:55:47 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ncurses.h>
 #include "corewar.h"
 #include "visual.h"
+#include <unistd.h>
 
 t_data	g_data;
 
@@ -40,6 +41,7 @@ void	print_champ(t_env *env)
 				cursor.x = 0;
 				cursor.y += 1;
 			}
+			move(cursor.y + Y_PADD, cursor.x + X_PADD);
 			mvwprintw(g_data.win, cursor.y + Y_PADD, cursor.x + X_PADD
 					, "%.2x", ((t_champ *)cur_champ->content)->prog[idx]);
 			cursor.x += 3;
