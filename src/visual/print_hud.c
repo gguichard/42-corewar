@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 03:20:25 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/22 07:35:25 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 08:24:38 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static int	total_lives(t_list *champ_lst)
 	return (total);
 }
 
-void		print_bar(t_list *champ_lst)
+void		print_lifebar_visu(t_list *champ_lst)
 {
 	int		idx;
 	int		color;
@@ -107,16 +107,17 @@ void		print_bar(t_list *champ_lst)
 	cur_champ = champ_lst;
 	tot = total_lives(champ_lst);
 	idx = 0;
+	pos = (t_int2){idx + X_HUD_PADD + 1, 5 * TXT_HUD_PADD};
 	while (tot != 0 && cur_champ != NULL)
 	{
-		pos = (t_int2){idx + X_HUD_PADD + 1, 5 * TXT_HUD_PADD};
 		idx = -1;
 		color = champ_color(((t_champ *)cur_champ->content)->id);
 		wattron(g_data.hud, COLOR_PAIR(color));
-		while (++idx < ((t_champ *)cur_champ->content)->lives * 80 / (float)tot)
+		while (++idx < ft_round(((t_champ *)cur_champ->content)->lives * 80
+					/ (float)tot))
 			mvwprintw(g_data.hud, pos.y, pos.x++, "-");
 		wattroff(g_data.hud, COLOR_PAIR(color));
-		wrefresh(g_data.hud);
 		cur_champ = cur_champ->next;
 	}
+	wrefresh(g_data.hud);
 }

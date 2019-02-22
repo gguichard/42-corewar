@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/22 06:51:58 by vifonne          ###   ########.fr        #
+#    Updated: 2019/02/22 08:24:55 by gguichar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,8 @@ visual/func_print.c		\
 visual/init_ncurses.c	\
 visual/print_hud.c		\
 visual/print_champ.c	\
-visual/key_hook.c
+visual/key_hook.c		\
+visual/math_utils.c
 
 OBJ_DIR	=	.obj
 OBJ		=	$(SRC:.c=.o)

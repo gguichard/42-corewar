@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/21 16:20:20 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 07:51:17 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int	decrease_cycle_to_die(t_env *env)
 
 static int	visual_manage_cycle(t_env *env)
 {
-	print_bar(env->champ_lst);
+	print_lifebar_visu(env->champ_lst);
 	refresh_champ_lives(env);
 	if (!key_hook())
 		return (0);

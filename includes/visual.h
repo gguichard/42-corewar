@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 04:01:13 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/22 06:48:30 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 08:24:05 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,11 @@ void	print_champ(t_env *env);
 void	refresh_champ_lives(t_env *env);
 void	init_champ_color(void);
 void	print_winner_visu(t_champ *winner);
-void	print_bar(t_list *champ_lst);
+void	print_lifebar_visu(t_list *champ_lst);
 int		champ_color(int id);
 int		key_hook(void);
 void	print_bottom(void);
 void	print_gradin(void);
+double	ft_round(double value);
 
 #endif
