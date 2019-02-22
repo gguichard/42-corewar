@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:43 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/22 05:19:10 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/22 06:39:40 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,10 @@ enum			e_error
 	ERR_NOERROR = 0,
 	ERR_UNEXPECTED = 1,
 	ERR_NOCHAMPNAME,
+	ERR_OPTCONFLICT,
 	ERR_WRONGOPT,
 	ERR_WRONGNOPT,
-	ERR_WRONGVOPT,
+	ERR_WRONGDEBUGOPT,
 	ERR_WRONGDUMPOPT,
 	ERR_CHAMPREAD,
 	ERR_NOCHAMPS,
@@ -57,12 +58,6 @@ struct			s_env
 	int			cycle_checks_no_decr;
 };
 
-typedef struct	s_opt
-{
-	const char	*name;
-	t_error		(*fn)(t_env *, const char *);
-}				t_opt;
-
 typedef struct	s_op
 {
 	int			(*fn)(t_env *, t_process *, uint8_t *);
@@ -73,7 +68,6 @@ t_error			create_champs(t_env *env, char **argv, int argc, int cur_arg);
 void			setup_champ(t_env *env, t_champ *champ, int pc);
 void			print_winner_champ(t_env *env);
 
-t_error			parse_opts(t_env *env, char **argv, int *cur_arg);
 t_process		*create_process(t_env *env, t_champ *champ);
 
 void			fix_pc_offset(int *offset);

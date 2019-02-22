@@ -6,24 +6,14 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 06:17:13 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/22 05:19:17 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/22 06:39:22 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <limits.h>
 #include "libft.h"
 #include "corewar.h"
-
-static char		*get_optarg(const char *opt, char **argv, int *cur_arg)
-{
-	size_t	len;
-
-	len = ft_strlen(opt);
-	if (argv[*cur_arg][len] != '\0')
-		return (argv[*cur_arg] + len);
-	*cur_arg += 1;
-	return (argv[*cur_arg]);
-}
+#include "options.h"
 
 static t_error	parse_dump_opt(t_env *env, const char *optarg)
 {
@@ -39,12 +29,14 @@ static t_error	parse_dump_opt(t_env *env, const char *optarg)
 	return (ERR_NOERROR);
 }
 
-static t_error	parse_verbose_opt(t_env *env, const char *optarg)
+static t_error	parse_debug_opt(t_env *env, const char *optarg)
 {
 	long	value;
 	char	*endptr;
 
-	if (optarg == NULL)
+	if (env->visu == VISU_ON)
+		return (ERR_OPTCONFLICT);
+	else if (optarg == NULL)
 		env->debug_lvl = DEBUG_FIRST_LVL;
 	else
 	{
@@ -52,35 +44,29 @@ static t_error	parse_verbose_opt(t_env *env, const char *optarg)
 		if (value != DEBUG_FIRST_LVL
 				&& value != DEBUG_SECOND_LVL
 				&& value != DEBUG_THIRD_LVL)
-			return (ERR_WRONGVOPT);
+			return (ERR_WRONGDEBUGOPT);
 		env->debug_lvl = value;
 	}
+	env->debug = DEBUG_ON;
 	return (ERR_NOERROR);
 }
 
-t_error			parse_opt(t_env *env, t_opt *opts, char **argv, int *cur_arg)
+static t_error	parse_visual_opt(t_env *env, const char *optarg)
 {
-	const char	*opt;
-	int			idx;
-
-	opt = argv[*cur_arg];
-	idx = 0;
-	while (opts[idx].name != NULL)
-	{
-		if (ft_strstr(opt, opts[idx].name) == opt)
-			return (opts[idx].fn(env
-						, get_optarg(opts[idx].name, argv, cur_arg)));
-		idx++;
-	}
-	return (ERR_WRONGOPT);
+	(void)optarg;
+	if (env->debug == DEBUG_ON || env->dump_cycles != -1)
+		return (ERR_OPTCONFLICT);
+	env->visu = VISU_ON;
+	return (ERR_NOERROR);
 }
 
 t_error			parse_opts(t_env *env, char **argv, int *cur_arg)
 {
 	static t_opt	opts[] = {
-		{"-dump", parse_dump_opt},
-		{"-v", parse_verbose_opt},
-		{NULL, NULL}
+		{"--dump", parse_dump_opt, OPT_MUSTHAVEARG},
+		{"--debug", parse_debug_opt, OPT_MUSTHAVEARG},
+		{"-v", parse_visual_opt, OPT_NOARG},
+		{NULL, NULL, 0}
 	};
 	t_error			err_id;
 

@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/22 06:27:50 by vifonne          ###   ########.fr        #
+#    Updated: 2019/02/22 06:51:58 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRC_DIR	=	src
 SRC		=				\
 main.c					\
 options.c				\
+options_utils.c			\
 read.c					\
 champs.c				\
 cycles.c				\

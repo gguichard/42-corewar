@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 22:53:43 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/21 08:31:36 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/22 05:33:59 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	exec_inst(t_env *env, t_process *process)
 		opcode -= 1;
 		fill_buff_from_arena(env, inst, MAX_INST_SIZE, process->pc);
 		ret = g_op[opcode].fn(env, process, inst);
-		if (env->debug == DEBUG_ON)
+		if (env->debug == DEBUG_ON && env->debug_lvl >= DEBUG_THIRD_LVL)
 			ft_printf("ADV %d (%#.4x -> %#.4x)\n", ret, process->pc
 					, process->pc + ret);
 		process->pc += ret;
