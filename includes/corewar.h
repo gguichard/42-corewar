@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:43 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/22 03:57:49 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 05:19:10 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ enum			e_error
 	ERR_NOERROR = 0,
 	ERR_UNEXPECTED = 1,
 	ERR_NOCHAMPNAME,
+	ERR_WRONGOPT,
 	ERR_WRONGNOPT,
+	ERR_WRONGVOPT,
 	ERR_WRONGDUMPOPT,
 	ERR_CHAMPREAD,
 	ERR_NOCHAMPS,
@@ -54,6 +56,12 @@ struct			s_env
 	int			cycle_before_die;
 	int			cycle_checks_no_decr;
 };
+
+typedef struct	s_opt
+{
+	const char	*name;
+	t_error		(*fn)(t_env *, const char *);
+}				t_opt;
 
 typedef struct	s_op
 {
