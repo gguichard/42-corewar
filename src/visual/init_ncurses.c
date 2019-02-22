@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 03:11:42 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/23 00:15:06 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/23 00:40:44 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	init_screen(t_env *env)
 {
 	struct winsize	win;
 
+	g_data.env = env;
 	g_data.cursor = (t_int2){X_PADD, Y_PADD};
 	initscr();
 	start_color();

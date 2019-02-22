@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 00:05:44 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/23 00:18:07 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/23 00:41:49 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 #include <stdlib.h>
 #include "visual.h"
 
-t_data	g_data;
+t_data		g_data;
 
 static void	end_ncurses(int sig)
 {
 	delwin(g_data.hud);
 	endwin();
+	ft_lstfree(&g_data.env->champ_lst);
+	ft_lstfree(&g_data.env->process_lst);
 	exit(sig);
 }
 

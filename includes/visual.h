@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 04:01:13 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/23 00:14:22 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/23 00:40:09 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct	s_int2
 
 typedef struct	s_data
 {
+	t_env		*env;
 	WINDOW		*win;
 	WINDOW		*hud;
 	int			champ[MAX_PLAYERS];
