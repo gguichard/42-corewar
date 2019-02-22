@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:03 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/22 05:30:48 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 06:39:34 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,30 @@
 #include "champion.h"
 #include "parsing.h"
 #include "visual.h"
+#include "options.h"
 
 static void	show_help(char **argv)
 {
 	ft_printf("USAGE: %s [options] <champions>\n", argv[0]);
 	ft_printf("You can load at most %d champions\n\n", MAX_PLAYERS);
 	ft_printf("OPTIONS:\n");
-	ft_printf("  -dump <cycle>\tDumps memory at specified cycle then "
+	ft_printf("  --dump <cycle>\tDumps memory at specified cycle then "
 			"exits\n");
+	ft_printf("  --debug <level>\tEnable debug mode (levels: 1, 2 or 3)\n");
+	ft_printf("  -v\t\t\tEnable visual mode\n");
 }
 
 /*static void	debug_mode_welcome(t_env *env)
-{
-	if (env->debug == DEBUG_ON)
-	{
-		ft_printf("Welcome into Debug mode v1.0 :\n");
-		ft_printf("3 levels are available :\n");
-		ft_printf("\t- 1 : Display only instructions\n");
-		ft_printf("\t- 2 : Display instructions with their parameters\n");
-		ft_printf("\t- 3 : Same as 2 but with amount of bytes that each PC increase.\n");
-	}
-}*/
+  {
+  if (env->debug == DEBUG_ON)
+  {
+  ft_printf("Welcome into Debug mode v1.0 :\n");
+  ft_printf("3 levels are available :\n");
+  ft_printf("\t- 1 : Display only instructions\n");
+  ft_printf("\t- 2 : Display instructions with their parameters\n");
+  ft_printf("\t- 3 : Same as 2 but with amount of bytes that each PC increase.\n");
+  }
+  }*/
 
 static void	run_vm(t_env *env)
 {
@@ -65,12 +68,10 @@ int			main(int argc, char **argv)
 	t_error	err_id;
 
 	ft_memset(&env, 0, sizeof(t_env));
-	env.visu = 1;
 	env.cur_cycle = 1;
 	env.cycle_to_die = CYCLE_TO_DIE;
 	env.cycle_before_die = env.cycle_to_die;
 	env.dump_cycles = -1;
-	env.debug = 0;
 	err_id = parse_opts(&env, argv, &cur_arg);
 	if (err_id == ERR_NOERROR)
 		err_id = create_champs(&env, argv, argc, cur_arg);
@@ -78,8 +79,10 @@ int			main(int argc, char **argv)
 		err_id = ERR_NOCHAMPS;
 	if (err_id != ERR_NOERROR)
 	{
-		if (err_id != ERR_CHAMPREAD)
-			ft_printf("corewar: error: %s\n", str_to_error(err_id));
+		if (err_id == ERR_WRONGOPT)
+			ft_dprintf(2, "corewar: error: Invalid option %s\n", argv[cur_arg]);
+		else if (err_id != ERR_CHAMPREAD)
+			ft_dprintf(2, "corewar: error: %s\n", str_to_error(err_id));
 		show_help(argv);
 		return (1);
 	}
