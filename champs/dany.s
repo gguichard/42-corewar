@@ -2,7 +2,7 @@
 .comment "Queen Daenerys Stormborn of the House Targaryen, the First of Her Name, Queen of the Andals, the Rhoynar and the First Men, Lady of the Seven Kingdoms and Protector of the Realm, Lady of Dragonstone, Queen of Meereen, Khaleesi of the Great Grass Sea, the Unburnt, Breaker of Chains, Mother of Dragons and winner of corewar."
 
 init:	sti r1, %:live,%1
-		ld %190,r2  # depart de la reecriture
+		ld %355,r2  # depart de la reecriture
 		ld %4,r3	# pad de reecriture
 		ld -21, r6	# valeur de la reecriture
 		ld %-56,r7	# valeur debut champ
