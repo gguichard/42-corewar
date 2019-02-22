@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:43 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/21 07:15:08 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 03:57:49 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,12 @@
 # include "champion.h"
 # include "process.h"
 
-# define DEBUG_ON	1
-# define VISU_ON	1
+# define DEBUG_ON			1
+# define DEBUG_FIRST_LVL	1
+# define DEBUG_SECOND_LVL	2
+# define DEBUG_THIRD_LVL	3
+# define VISU_ON			1
+
 typedef enum e_error	t_error;
 typedef struct s_env	t_env;
 
@@ -42,6 +46,7 @@ struct			s_env
 	t_list		*process_lst;
 	uint8_t		arena[MEM_SIZE];
 	int			debug;
+	int			debug_lvl;
 	int			visu;
 	int			cur_cycle;
 	int			dump_cycles;
