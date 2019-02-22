@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:44:58 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/22 06:06:36 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/22 07:10:50 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,26 @@
 
 const char	*str_to_error(t_error err_id)
 {
+	static char	buffer[256];
+
 	if (err_id == ERR_UNEXPECTED)
-		return ("Unexpected error");
+		ft_strcpy(buffer, "Unexpected error");
 	else if (err_id == ERR_NOCHAMPNAME)
-		return ("No champion name");
-	else if (err_id == ERR_OPTCONFLICT)
-		return ("Please check your options carefully it seems that there is a "
-				"conflict in it");
+		ft_strcpy(buffer, "No champion name after champ number");
 	else if (err_id == ERR_WRONGNOPT)
-		return ("Champion number should be between 0 and 2147483647");
+		ft_strcpy(buffer, "Champion number should be an integer");
 	else if (err_id == ERR_WRONGDUMPOPT)
-		return ("Dump option number should be between 0 and 2147483647");
+		ft_strcpy(buffer, "Dump option number should be a positive integer");
 	else if (err_id == ERR_WRONGDEBUGOPT)
-		return ("Wrong debug level");
+		ft_strcpy(buffer, "Wrong debug level");
 	else if (err_id == ERR_NOCHAMPS)
-		return ("Please load champions");
+		ft_strcpy(buffer, "You must specify at least one champion");
 	else if (err_id == ERR_TOOMANYCHAMPS)
-		return ("There is too many champions");
-	else
-		return ("Unknown error");
+		ft_strcpy(buffer, "There is too many champions");
+	else if (err_id == ERR_OPTCONFLICT)
+	{
+		ft_strcpy(buffer, "Please check your options carefully ");
+		ft_strcat(buffer, "it seems that there is a conflict in it");
+	}
+	return (buffer);
 }

@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:15:16 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/22 03:25:16 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 07:13:10 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,12 @@ t_error		create_champs(t_env *env, char **argv, int argc, int cur_arg)
 			return (ERR_NOCHAMPNAME);
 		else if (!read_file(argv[cur_arg], &champ))
 			return (ERR_CHAMPREAD);
-		node = ft_lstnew(&champ, sizeof(t_champ));
-		if (node == NULL)
+		else if ((node = ft_lstnew(&champ, sizeof(t_champ))) == NULL)
 			return (ERR_UNEXPECTED);
+		g_data.champ[total++] = id;
 		((t_champ *)node->content)->id = id;
-		g_data.champ[total] = id;
 		ft_lstpush(&env->champ_lst, node);
 		cur_arg++;
-		total++;
 	}
 	return (ERR_NOERROR);
 }

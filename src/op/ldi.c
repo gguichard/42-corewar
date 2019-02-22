@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 21:28:28 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/22 03:54:10 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 06:45:55 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static void	debug_mode(int *args, int reg, int addr, int lvl)
 	if (lvl == DEBUG_FIRST_LVL)
 		ft_printf("%-5s\n", "ldi");
 	else if (lvl <= DEBUG_THIRD_LVL)
-		ft_printf("%-5s: %d %d r%d (pc %d)\n", "ldi", args[0], args[1], reg, addr);
+		ft_printf("%-5s: %d %d r%d (pc %d)\n", "ldi", args[0], args[1], reg
+				, addr);
 }
 
 int			ldi(t_env *env, t_process *cur_process, uint8_t *bytes)

@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 21:55:32 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/22 04:11:51 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 06:46:49 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ static void	debug_mode(t_decode decode, int lvl)
 				, (int)decode.tab[0].value
 				, (int)decode.tab[1].value
 				, (int)decode.tab[2].value);
-
 }
 
 int			add(t_env *env, t_process *cur_process, uint8_t *bytes)
