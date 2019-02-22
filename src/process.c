@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 22:53:43 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/22 05:33:59 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/22 22:27:07 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	exec_inst(t_env *env, t_process *process)
 
 	opcode = process->queued_op;
 	if (opcode < 1 || opcode > 16)
-		process->pc += 1;
+		increase_pc(process, 1);
 	else
 	{
 		opcode -= 1;
@@ -65,9 +65,8 @@ static void	exec_inst(t_env *env, t_process *process)
 		if (env->debug == DEBUG_ON && env->debug_lvl >= DEBUG_THIRD_LVL)
 			ft_printf("ADV %d (%#.4x -> %#.4x)\n", ret, process->pc
 					, process->pc + ret);
-		process->pc += ret;
+		increase_pc(process, ret);
 	}
-	fix_pc_offset(&process->pc);
 	process->queued_op = 0;
 }
 

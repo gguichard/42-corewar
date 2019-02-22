@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 03:14:43 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/22 07:07:25 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 23:02:38 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,14 @@ void		loop_screen(void)
 
 	nodelay(g_data.win, FALSE);
 	while ((ch = getch()))
+	{
 		if (ch == 27)
 		{
 			delwin(g_data.hud);
 			endwin();
 			break ;
 		}
+	}
 }
 
 int			champ_color(int id)
