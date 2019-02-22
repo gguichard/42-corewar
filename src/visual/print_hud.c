@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 03:20:25 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/22 07:13:40 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 07:35:25 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ void		refresh_champ_lives(t_env *env)
 		cur_champ = cur_champ->next;
 	}
 	pos = (t_int2){X_HUD_PADD, Y_HUD_PADD + champ * TXT_HUD_PADD + 1};
-	mvwprintw(g_data.hud, pos.y - 3, pos.x, "Cycle : %d", env->cur_cycle);
-	mvwprintw(g_data.hud, pos.y - 2, pos.x, "Cycle to die : %d"
+	mvwprintw(g_data.hud, pos.y - 3, pos.x, "Cycle : %-10d", env->cur_cycle);
+	mvwprintw(g_data.hud, pos.y - 2, pos.x, "Cycle to die : %-10d"
 			, env->cycle_to_die);
 }
 
@@ -113,11 +113,8 @@ void		print_bar(t_list *champ_lst)
 		idx = -1;
 		color = champ_color(((t_champ *)cur_champ->content)->id);
 		wattron(g_data.hud, COLOR_PAIR(color));
-		while (++idx < ((t_champ *)cur_champ->content)->lives / (float)tot * 80)
-		{
-			mvwprintw(g_data.hud, pos.y, pos.x, "-");
-			pos.x += 1;
-		}
+		while (++idx < ((t_champ *)cur_champ->content)->lives * 80 / (float)tot)
+			mvwprintw(g_data.hud, pos.y, pos.x++, "-");
 		wattroff(g_data.hud, COLOR_PAIR(color));
 		wrefresh(g_data.hud);
 		cur_champ = cur_champ->next;
