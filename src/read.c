@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:23:27 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/21 07:32:04 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/22 22:59:41 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <unistd.h>
-#include <stdio.h>
 #include "libft.h"
 #include "champion.h"
 #include "parsing.h"
@@ -43,7 +42,7 @@ static int	read_magic(int fd, t_champ *champ)
 static int	read_name(int fd, t_champ *champ)
 {
 	int		ret;
-	char	buf[PROG_NAME_LENGTH];
+	char	buf[PROG_NAME_LENGTH + 1];
 
 	ret = read(fd, buf, PROG_NAME_LENGTH);
 	if (ret != PROG_NAME_LENGTH)
@@ -51,8 +50,8 @@ static int	read_name(int fd, t_champ *champ)
 		ft_dprintf(2, "corewar: error: Bad name\n");
 		return (0);
 	}
-	ft_memcpy(champ->header.prog_name, buf, PROG_NAME_LENGTH);
-	champ->header.prog_name[ret] = '\0';
+	buf[ret] = '\0';
+	ft_memcpy(champ->header.prog_name, buf, PROG_NAME_LENGTH + 1);
 	if (lseek(fd, 4, SEEK_CUR) < 0 || (ret = read(fd, buf, 4)) != 4)
 	{
 		ft_dprintf(2, "corewar: error: Bad champ size\n");
@@ -72,7 +71,7 @@ static int	read_name(int fd, t_champ *champ)
 static int	read_comment(int fd, t_champ *champ)
 {
 	int		ret;
-	char	buf[COMMENT_LENGTH];
+	char	buf[COMMENT_LENGTH + 1];
 
 	ret = read(fd, buf, COMMENT_LENGTH);
 	if (ret != COMMENT_LENGTH)
@@ -80,8 +79,8 @@ static int	read_comment(int fd, t_champ *champ)
 		ft_dprintf(2, "corewar: error: Bad comment\n");
 		return (0);
 	}
-	ft_memcpy(champ->header.comment, buf, COMMENT_LENGTH);
-	champ->header.comment[ret] = '\0';
+	buf[ret] = '\0';
+	ft_memcpy(champ->header.comment, buf, COMMENT_LENGTH + 1);
 	if (lseek(fd, 4, SEEK_CUR) < 0)
 	{
 		ft_dprintf(2, "corewar: error: %s\n", strerror(errno));
@@ -93,7 +92,7 @@ static int	read_comment(int fd, t_champ *champ)
 static int	read_prog(int fd, t_champ *champ)
 {
 	int				ret;
-	unsigned char	buf[CHAMP_MAX_SIZE];
+	unsigned char	buf[CHAMP_MAX_SIZE + 1];
 
 	ret = read(fd, buf, champ->header.prog_size + 1);
 	if (ret != (int)champ->header.prog_size)

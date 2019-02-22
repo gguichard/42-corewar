@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:03 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/22 23:02:18 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 23:27:25 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,12 @@
 #include "visual.h"
 #include "options.h"
 
-static void	show_help(char **argv)
+static void	show_help(t_error err_id, char **argv, int cur_arg)
 {
+	if (err_id == ERR_WRONGOPT)
+		ft_dprintf(2, "corewar: error: Invalid option %s\n", argv[cur_arg]);
+	else if (err_id != ERR_CHAMPREAD)
+		ft_dprintf(2, "corewar: error: %s\n", str_to_error(err_id));
 	ft_printf("USAGE: %s [options] <champions>\n", argv[0]);
 	ft_printf("You can load at most %d champions\n\n", MAX_PLAYERS);
 	ft_printf("OPTIONS:\n");
@@ -34,6 +38,8 @@ static void	run_vm(t_env *env)
 	size_t	nb_champs;
 	t_list	*cur_champ;
 
+	if (env->visu == VISU_ON)
+		init_screen(env);
 	idx = 0;
 	nb_champs = ft_lstsize(env->champ_lst);
 	cur_champ = env->champ_lst;
@@ -47,6 +53,8 @@ static void	run_vm(t_env *env)
 	if (env->dump_cycles != 0)
 		run_cycles_loop(env);
 	print_winner_champ(env);
+	if (env->visu == VISU_ON)
+		loop_screen();
 }
 
 int			main(int argc, char **argv)
@@ -65,19 +73,11 @@ int			main(int argc, char **argv)
 		err_id = create_champs(&env, argv, argc, cur_arg);
 	if (err_id == ERR_NOERROR && env.champ_lst == NULL)
 		err_id = ERR_NOCHAMPS;
-	if (err_id != ERR_NOERROR)
-	{
-		if (err_id == ERR_WRONGOPT)
-			ft_dprintf(2, "corewar: error: Invalid option %s\n", argv[cur_arg]);
-		else if (err_id != ERR_CHAMPREAD)
-			ft_dprintf(2, "corewar: error: %s\n", str_to_error(err_id));
-		show_help(argv);
-		return (1);
-	}
-	if (env.visu == VISU_ON)
-		init_screen(&env);
-	run_vm(&env);
-	if (env.visu == VISU_ON)
-		loop_screen();
-	return (0);
+	if (err_id == ERR_NOERROR)
+		run_vm(&env);
+	else
+		show_help(err_id, argv, cur_arg);
+	ft_lstfree(&env.champ_lst);
+	ft_lstfree(&env.process_lst);
+	return (err_id == ERR_NOERROR ? 0 : 1);
 }

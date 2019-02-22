@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:56:50 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/22 07:51:17 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/22 23:26:36 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,29 @@
 #include "visual.h"
 #include "op.h"
 
-static int	kill_old_process(t_env *env)
+static t_list	*free_old_process(t_env *env, t_list *prev, t_list *cur
+		, t_process *process)
+{
+	t_list	*next;
+
+	next = cur->next;
+	if (prev == NULL)
+		env->process_lst = next;
+	else
+		prev->next = next;
+	if (env->debug == DEBUG_ON && env->debug_lvl >= DEBUG_THIRD_LVL)
+		ft_printf("Process hasn't lived for %d cycles\n"
+				, env->cur_cycle - process->last_live);
+	free(cur->content);
+	free(cur);
+	return (next);
+}
+
+static int		kill_old_process(t_env *env)
 {
 	int			lives;
 	t_list		*prev;
 	t_list		*cur;
-	t_list		*next;
 	t_process	*process;
 
 	lives = 0;
@@ -30,32 +47,20 @@ static int	kill_old_process(t_env *env)
 	while (cur != NULL)
 	{
 		process = (t_process *)cur->content;
-		if (process->lives > 0)
+		if (process->lives == 0)
+			cur = free_old_process(env, prev, cur, process);
+		else
 		{
 			lives += process->lives;
 			process->lives = 0;
 			prev = cur;
 			cur = cur->next;
 		}
-		else
-		{
-			next = cur->next;
-			if (prev == NULL)
-				env->process_lst = next;
-			else
-				prev->next = next;
-			if (env->debug == DEBUG_ON)
-				ft_printf("Process hasn't lived for %d cycles\n"
-						, env->cur_cycle - process->last_live);
-			free(cur->content);
-			free(cur);
-			cur = next;
-		}
 	}
 	return (lives);
 }
 
-static int	decrease_cycle_to_die(t_env *env)
+static int		decrease_cycle_to_die(t_env *env)
 {
 	if (kill_old_process(env) >= NBR_LIVE)
 	{
@@ -76,16 +81,14 @@ static int	decrease_cycle_to_die(t_env *env)
 	return (0);
 }
 
-static int	visual_manage_cycle(t_env *env)
+static int		visual_manage_cycle(t_env *env)
 {
 	print_lifebar_visu(env->champ_lst);
 	refresh_champ_lives(env);
-	if (!key_hook())
-		return (0);
-	return (1);
+	return (key_hook());
 }
 
-void		run_cycles_loop(t_env *env)
+void			run_cycles_loop(t_env *env)
 {
 	while (env->process_lst != NULL)
 	{
@@ -105,9 +108,8 @@ void		run_cycles_loop(t_env *env)
 				ft_printf("Cycle to die is now %d\n", env->cycle_to_die);
 			env->cycle_before_die = env->cycle_to_die;
 		}
-		if (env->visu == VISU_ON)
-			if (!visual_manage_cycle(env))
-				break ;
+		if (env->visu == VISU_ON && !visual_manage_cycle(env))
+			break ;
 		env->cur_cycle += 1;
 	}
 }
