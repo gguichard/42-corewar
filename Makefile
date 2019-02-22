@@ -11,6 +11,8 @@
 
 NAME	=	corewar
 
+ASM		=	asm
+ASM_DIR =	src_asm
 SRC_DIR	=	src
 SRC		=				\
 main.c					\
@@ -66,6 +68,8 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(addprefix $(OBJ_DIR)/,$(OBJ))
 	$(CC) -lncurses -o $@ $^
+	$(MAKE) -C $(ASM_DIR)
+	mv src_asm/asm .
 
 $(LIBFT):
 	@echo "\n$(UNDER)Compiling libft:$(END)\t\t$(YELLOW)$(CC) $(CFLAGS)$(WHITE)\n"
@@ -85,10 +89,12 @@ $(OBJ_DIR):
 
 clean:
 	$(MAKE) -C libft clean
+	$(MAKE) -C $(ASM_DIR) clean
 	/bin/rm -rf $(OBJ_DIR)
 
 fclean: clean
 	$(MAKE) -C libft fclean
+	/bin/rm -f $(ASM)
 	/bin/rm -f $(NAME)
 
 re: fclean all
