@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:23:11 by wta               #+#    #+#             */
-/*   Updated: 2019/02/18 09:56:50 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/22 05:38:35 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "asm.h"
 #include <stdlib.h>
 
-t_op	g_op_tab[17] =
+t_op		g_op_tab[17] =
 {
 	{"live", 1, {T_DIR, 0, 0}, 1, 10, "alive", 0, 0},
 	{"ld", 2, {T_DIR | T_IND, T_REG, 0}, 2, 5, "load", 1, 0},
@@ -42,7 +42,7 @@ t_op	g_op_tab[17] =
 	{0, 0, {0, 0, 0}, 0, 0, 0, 0, 0}
 };
 
-void	free_data(t_data *data)
+void		free_data(t_data *data)
 {
 	int		idx;
 
@@ -58,24 +58,49 @@ void	free_data(t_data *data)
 	ft_memdel((void **)&data->filter);
 }
 
-int		main(int ac, char **av)
+void		ft_usage(void)
+{
+	ft_printf("Usage: ./asm  <sourcefile.s>\n");
+	ft_printf("\tSupport multiple sourcefile.s\n");
+}
+
+t_error		convert_to_asm(t_data *data, t_error err_id, char *str)
+{
+	ft_memset(data, 0, sizeof(t_data));
+	err_id = read_file(str, data);
+	if (err_id == ERR_NOERROR)
+		err_id = check_valid_tab(data);
+	if (err_id == ERR_NOERROR)
+		err_id = create_cor(data, str);
+	if (err_id == ERR_NOERROR)
+		ft_printf("Writing output program to %s\n", data->file_name);
+	else
+		err_handler(err_id);
+	free_data(data);
+	return (err_id);
+}
+
+int			main(int ac, char **av)
 {
 	t_data	data;
 	t_error err_id;
+	int		idx;
 
+	idx = 1;
 	err_id = ERR_NOERROR;
-	if (ac != 2)
+	if (ac < 2)
+	{
+		ft_usage();
 		return (0);
-	ft_memset(&data, 0, sizeof(t_data));
-	err_id = read_file(av[1], &data);
-	if (err_id == ERR_NOERROR)
-		err_id = check_valid_tab(&data);
-	if (err_id == ERR_NOERROR)
-		err_id = create_cor(&data, av[1]);
-	if (err_id == ERR_NOERROR)
-		ft_printf("Writing output program to %s\n", data.file_name);
-	else
-		err_handler(err_id);
-	free_data(&data);
+	}
+	while (idx < ac)
+	{
+		ft_printf("compiling champ: %s\n", av[idx]);
+		convert_to_asm(&data, err_id, av[idx]);
+		err_id = ERR_NOERROR;
+		idx++;
+		if (idx != ac)
+			ft_printf("\n");
+	}
 	return (0);
 }
