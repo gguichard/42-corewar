@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 21:28:28 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/21 01:54:15 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/22 03:54:10 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,12 @@
 #include "func_op.h"
 #include "op.h"
 
-static void	debug_mode(int arg1, int arg2, int reg, int addr)
+static void	debug_mode(int *args, int reg, int addr, int lvl)
 {
-	ft_printf("%-5s: %d %d r%d (pc %d)\n"
-			, "ldi"
-			, arg1
-			, arg2
-			, reg
-			, addr);
+	if (lvl == DEBUG_FIRST_LVL)
+		ft_printf("%-5s\n", "ldi");
+	else if (lvl <= DEBUG_THIRD_LVL)
+		ft_printf("%-5s: %d %d r%d (pc %d)\n", "ldi", args[0], args[1], reg, addr);
 }
 
 int			ldi(t_env *env, t_process *cur_process, uint8_t *bytes)
@@ -47,8 +45,8 @@ int			ldi(t_env *env, t_process *cur_process, uint8_t *bytes)
 		swap_bytes((uint8_t *)&value, 4);
 		cur_process->reg[(int)decode.tab[2].value - 1] = (uint64_t)value;
 		if (env->debug == DEBUG_ON)
-			debug_mode((int)args[0], (int)args[1], (int)decode.tab[2].value
-					, addr);
+			debug_mode((int *)args, (int)decode.tab[2].value
+					, addr, env->debug_lvl);
 	}
 	return (ret);
 }

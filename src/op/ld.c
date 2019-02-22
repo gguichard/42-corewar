@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:24 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/21 00:59:58 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/22 03:52:38 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 #include "process.h"
 #include "func_op.h"
 
-static void	debug_mode(int value, int reg)
+static void	debug_mode(int value, int reg, int lvl)
 {
-	ft_printf("%-5s: %d r%d\n"
-			, "ld"
-			, value
-			, reg);
+	if (lvl == DEBUG_FIRST_LVL)
+		ft_printf("%-5s\n", "ld");
+	else if (lvl <= DEBUG_THIRD_LVL)
+		ft_printf("%-5s: %d r%d\n", "ld", value, reg);
 }
 
 int			ld(t_env *env, t_process *cur_process, uint8_t *bytes)
@@ -40,7 +40,7 @@ int			ld(t_env *env, t_process *cur_process, uint8_t *bytes)
 		cur_process->reg[reg - 1] = value;
 		cur_process->carry = (value == 0);
 		if (env->debug == DEBUG_ON)
-			debug_mode(value, reg);
+			debug_mode(value, reg, env->debug_lvl);
 	}
 	return (ret);
 }

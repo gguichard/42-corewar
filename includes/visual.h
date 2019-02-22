@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 04:01:13 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/21 23:52:02 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/22 05:29:18 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # define HUD_COL		250
 # define WIDTH			64
 # define HEIGHT			64
-# define X_PADD			4
-# define Y_PADD			2
+# define X_PADD			27
+# define Y_PADD			9
 # define X_HUD_PADD		4
 # define Y_HUD_PADD		2
 # define TXT_HUD_PADD	5
@@ -54,6 +54,7 @@ void	print_winner_visu(t_champ *winner);
 void	print_bar(t_list *champ_lst);
 int		champ_color(int id);
 int		key_hook(void);
-void	print_ascii_art(void);
+void	print_bottom(void);
+void	print_gradin(void);
 
 #endif

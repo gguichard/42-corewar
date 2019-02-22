@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 01:04:23 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/21 01:24:44 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/22 03:51:32 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,12 @@
 #include "func_op.h"
 #include "op.h"
 
-static void	debug_mode(int arg1, int arg2, int reg)
+static void	debug_mode(int arg1, int arg2, int reg, int lvl)
 {
-	ft_printf("%-5s: %d & %d r%d\n"
-			, "xor"
-			, arg1
-			, arg2
-			, reg);
+	if (lvl == DEBUG_FIRST_LVL)
+		ft_printf("%-5s\n", "xor");
+	else if (lvl <= DEBUG_THIRD_LVL)
+		ft_printf("%-5s: %d & %d r%d\n", "xor", arg1, arg2, reg);
 }
 
 int			ft_xor(t_env *env, t_process *cur_process, uint8_t *bytes)
@@ -48,7 +47,8 @@ int			ft_xor(t_env *env, t_process *cur_process, uint8_t *bytes)
 		cur_process->reg[(int)decode.tab[2].value - 1] = tmp;
 		cur_process->carry = (tmp == 0);
 		if (env->debug == DEBUG_ON)
-			debug_mode(args[0], args[1], (int)decode.tab[2].value);
+			debug_mode(args[0], args[1], (int)decode.tab[2].value
+					, env->debug_lvl);
 	}
 	return (ret);
 }

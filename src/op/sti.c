@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 02:21:10 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/21 03:01:31 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 04:03:29 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,12 @@
 #include "visual.h"
 #include "op.h"
 
-static void	debug_mode(int reg, int arg1, int arg2, int addr)
+static void	debug_mode(int reg, int *args, int addr, int lvl)
 {
-	ft_printf("%-5s: r%d %d %d (pc %d)\n"
-			, "sti"
-			, reg
-			, arg1
-			, arg2
-			, addr);
+	if (lvl == DEBUG_FIRST_LVL)
+		ft_printf("%-5s\n", "sti");
+	else if (lvl <= DEBUG_THIRD_LVL)
+		ft_printf("%-5s: r%d %d %d (pc %d)\n", "sti", reg, args[0], args[1], addr);
 }
 
 int			sti(t_env *env, t_process *cur_process, uint8_t *bytes)
@@ -52,8 +50,8 @@ int			sti(t_env *env, t_process *cur_process, uint8_t *bytes)
 			write_ncurses((uint8_t *)args, cur_process->champ_id, 4
 					, cur_process->pc + addr);
 		if (env->debug == DEBUG_ON)
-			debug_mode((int)decode.tab[0].value, (int)args[1], (int)args[2]
-					, cur_process->pc + addr);
+			debug_mode((int)decode.tab[0].value, (int *)args
+					, cur_process->pc + addr, env->debug_lvl);
 	}
 	return (ret);
 }

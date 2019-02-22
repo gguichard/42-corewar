@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/16 00:15:06 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/21 03:07:07 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 04:01:48 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 #include "func_op.h"
 #include "op.h"
 
-static void	debug_mode(int reg, int value)
+static void	debug_mode(int reg, int value, int lvl)
 {
-	ft_printf("%-5s: r%d %d\n"
-			, "st"
-			, reg
-			, value);
+	if (lvl == DEBUG_FIRST_LVL)
+		ft_printf("%-5s\n", "st");
+	else if (lvl <= DEBUG_THIRD_LVL)
+		ft_printf("%-5s: r%d %d\n", "st", reg, value);
 }
 
 int			st(t_env *env, t_process *cur_process, uint8_t *bytes)
@@ -48,7 +48,8 @@ int			st(t_env *env, t_process *cur_process, uint8_t *bytes)
 						, cur_process->pc + (int)decode.tab[1].value % IDX_MOD);
 		}
 		if (env->debug == DEBUG_ON)
-			debug_mode(decode.tab[0].value, decode.tab[1].value);
+			debug_mode(decode.tab[0].value, decode.tab[1].value
+					, env->debug_lvl);
 	}
 	return (ret);
 }

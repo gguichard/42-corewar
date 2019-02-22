@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:32 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/21 07:47:52 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 03:55:02 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@
 #include "func_op.h"
 #include "op.h"
 
-static void	debug_mode(int param)
+static void	debug_mode(int param, int lvl)
 {
-	ft_printf("%-5s: %d\n"
-			, "live"
-			, param);
+	if (lvl == DEBUG_FIRST_LVL)
+		ft_printf("%-5s\n", "live");
+	else if (lvl <= DEBUG_THIRD_LVL)
+		ft_printf("%-5s: %d\n", "live", param);
 }
 
 int			live(t_env *env, t_process *cur_process, uint8_t *bytes)
@@ -49,6 +50,6 @@ int			live(t_env *env, t_process *cur_process, uint8_t *bytes)
 	cur_process->lives += 1;
 	cur_process->last_live = env->cur_cycle;
 	if (env->debug == DEBUG_ON)
-		debug_mode((int)decode.tab[0].value);
+		debug_mode((int)decode.tab[0].value, env->debug_lvl);
 	return (ret);
 }

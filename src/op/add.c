@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 21:55:32 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/20 03:51:56 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 04:11:51 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,17 @@
 #include "op.h"
 #include "func_op.h"
 
-static void	debug_mode(t_decode decode)
+static void	debug_mode(t_decode decode, int lvl)
 {
-	ft_printf("%-5s: r%d r%d r%d\n"
-			, "add"
-			, (int)decode.tab[0].value
-			, (int)decode.tab[1].value
-			, (int)decode.tab[2].value);
+	if (lvl == DEBUG_FIRST_LVL)
+		ft_printf("%-5s\n", "add");
+	else if (lvl <= DEBUG_THIRD_LVL)
+		ft_printf("%-5s: r%d r%d r%d\n"
+				, "add"
+				, (int)decode.tab[0].value
+				, (int)decode.tab[1].value
+				, (int)decode.tab[2].value);
+
 }
 
 int			add(t_env *env, t_process *cur_process, uint8_t *bytes)
@@ -45,6 +49,6 @@ int			add(t_env *env, t_process *cur_process, uint8_t *bytes)
 	cur_process->reg[(int)decode.tab[2].value - 1] = (uint32_t)value;
 	cur_process->carry = (value == 0);
 	if (env->debug == DEBUG_ON)
-		debug_mode(decode);
+		debug_mode(decode, env->debug_lvl);
 	return (ret);
 }
