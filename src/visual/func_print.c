@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 03:14:43 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/22 05:29:29 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 06:12:05 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <ncurses.h>
 #include "corewar.h"
 #include "visual.h"
-#include <stdio.h>
 
 t_data	g_data;
 
@@ -46,6 +45,17 @@ int		champ_color(int id)
 	return (0);
 }
 
+static void	print_curs(t_int2 pos, uint8_t *bytes_ptr, int color, int idx)
+{
+	attron(COLOR_PAIR(color + 4));
+	mvwprintw(g_data.win, pos.y + Y_PADD, pos.x * 3 + X_PADD, "%.2x"
+		, bytes_ptr[idx]);
+	attron(COLOR_PAIR(color));
+	wrefresh(g_data.win);
+	usleep(g_data.time);
+
+}
+
 void	write_ncurses(uint8_t *bytes_ptr, int id, int size, int index)
 {
 	t_int2	pos;
@@ -60,15 +70,17 @@ void	write_ncurses(uint8_t *bytes_ptr, int id, int size, int index)
 	attron(COLOR_PAIR(color));
 	while (idx < size)
 	{
+		if (idx == 0)
+			print_curs(pos, bytes_ptr, color, idx);
 		mvwprintw(g_data.win, pos.y + Y_PADD, pos.x * 3 + X_PADD, "%.2x"
-				, bytes_ptr[idx]);
+			, bytes_ptr[idx]);
 		index += 1;
 		fix_pc_offset(&index);
 		pos = (t_int2) {index % WIDTH , index / HEIGHT};
 		idx++;
 		usleep(g_data.time);
+		wrefresh(g_data.win);
 	}
-	refresh();
 	attroff(COLOR_PAIR(color));
 }
 

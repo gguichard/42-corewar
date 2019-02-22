@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 03:11:42 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/22 05:29:17 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/22 06:08:26 by vifonne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ void	init_champ_color(void)
 	init_pair(2, COLOR_BLUE, -1);
 	init_pair(3, COLOR_GREEN, -1);
 	init_pair(4, COLOR_YELLOW, -1);
+	init_pair(5, -1, COLOR_RED);
+	init_pair(6, -1, COLOR_BLUE);
+	init_pair(7, -1, COLOR_GREEN);
+	init_pair(8, -1, COLOR_YELLOW);
+
 }
 
 void	print_init_state(t_env *env)
