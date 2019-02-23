@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:43 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/22 06:39:40 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/23 01:43:22 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,6 @@
 # define DEBUG_THIRD_LVL	3
 # define VISU_ON			1
 
-typedef enum e_error	t_error;
-typedef struct s_env	t_env;
-
 enum			e_error
 {
 	ERR_NOERROR = 0,
@@ -42,6 +39,9 @@ enum			e_error
 	ERR_NOCHAMPS,
 	ERR_TOOMANYCHAMPS
 };
+
+typedef struct s_env	t_env;
+typedef enum e_error	t_error;
 
 struct			s_env
 {
