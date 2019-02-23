@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:23:11 by wta               #+#    #+#             */
-/*   Updated: 2019/02/22 05:38:35 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/23 04:42:01 by rvalenti         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int			main(int ac, char **av)
 	}
 	while (idx < ac)
 	{
-		ft_printf("compiling champ: %s\n", av[idx]);
+		ft_printf("Compiling champ: %s\n", av[idx]);
 		convert_to_asm(&data, err_id, av[idx]);
 		err_id = ERR_NOERROR;
 		idx++;
