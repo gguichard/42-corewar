@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:15:16 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/23 05:02:45 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/23 05:17:46 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_error		create_champs(t_env *env, char **argv, int argc, int cur_arg)
 	total = 0;
 	while (cur_arg < argc)
 	{
-		if (total > MAX_PLAYERS)
+		if (total == MAX_PLAYERS)
 			return (ERR_TOOMANYCHAMPS);
 		else if (!set_champ_id(env, argv, &cur_arg, &id))
 			return (ERR_WRONGNOPT);
