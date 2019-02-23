@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 22:53:43 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/22 22:27:07 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/23 05:57:14 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "process.h"
 #include "func_op.h"
 
-t_op		g_op[] = {
+const t_op	g_op[] = {
 	{live, 10},
 	{ld, 5},
 	{st, 5},
