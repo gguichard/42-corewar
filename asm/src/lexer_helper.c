@@ -1,26 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   write_2.c                                          :+:      :+:    :+:   */
+/*   lexer_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/23 02:08:24 by wta               #+#    #+#             */
-/*   Updated: 2019/02/23 02:54:32 by gguichar         ###   ########.fr       */
+/*   Created: 2019/02/18 05:12:23 by wta               #+#    #+#             */
+/*   Updated: 2019/02/18 05:20:17 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "libft.h"
-#include "dasm.h"
 
-void	write_header(t_data *data, char *str, int idx, int len)
+int			is_int(char *str)
 {
-	char	*name;
+	int		i;
 
-	write(data->fd, str, ft_strlen(str));
-	write(data->fd, "\"", 1);
-	name = data->buf + idx;
-	write(data->fd, name, len);
-	write(data->fd, "\"\n", 2);
+	i = 0;
+	if (((str[i] == '-' || str[i] == '+') && ft_isdigit(str[i + 1]))
+			|| (ft_isdigit(str[i])))
+		i++;
+	else
+		return (0);
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+int			get_tab_size(char **tab)
+{
+	int		n;
+	int		i;
+
+	i = 0;
+	n = 0;
+	while (tab[i])
+	{
+		if (tab[i][0] != '#')
+			n++;
+		i++;
+	}
+	return (n);
 }

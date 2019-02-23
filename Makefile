@@ -17,6 +17,7 @@ SRC_DIR	=	src
 SRC		=				\
 main.c					\
 options.c				\
+options_utils.c			\
 read.c					\
 champs.c				\
 cycles.c				\
@@ -46,13 +47,17 @@ visual/func_print.c		\
 visual/init_ncurses.c	\
 visual/print_hud.c		\
 visual/print_champ.c
+visual/print_champ.c	\
+visual/key_hook.c		\
+visual/math_utils.c		\
+visual/sig_handler.c
 
 OBJ_DIR	=	.obj
 OBJ		=	$(SRC:.c=.o)
 DEP		=	$(OBJ:.o=.d)
 INC_DIR	=	includes
 
-CC		=	gcc
+CC		=	gcc -pedantic
 CFLAGS	=	-Wall -Wextra -Werror -I libft/includes -I $(INC_DIR)
 
 LIBFT	=	libft/libft.a
