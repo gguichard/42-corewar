@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:44:58 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/22 07:10:50 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/23 05:05:21 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ const char	*str_to_error(t_error err_id)
 	else if (err_id == ERR_NOCHAMPNAME)
 		ft_strcpy(buffer, "No champion name after champ number");
 	else if (err_id == ERR_WRONGNOPT)
-		ft_strcpy(buffer, "Champion number should be an integer");
+		ft_strcpy(buffer, "Wrong champion number option");
 	else if (err_id == ERR_WRONGDUMPOPT)
 		ft_strcpy(buffer, "Dump option number should be a positive integer");
 	else if (err_id == ERR_WRONGDEBUGOPT)

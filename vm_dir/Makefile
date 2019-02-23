@@ -18,6 +18,7 @@ options.c				\
 options_utils.c			\
 read.c					\
 champs.c				\
+champs_utils.c			\
 cycles.c				\
 process.c				\
 errors.c				\
