@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/23 04:11:56 by vifonne          ###   ########.fr        #
+#    Updated: 2019/02/23 04:43:48 by gguichar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,19 +45,15 @@ LIBFT	=	../libft/libft.a
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(addprefix $(OBJ_DIR)/,$(OBJ))
-	@$(CC) -o $@ $^
+	$(CC) -o $@ $^
 
 $(LIBFT):
-	@echo "\n$(UNDER)Compiling libft:$(END)\t\t$(YELLOW)$(CC) $(CFLAGS)$(END)\n"
-	@/bin/echo -n "0% ["
 	@$(MAKE) -C ../libft
-	@echo "] 100%\n"
 
 -include $(addprefix $(OBJ_DIR)/,$(DEP))
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	@$(CC) $(CFLAGS) -MMD -o $@ -c $<
-	@/bin/echo -n "="
+	$(CC) $(CFLAGS) -MMD -o $@ -c $<
 
 $(OBJ_DIR):
 	@/bin/mkdir $@

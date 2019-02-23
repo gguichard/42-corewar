@@ -6,7 +6,7 @@
 #    By: vifonne <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/23 03:29:11 by vifonne           #+#    #+#              #
-#    Updated: 2019/02/23 04:31:14 by gguichar         ###   ########.fr        #
+#    Updated: 2019/02/23 04:45:21 by gguichar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,31 +38,23 @@ all: $(NAME)
 $(NAME): $(LIBFT) $(VM) $(ASM) $(DASM)
 
 $(VM):
-	@echo "\n$(UNDER)Compiling vm:$(END)\t\t$(GREEN)$(CC) $(CFLAGS)$(END)\n"
-	@/bin/echo -n "0% ["
+	@echo "\n$(UNDER)Compiling vm:$(END)\n"
 	@$(MAKE) -C $(VM_DIR)
-	@echo "] 100%\n"
 	@cp $(VM_DIR)/$(VM) .
 
 $(ASM):
-	@echo "\n$(UNDER)Compiling asm:$(END)\t\t$(GREEN)$(CC) $(CFLAGS)$(END)\n"
-	@/bin/echo -n "0% ["
+	@echo "\n$(UNDER)Compiling asm:$(END)\n"
 	@$(MAKE) -C $(ASM_DIR)
-	@echo "] 100%\n"
 	@cp $(ASM_DIR)/$(ASM) .
 
 $(DASM):
-	@echo "\n$(UNDER)Compiling dasm:$(END)\t\t$(GREEN)$(CC) $(CFLAGS)$(END)\n"
-	@/bin/echo -n "0% ["
+	@echo "\n$(UNDER)Compiling dasm:$(END)\n"
 	@$(MAKE) -C $(DASM_DIR)
-	@echo "] 100%\n"
 	@cp $(DASM_DIR)/$(DASM) .
 
 $(LIBFT):
-	@echo "\n$(UNDER)Compiling libft:$(END)\t\t$(GREEN)$(CC) $(CFLAGS)$(END)\n"
-	@/bin/echo -n "0% ["
+	@echo "\n$(UNDER)Compiling libft:$(END)\n"
 	@$(MAKE) -C libft
-	@echo "] 100%\n"
 
 clean:
 	@echo "$(UNDER)Cleaning project:$(END)\n"
