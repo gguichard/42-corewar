@@ -5,36 +5,27 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/20 20:32:03 by gguichar          #+#    #+#             */
-/*   Updated: 2019/01/31 10:53:58 by gguichar         ###   ########.fr       */
+/*   Created: 2019/02/22 05:42:03 by gguichar          #+#    #+#             */
+/*   Updated: 2019/02/22 06:39:06 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OPTIONS_H
 # define OPTIONS_H
 
-# define MAX_OPTS 32
+# define OPT_NOARG 0
+# define OPT_MUSTHAVEARG 1
 
-typedef struct	s_opts
+# include "corewar.h"
+
+typedef struct	s_opt
 {
-	int			value;
-	int			index;
-	char		error;
-	const char	*args[MAX_OPTS];
-	const char	*optstring;
-}				t_opts;
+	const char	*name;
+	t_error		(*fn)(t_env *, const char *);
+	int			optarg_type;
+}				t_opt;
 
-/*
-** PARSING.
-*/
-t_opts			*parse_opts(int argc, char **argv, const char *optstring);
-
-/*
-** UTILS.
-*/
-void			check_optstring(const char *optstring);
-int				find_opt_offset(const char *optstring, char option);
-int				has_opt(t_opts *opts, char option);
-const char		*get_optarg(t_opts *opts, char option);
+t_error			parse_opt(t_env *env, t_opt *opts, char **argv, int *cur_arg);
+t_error			parse_opts(t_env *env, char **argv, int *cur_arg);
 
 #endif
