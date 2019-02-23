@@ -6,7 +6,7 @@
 #    By: vifonne <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/23 03:29:11 by vifonne           #+#    #+#              #
-#    Updated: 2019/02/23 04:24:23 by vifonne          ###   ########.fr        #
+#    Updated: 2019/02/23 04:30:25 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,6 +67,7 @@ $(LIBFT):
 clean:
 	@echo "$(UNDER)Cleaning project:$(END)\n"
 	@echo "$(YELLOW)"
+	@echo "Cleaning libft"
 	@$(MAKE) -C libft clean
 	@$(MAKE) -C $(ASM_DIR) clean
 	@$(MAKE) -C $(DASM_DIR) clean
@@ -76,6 +77,7 @@ clean:
 fclean: clean
 	@echo "\n$(UNDER)Full clean project:$(END)\n"
 	@echo "$(RED)"
+	@echo "Full clean libft"
 	@$(MAKE) -C libft fclean
 	@$(MAKE) -C $(ASM_DIR) fclean
 	@$(MAKE) -C $(DASM_DIR) fclean
