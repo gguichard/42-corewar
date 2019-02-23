@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 06:17:13 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/23 04:51:11 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/23 05:39:19 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,13 @@ static t_error	parse_debug_opt(t_env *env, const char *optarg)
 	if (env->visu == VISU_ON)
 		return (ERR_OPTCONFLICT);
 	else if (optarg == NULL)
-		env->debug_lvl = DEBUG_FIRST_LVL;
-	else
-	{
-		value = ft_strtol(optarg, &endptr, 10);
-		if (value != DEBUG_FIRST_LVL
-				&& value != DEBUG_SECOND_LVL
-				&& value != DEBUG_THIRD_LVL)
-			return (ERR_WRONGDEBUGOPT);
-		env->debug_lvl = value;
-	}
+		return (ERR_WRONGDEBUGOPT);
+	value = ft_strtol(optarg, &endptr, 10);
+	if (value != DEBUG_FIRST_LVL
+			&& value != DEBUG_SECOND_LVL
+			&& value != DEBUG_THIRD_LVL)
+		return (ERR_WRONGDEBUGOPT);
+	env->debug_lvl = value;
 	env->debug = DEBUG_ON;
 	return (ERR_NOERROR);
 }
