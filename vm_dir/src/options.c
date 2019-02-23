@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 06:17:13 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/23 04:49:02 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/23 04:51:11 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,9 @@ t_error			parse_opts(t_env *env, char **argv, int *cur_arg)
 	*cur_arg = 1;
 	while (argv[*cur_arg] != NULL && argv[*cur_arg][0] == '-')
 	{
-		if (ft_strequ("--", argv[*cur_arg]) || ft_strequ("-n", argv[*cur_arg]))
+		if (ft_strequ("-n", argv[*cur_arg]))
+			break ;
+		else if (ft_strequ("--", argv[*cur_arg]))
 		{
 			*cur_arg += 1;
 			break ;
