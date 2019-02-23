@@ -6,13 +6,13 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 09:21:09 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/23 03:49:56 by vifonne          ###   ########.fr        #
+#    Updated: 2019/02/23 04:12:54 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= 	printf.a
 
-SRC		= 	ft_printf.c parse_tok.c parser.c buffer.c \
+SRC		=	ft_printf.c parse_tok.c parser.c buffer.c \
 			conv_s.c conv_c.c conv_di.c conv_u.c conv_x.c conv_o.c conv_p.c \
 			conv_misc.c conv_utils.c
 SRC_DIR	= 	src

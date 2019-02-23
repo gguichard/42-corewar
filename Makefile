@@ -6,11 +6,11 @@
 #    By: vifonne <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/23 03:29:11 by vifonne           #+#    #+#              #
-#    Updated: 2019/02/23 04:01:33 by vifonne          ###   ########.fr        #
+#    Updated: 2019/02/23 04:24:23 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	corewar
+NAME		=	corewar_project
 
 ASM			=	asm
 ASM_DIR	 	=	asm_dir
@@ -35,25 +35,31 @@ CFLAGS		=		-Wall -Wextra -Werror
 
 all: $(NAME)
 
-$(NAME): $(LIBFT)
-	@echo "\n$(UNDER)Compiling vm:$(END)\t\t$(YELLOW)$(CC) $(CFLAGS)$(END)\n"
+$(NAME): $(LIBFT) $(VM) $(ASM) $(DASM)
+
+$(VM):
+	@echo "\n$(UNDER)Compiling vm:$(END)\t\t$(GREEN)$(CC) $(CFLAGS)$(END)\n"
 	@/bin/echo -n "0% ["
 	@$(MAKE) -C $(VM_DIR)
 	@echo "] 100%\n"
-	@echo "\n$(UNDER)Compiling asm:$(END)\t\t$(YELLOW)$(CC) $(CFLAGS)$(END)\n"
+	@cp $(VM_DIR)/$(VM) .
+
+$(ASM):	
+	@echo "\n$(UNDER)Compiling asm:$(END)\t\t$(GREEN)$(CC) $(CFLAGS)$(END)\n"
 	@/bin/echo -n "0% ["
 	@$(MAKE) -C $(ASM_DIR)
 	@echo "] 100%\n"
-	@echo "\n$(UNDER)Compiling dasm:$(END)\t\t$(YELLOW)$(CC) $(CFLAGS)$(END)\n"
+	@cp $(ASM_DIR)/$(ASM) .
+	
+$(DASM):
+	@echo "\n$(UNDER)Compiling dasm:$(END)\t\t$(GREEN)$(CC) $(CFLAGS)$(END)\n"
 	@/bin/echo -n "0% ["
 	@$(MAKE) -C $(DASM_DIR)
 	@echo "] 100%\n"
-	cp $(ASM_DIR)/$(ASM) .
-	cp $(DASM_DIR)/$(DASM) .
-	cp $(VM_DIR)/$(VM) .
+	@cp $(DASM_DIR)/$(DASM) .
 
 $(LIBFT):
-	@echo "\n$(UNDER)Compiling libft:$(END)\t\t$(YELLOW)$(CC) $(CFLAGS)$(END)\n"
+	@echo "\n$(UNDER)Compiling libft:$(END)\t\t$(GREEN)$(CC) $(CFLAGS)$(END)\n"
 	@/bin/echo -n "0% ["
 	@$(MAKE) -C libft
 	@echo "] 100%\n"
@@ -79,9 +85,9 @@ fclean: clean
 	@echo "$(RED)"
 	/bin/rm -f $(ASM)
 	/bin/rm -f $(DASM)
-	/bin/rm -f $(NAME)
+	/bin/rm -f $(VM)
 	@echo "$(END)"
 
 re: fclean all
 
-.PHONY: all clean fclean re $(NAME)
+.PHONY: all clean fclean re $(NAME) $(VM) $(ASM) $(DASM)

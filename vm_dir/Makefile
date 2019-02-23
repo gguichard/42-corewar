@@ -63,7 +63,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(addprefix $(OBJ_DIR)/,$(OBJ))
 	@$(CC) -lncurses -o $@ $^
-	
+
 $(LIBFT):
 	@echo "\n$(UNDER)Compiling libft:$(END)\t\t$(YELLOW)$(CC) $(CFLAGS)$(END)\n"
 	@/bin/echo -n "0% ["
@@ -93,4 +93,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re $(NAME)
+.PHONY: all clean fclean re
