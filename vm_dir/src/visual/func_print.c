@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 03:14:43 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/23 00:22:17 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/23 11:16:28 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,15 @@ void		write_ncurses(uint8_t *bytes_ptr, int id, int size, int index)
 	int		idx;
 	int		color;
 
-	idx = -1;
+	idx = size;
 	init_champ_color();
 	color = champ_color(id);
 	fix_pc_offset(&index);
 	pos = (t_int2) {index % WIDTH, index / HEIGHT};
 	attron(COLOR_PAIR(color));
-	while (++idx < size)
+	while (--idx >= 0)
 	{
-		if (idx == 0)
+		if (idx == (size - 1))
 			print_curs(pos, bytes_ptr, color, idx);
 		mvwprintw(g_data.win, pos.y + Y_PADD, pos.x * 3 + X_PADD, "%.2x"
 				, bytes_ptr[idx]);

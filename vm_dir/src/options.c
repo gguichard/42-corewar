@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/20 06:17:13 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/23 05:39:19 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/23 11:12:18 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static t_error	parse_dump_opt(t_env *env, const char *optarg)
 
 	if (optarg == NULL)
 		return (ERR_WRONGDUMPOPT);
+	else if (env->visu == VISU_ON)
+		return (ERR_OPTCONFLICT);
 	dump_cycles = ft_strtol(optarg, &endptr, 10);
 	if (*endptr != '\0' || dump_cycles < 0 || dump_cycles > INT_MAX)
 		return (ERR_WRONGDUMPOPT);
