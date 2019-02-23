@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 06:22:11 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/22 06:50:59 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/23 02:21:30 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,17 @@ static int		wait_input(void)
 	int	ch;
 
 	while ((ch = getch()))
-		if (ch == ' ')
+	{
+		if (ch == 27)
+			return (0);
+		else if (ch == ' ')
 		{
 			mvwprintw(g_data.hud, 7 * TXT_HUD_PADD - 2, X_HUD_PADD
 					, "**RUNNING**");
 			wrefresh(g_data.hud);
 			break ;
 		}
-		else if (ch == 27)
-			return (0);
+	}
 	return (1);
 }
 

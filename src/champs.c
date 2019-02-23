@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:15:16 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/22 22:30:53 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/23 02:29:41 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,9 @@ void		setup_champ(t_env *env, t_champ *champ, int pc)
 
 	ft_memcpy(&env->arena[pc], champ->prog, champ->header.prog_size);
 	if (env->visu != VISU_ON)
-		ft_printf("Champion \"%s\" (%d bytes) has been loaded\n"
+		ft_printf("Champion \"%s\" (\"%s\") (%d bytes) has been loaded\n"
 				, champ->header.prog_name
+				, champ->header.comment
 				, champ->header.prog_size);
 	process = create_process(env, champ);
 	if (process != NULL)

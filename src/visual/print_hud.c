@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 03:20:25 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/22 08:24:38 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/23 02:22:44 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void		print_winner_visu(t_champ *winner)
 			, (dim.x / 2 - (ft_strlen(winner->header.prog_name) + 10) / 2)
 			, "%s has won!"
 			, winner->header.prog_name);
+	mvwprintw(g_data.hud, 7 * TXT_HUD_PADD - 2, X_HUD_PADD, "**FINISHED**");
 	wrefresh(g_data.hud);
 }
 
