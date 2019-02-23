@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 04:35:03 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/23 05:12:27 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/23 05:53:48 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ static void	run_vm(t_env *env)
 		cur_champ = cur_champ->next;
 		idx++;
 	}
-	if (env->dump_cycles != 0)
+	if (env->dump_cycles == 0)
+		print_arena(env);
+	else
 		run_cycles_loop(env);
 	if (env->dump_cycles == -1
 			|| env->dump_cycles > env->cur_cycle)
