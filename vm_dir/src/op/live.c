@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 20:35:32 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/22 22:59:25 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/23 05:20:33 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	live_champ(t_env *env, t_champ *champ)
 	champ->live_cycle = env->cur_cycle;
 	champ->lives += 1;
 	if (env->visu != VISU_ON)
-		ft_printf("Champion %d \"%s\" is alive\n", champ->id
+		ft_printf("Champion %d (\"%s\") is alive\n", champ->id
 				, champ->header.prog_name);
 }
 

@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/14 01:15:16 by gguichar          #+#    #+#             */
-/*   Updated: 2019/02/23 05:17:46 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/23 05:20:57 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void		print_winner_champ(t_env *env)
 		if (env->visu == VISU_ON)
 			print_winner_visu((t_champ *)best_champ->content);
 		else
-			ft_printf("Champion %d \"%s\" has won!\n"
+			ft_printf("Champion %d (\"%s\") has won!\n"
 					, ((t_champ *)best_champ->content)->id
 					, ((t_champ *)best_champ->content)->header.prog_name);
 	}
