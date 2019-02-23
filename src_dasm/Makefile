@@ -6,15 +6,21 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/22 04:24:22 by wta              ###   ########.fr        #
+#    Updated: 2019/02/23 02:24:39 by wta              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	dasm
 
 SRC_DIR	=	src
-SRC		=			\
-main.c				\
+SRC		=		\
+dasm_helpers.c	\
+error.c			\
+main.c			\
+manage_header.c	\
+utils.c			\
+write.c			\
+write_2.c
 
 OBJ_DIR	=	.obj
 OBJ		=	$(SRC:.c=.o)
@@ -22,7 +28,7 @@ DEP		=	$(OBJ:.o=.d)
 
 INC_DIR	=	includes
 
-CC		=	gcc -g
+CC		=	gcc
 CFLAGS	=	-Wall -Wextra -Werror -I ../libft/includes -I $(INC_DIR)
 
 LIBFT	=	../libft/libft.a
