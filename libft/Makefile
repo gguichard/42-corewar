@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/29 17:35:18 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/13 04:56:02 by vifonne          ###   ########.fr        #
+#    Updated: 2019/02/23 03:49:44 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,12 +61,12 @@ $(OBJ_DIR):
 	@/bin/mkdir $@
 
 clean:
-	$(MAKE) -C $(PF_DIR) clean
-	/bin/rm -rf $(OBJ_DIR)
+	@$(MAKE) -C $(PF_DIR) clean
+	@/bin/rm -rf $(OBJ_DIR)
 
 fclean: clean
-	$(MAKE) -C $(PF_DIR) fclean
-	/bin/rm -f $(NAME)
+	@$(MAKE) -C $(PF_DIR) fclean
+	@/bin/rm -f $(NAME)
 
 re: fclean all
 

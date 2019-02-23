@@ -3,67 +3,23 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
+#    By: vifonne <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
+#    Created: 2019/02/23 03:29:11 by vifonne           #+#    #+#              #
+#    Updated: 2019/02/23 04:01:33 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	corewar
 
 ASM			=	asm
-ASM_DIR	 	=	src_asm
+ASM_DIR	 	=	asm_dir
 
 DASM		=	dasm
-DASM_DIR	=	src_dasm
+DASM_DIR	=	dasm_dir
 
-SRC_DIR		=	src
-SRC			=			\
-main.c					\
-options.c				\
-options_utils.c			\
-read.c					\
-champs.c				\
-cycles.c				\
-process.c				\
-errors.c				\
-print_arena.c			\
-pc_utils.c				\
-op/op_utils.c			\
-op/op_utils2.c			\
-op/live.c				\
-op/ld.c					\
-op/st.c					\
-op/add.c				\
-op/sub.c				\
-op/ft_and.c				\
-op/ft_or.c				\
-op/ft_xor.c				\
-op/zjmp.c				\
-op/ldi.c				\
-op/sti.c				\
-op/ft_fork.c			\
-op/lld.c				\
-op/lldi.c				\
-op/ft_lfork.c			\
-op/aff.c				\
-visual/func_print.c		\
-visual/init_ncurses.c	\
-visual/print_hud.c		\
-visual/print_champ.c	\
-visual/key_hook.c		\
-visual/math_utils.c		\
-visual/sig_handler.c
-
-OBJ_DIR	=	.obj
-OBJ		=	$(SRC:.c=.o)
-DEP		=	$(OBJ:.o=.d)
-INC_DIR	=	includes
-
-CC		=	gcc
-CFLAGS	=	-Wall -Wextra -Werror -I libft/includes -I $(INC_DIR)
-
-LIBFT	=	libft/libft.a
+VM			=	corewar
+VM_DIR		=	vm_dir
 
 UNDER		=		$'\x1b[4m$'
 RED			=		$'\x1b[31m$'
@@ -72,43 +28,60 @@ YELLOW		=		$'\x1b[33m$'
 WHITE		=		$'\x1b[37m$'
 END			=		$'\x1b[0m$'
 
+LIBFT		=		libft/libft.a
+
+CC			=		gcc
+CFLAGS		=		-Wall -Wextra -Werror
+
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(addprefix $(OBJ_DIR)/,$(OBJ))
-	$(CC) -lncurses -o $@ $^
-	$(MAKE) -C $(ASM_DIR)
-	$(MAKE) -C $(DASM_DIR)
-	mv src_asm/asm .
-	mv src_dasm/dasm .
+$(NAME): $(LIBFT)
+	@echo "\n$(UNDER)Compiling vm:$(END)\t\t$(YELLOW)$(CC) $(CFLAGS)$(END)\n"
+	@/bin/echo -n "0% ["
+	@$(MAKE) -C $(VM_DIR)
+	@echo "] 100%\n"
+	@echo "\n$(UNDER)Compiling asm:$(END)\t\t$(YELLOW)$(CC) $(CFLAGS)$(END)\n"
+	@/bin/echo -n "0% ["
+	@$(MAKE) -C $(ASM_DIR)
+	@echo "] 100%\n"
+	@echo "\n$(UNDER)Compiling dasm:$(END)\t\t$(YELLOW)$(CC) $(CFLAGS)$(END)\n"
+	@/bin/echo -n "0% ["
+	@$(MAKE) -C $(DASM_DIR)
+	@echo "] 100%\n"
+	cp $(ASM_DIR)/$(ASM) .
+	cp $(DASM_DIR)/$(DASM) .
+	cp $(VM_DIR)/$(VM) .
 
 $(LIBFT):
-	@echo "\n$(UNDER)Compiling libft:$(END)\t\t$(YELLOW)$(CC) $(CFLAGS)$(WHITE)\n"
+	@echo "\n$(UNDER)Compiling libft:$(END)\t\t$(YELLOW)$(CC) $(CFLAGS)$(END)\n"
 	@/bin/echo -n "0% ["
 	@$(MAKE) -C libft
 	@echo "] 100%\n"
 
--include $(addprefix $(OBJ_DIR)/,$(DEP))
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -MMD -o $@ -c $<
-
-$(OBJ_DIR):
-	/bin/mkdir $@
-	/bin/mkdir $@/op
-	/bin/mkdir $@/visual
-
 clean:
-	$(MAKE) -C libft clean
-	$(MAKE) -C $(ASM_DIR) clean
-	$(MAKE) -C $(DASM_DIR) clean
-	/bin/rm -rf $(OBJ_DIR)
+	@echo "$(UNDER)Cleaning project:$(END)\n"
+	@echo "$(YELLOW)"
+	@$(MAKE) -C libft clean
+	@$(MAKE) -C $(ASM_DIR) clean
+	@$(MAKE) -C $(DASM_DIR) clean
+	@$(MAKE) -C $(VM_DIR) clean
+	@echo "$(END)"
 
 fclean: clean
-	$(MAKE) -C libft fclean
+	@echo "\n$(UNDER)Full clean project:$(END)\n"
+	@echo "$(RED)"
+	@$(MAKE) -C libft fclean
+	@$(MAKE) -C $(ASM_DIR) fclean
+	@$(MAKE) -C $(DASM_DIR) fclean
+	@$(MAKE) -C $(VM_DIR) fclean
+	@echo "$(END)"
+	@echo "\n$(UNDER)Cleaning exec in current directory:$(END)\n"
+	@echo "$(RED)"
 	/bin/rm -f $(ASM)
 	/bin/rm -f $(DASM)
 	/bin/rm -f $(NAME)
+	@echo "$(END)"
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re $(NAME)

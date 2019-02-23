@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/12 09:21:09 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/13 04:57:55 by vifonne          ###   ########.fr        #
+#    Updated: 2019/02/23 03:49:56 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,10 +35,10 @@ $(OBJ_DIR):
 	@/bin/mkdir $@
 
 clean:
-	/bin/rm -rf $(OBJ_DIR)
+	@/bin/rm -rf $(OBJ_DIR)
 
 fclean: clean
-	/bin/rm -f $(NAME)
+	@/bin/rm -f $(NAME)
 
 re: fclean all
 

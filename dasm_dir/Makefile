@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/23 03:06:28 by gguichar         ###   ########.fr        #
+#    Updated: 2019/02/23 03:59:33 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,10 +36,10 @@ LIBFT	=	../libft/libft.a
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(addprefix $(OBJ_DIR)/,$(OBJ))
-	$(CC) -o $@ $^
+	@$(CC) -o $@ $^
 
 $(LIBFT):
-	@echo "\n$(UNDER)Compiling libft:$(END)\t\t$(YELLOW)$(CC) $(CFLAGS)$(WHITE)\n"
+	@echo "\n$(UNDER)Compiling libft:$(END)\t\t$(YELLOW)$(CC) $(CFLAGS)$(END)\n"
 	@/bin/echo -n "0% ["
 	@$(MAKE) -C ../libft
 	@echo "] 100%\n"
@@ -47,19 +47,22 @@ $(LIBFT):
 -include $(addprefix $(OBJ_DIR)/,$(DEP))
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -MMD -o $@ -c $<
+	@$(CC) $(CFLAGS) -MMD -o $@ -c $<
+	@/bin/echo -n "="
 
 $(OBJ_DIR):
-	/bin/mkdir $@
+	@/bin/mkdir $@
 
 clean:
-	$(MAKE) -C ../libft clean
-	/bin/rm -rf $(OBJ_DIR)
+	@echo "Cleaning $(NAME)"
+	@$(MAKE) -C ../libft clean
+	@/bin/rm -rf $(OBJ_DIR)
 
 fclean: clean
-	$(MAKE) -C ../libft fclean
-	/bin/rm -f $(NAME)
+	@echo "Full clean $(NAME)"
+	@$(MAKE) -C ../libft fclean
+	@/bin/rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re $(NAME)

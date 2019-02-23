@@ -6,35 +6,52 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/23 02:59:45 by gguichar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	asm
+NAME		=	corewar
 
-SRC_DIR	=	src
-SRC		=			\
-asm_managers.c		\
-check_line.c		\
-check_valid_tab.c	\
-create_cor_utils.c	\
-error_handler.c		\
-get_file_cor.c		\
-lexer.c				\
-lexer_helper.c		\
-lst_utils.c			\
-main.c				\
-read_file.c			\
-read_file_helper.c	\
-read_file_helper2.c	\
-utils.c				\
-utils2.c			\
-write_bytes.c
+SRC_DIR		=	src
+SRC			=			\
+main.c					\
+options.c				\
+options_utils.c			\
+read.c					\
+champs.c				\
+cycles.c				\
+process.c				\
+errors.c				\
+print_arena.c			\
+pc_utils.c				\
+op/op_utils.c			\
+op/op_utils2.c			\
+op/live.c				\
+op/ld.c					\
+op/st.c					\
+op/add.c				\
+op/sub.c				\
+op/ft_and.c				\
+op/ft_or.c				\
+op/ft_xor.c				\
+op/zjmp.c				\
+op/ldi.c				\
+op/sti.c				\
+op/ft_fork.c			\
+op/lld.c				\
+op/lldi.c				\
+op/ft_lfork.c			\
+op/aff.c				\
+visual/func_print.c		\
+visual/init_ncurses.c	\
+visual/print_hud.c		\
+visual/print_champ.c	\
+visual/key_hook.c		\
+visual/math_utils.c		\
+visual/sig_handler.c
 
 OBJ_DIR	=	.obj
 OBJ		=	$(SRC:.c=.o)
 DEP		=	$(OBJ:.o=.d)
-
 INC_DIR	=	includes
 
 CC		=	gcc
@@ -45,27 +62,35 @@ LIBFT	=	../libft/libft.a
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(addprefix $(OBJ_DIR)/,$(OBJ))
-	$(CC) -o $@ $^
-
+	@$(CC) -lncurses -o $@ $^
+	
 $(LIBFT):
-	$(MAKE) -C ../libft
+	@echo "\n$(UNDER)Compiling libft:$(END)\t\t$(YELLOW)$(CC) $(CFLAGS)$(END)\n"
+	@/bin/echo -n "0% ["
+	@$(MAKE) -C ../libft
+	@echo "] 100%\n"
 
 -include $(addprefix $(OBJ_DIR)/,$(DEP))
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(CFLAGS) -MMD -o $@ -c $<
+	@$(CC) $(CFLAGS) -MMD -o $@ -c $<
+	@/bin/echo -n "="
 
 $(OBJ_DIR):
-	/bin/mkdir $@
+	@/bin/mkdir $@
+	@/bin/mkdir $@/op
+	@/bin/mkdir $@/visual
 
 clean:
-	$(MAKE) -C ../libft clean
-	/bin/rm -rf $(OBJ_DIR)
+	@echo "Cleaning $(NAME)"
+	@$(MAKE) -C ../libft clean
+	@/bin/rm -rf $(OBJ_DIR)
 
 fclean: clean
-	$(MAKE) -C ../libft fclean
-	/bin/rm -f $(NAME)
+	@echo "Full clean $(NAME)"
+	@$(MAKE) -C ../libft fclean
+	@/bin/rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re $(NAME)
