@@ -6,7 +6,7 @@
 /*   By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/27 20:13:17 by gguichar          #+#    #+#             */
-/*   Updated: 2018/08/29 16:39:10 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/20 21:06:19 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static t_fd	*find_fd_info(const int fd, t_fd **files)
 	return (elem);
 }
 
-static void	clean_fd_info(const int fd, t_fd **files)
+static int	clean_fd_info(const int fd, t_fd **files)
 {
 	t_fd	*prev;
 	t_fd	*curr;
@@ -47,14 +47,16 @@ static void	clean_fd_info(const int fd, t_fd **files)
 		prev = curr;
 		curr = curr->next;
 	}
-	if (curr == NULL)
-		return ;
-	if (prev == NULL)
-		*files = curr->next;
-	else
-		prev->next = curr->next;
-	ft_strdel(&(curr->data));
-	free(curr);
+	if (curr != NULL)
+	{
+		if (prev == NULL)
+			*files = curr->next;
+		else
+			prev->next = curr->next;
+		ft_strdel(&(curr->data));
+		free(curr);
+	}
+	return (-1);
 }
 
 static int	clean_data(t_fd *elem)
@@ -99,11 +101,15 @@ int			get_next_line(const int fd, char **line)
 	char		*eol;
 	int			result;
 
-	if (fd < 0 || line == NULL || !(elem = find_fd_info(fd, &files)))
+	if (fd < 0)
+		return (-1);
+	if (line == NULL)
+		return (clean_fd_info(fd, &files));
+	if (!(elem = find_fd_info(fd, &files)))
 		return (-1);
 	eol = NULL;
 	if ((!(elem->offset) || !(eol = ft_strchr(elem->offset, '\n')))
-		&& (result = read_line_fd(fd, elem, &eol)) <= 0)
+			&& (result = read_line_fd(fd, elem, &eol)) <= 0)
 	{
 		clean_fd_info(fd, &files);
 		return (result);
@@ -111,10 +117,7 @@ int			get_next_line(const int fd, char **line)
 	if (eol != NULL)
 		*(eol) = '\0';
 	if (!(*line = ft_strdup(elem->offset)))
-	{
-		clean_fd_info(fd, &files);
-		return (-1);
-	}
+		return (clean_fd_info(fd, &files));
 	elem->offset = !(eol) ? NULL : (eol + 1);
 	return (1);
 }

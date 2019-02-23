@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/23 01:42:56 by gguichar         ###   ########.fr        #
+#    Updated: 2019/02/13 05:00:58 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,13 +60,23 @@ CFLAGS	=	-Wall -Wextra -Werror -I libft/includes -I $(INC_DIR)
 
 LIBFT	=	libft/libft.a
 
+UNDER		=		$'\x1b[4m$'
+RED			=		$'\x1b[31m$'
+GREEN		=		$'\x1b[32m$'
+YELLOW		=		$'\x1b[33m$'
+WHITE		=		$'\x1b[37m$'
+END			=		$'\x1b[0m$'
+
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(addprefix $(OBJ_DIR)/,$(OBJ))
 	$(CC) -lncurses -o $@ $^
 
 $(LIBFT):
-	$(MAKE) -C libft
+	@echo "\n$(UNDER)Compiling libft:$(END)\t\t$(YELLOW)$(CC) $(CFLAGS)$(WHITE)\n"
+	@/bin/echo -n "0% ["
+	@$(MAKE) -C libft
+	@echo "] 100%\n"
 
 -include $(addprefix $(OBJ_DIR)/,$(DEP))
 
