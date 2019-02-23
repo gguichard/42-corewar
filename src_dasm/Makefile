@@ -6,75 +6,37 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
+#    Updated: 2019/02/23 02:27:42 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	corewar
+NAME	=	dasm
 
-ASM		=	asm
-ASM_DIR =	src_asm
 SRC_DIR	=	src
-SRC		=				\
-main.c					\
-options.c				\
-options_utils.c			\
-read.c					\
-champs.c				\
-cycles.c				\
-process.c				\
-errors.c				\
-print_arena.c			\
-pc_utils.c				\
-op/op_utils.c			\
-op/op_utils2.c			\
-op/live.c				\
-op/ld.c					\
-op/st.c					\
-op/add.c				\
-op/sub.c				\
-op/ft_and.c				\
-op/ft_or.c				\
-op/ft_xor.c				\
-op/zjmp.c				\
-op/ldi.c				\
-op/sti.c				\
-op/ft_fork.c			\
-op/lld.c				\
-op/lldi.c				\
-op/ft_lfork.c			\
-op/aff.c				\
-visual/func_print.c		\
-visual/init_ncurses.c	\
-visual/print_hud.c		\
-visual/print_champ.c
-visual/print_champ.c	\
-visual/key_hook.c		\
-visual/math_utils.c		\
-visual/sig_handler.c
+SRC		=		\
+dasm_helpers.c	\
+error.c			\
+main.c			\
+manage_header.c	\
+utils.c			\
+write.c			\
+write_2.c
 
 OBJ_DIR	=	.obj
 OBJ		=	$(SRC:.c=.o)
 DEP		=	$(OBJ:.o=.d)
+
 INC_DIR	=	includes
 
-CC		=	gcc -pedantic
-CFLAGS	=	-Wall -Wextra -Werror -I libft/includes -I $(INC_DIR)
+CC		=	gcc
+CFLAGS	=	-Wall -Wextra -Werror -I ../libft/includes -I $(INC_DIR)
 
-LIBFT	=	libft/libft.a
-
-UNDER		=		$'\x1b[4m$'
-RED			=		$'\x1b[31m$'
-GREEN		=		$'\x1b[32m$'
-YELLOW		=		$'\x1b[33m$'
-WHITE		=		$'\x1b[37m$'
-END			=		$'\x1b[0m$'
+LIBFT	=	../libft/libft.a
 
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(addprefix $(OBJ_DIR)/,$(OBJ))
-	$(CC) -lncurses -o $@ $^
-	$(MAKE) -C $(ASM_DIR)
-	mv src_asm/asm .
+	$(CC) -o $@ $^
 
 $(LIBFT):
 	@echo "\n$(UNDER)Compiling libft:$(END)\t\t$(YELLOW)$(CC) $(CFLAGS)$(WHITE)\n"
@@ -89,17 +51,13 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 
 $(OBJ_DIR):
 	/bin/mkdir $@
-	/bin/mkdir $@/op
-	/bin/mkdir $@/visual
 
 clean:
-	$(MAKE) -C libft clean
-	$(MAKE) -C $(ASM_DIR) clean
+	$(MAKE) -C ../libft clean
 	/bin/rm -rf $(OBJ_DIR)
 
 fclean: clean
-	$(MAKE) -C libft fclean
-	/bin/rm -f $(ASM)
+	$(MAKE) -C ../libft fclean
 	/bin/rm -f $(NAME)
 
 re: fclean all
