@@ -6,7 +6,7 @@
 #    By: vifonne <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/23 03:29:11 by vifonne           #+#    #+#              #
-#    Updated: 2019/02/23 04:30:25 by vifonne          ###   ########.fr        #
+#    Updated: 2019/02/23 04:31:14 by gguichar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,17 +21,17 @@ DASM_DIR	=	dasm_dir
 VM			=	corewar
 VM_DIR		=	vm_dir
 
-UNDER		=		$'\x1b[4m$'
-RED			=		$'\x1b[31m$'
-GREEN		=		$'\x1b[32m$'
-YELLOW		=		$'\x1b[33m$'
-WHITE		=		$'\x1b[37m$'
-END			=		$'\x1b[0m$'
+UNDER		=	$'\x1b[4m$'
+RED			=	$'\x1b[31m$'
+GREEN		=	$'\x1b[32m$'
+YELLOW		=	$'\x1b[33m$'
+WHITE		=	$'\x1b[37m$'
+END			=	$'\x1b[0m$'
 
-LIBFT		=		libft/libft.a
+LIBFT		=	libft/libft.a
 
-CC			=		gcc
-CFLAGS		=		-Wall -Wextra -Werror
+CC			=	gcc
+CFLAGS		=	-Wall -Wextra -Werror
 
 all: $(NAME)
 
@@ -44,13 +44,13 @@ $(VM):
 	@echo "] 100%\n"
 	@cp $(VM_DIR)/$(VM) .
 
-$(ASM):	
+$(ASM):
 	@echo "\n$(UNDER)Compiling asm:$(END)\t\t$(GREEN)$(CC) $(CFLAGS)$(END)\n"
 	@/bin/echo -n "0% ["
 	@$(MAKE) -C $(ASM_DIR)
 	@echo "] 100%\n"
 	@cp $(ASM_DIR)/$(ASM) .
-	
+
 $(DASM):
 	@echo "\n$(UNDER)Compiling dasm:$(END)\t\t$(GREEN)$(CC) $(CFLAGS)$(END)\n"
 	@/bin/echo -n "0% ["
