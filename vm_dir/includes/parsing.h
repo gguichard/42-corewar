@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:57:40 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/15 04:21:05 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/23 05:43:40 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@
 # include "process.h"
 # include "corewar.h"
 
-int	read_file(char *fn, t_champ *champ);
+int	read_file(const char *filename, t_champ *champ);
 
 #endif
