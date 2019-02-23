@@ -6,7 +6,7 @@
 #    By: gguichar <gguichar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/12/02 09:43:55 by gguichar          #+#    #+#              #
-#    Updated: 2019/02/23 02:24:39 by wta              ###   ########.fr        #
+#    Updated: 2019/02/23 02:27:42 by vifonne          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,10 @@ $(NAME): $(LIBFT) $(addprefix $(OBJ_DIR)/,$(OBJ))
 	$(CC) -o $@ $^
 
 $(LIBFT):
-	$(MAKE) -C ../libft
+	@echo "\n$(UNDER)Compiling libft:$(END)\t\t$(YELLOW)$(CC) $(CFLAGS)$(WHITE)\n"
+	@/bin/echo -n "0% ["
+	@$(MAKE) -C libft
+	@echo "] 100%\n"
 
 -include $(addprefix $(OBJ_DIR)/,$(DEP))
 
