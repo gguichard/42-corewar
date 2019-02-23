@@ -9,12 +9,16 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	corewar
+NAME		=	corewar
 
-ASM		=	asm
-ASM_DIR =	src_asm
-SRC_DIR	=	src
-SRC		=				\
+ASM			=	asm
+ASM_DIR	 	=	src_asm
+
+DASM		=	dasm
+DASM_DIR	=	src_dasm
+
+SRC_DIR		=	src
+SRC			=			\
 main.c					\
 options.c				\
 options_utils.c			\
@@ -46,7 +50,6 @@ op/aff.c				\
 visual/func_print.c		\
 visual/init_ncurses.c	\
 visual/print_hud.c		\
-visual/print_champ.c
 visual/print_champ.c	\
 visual/key_hook.c		\
 visual/math_utils.c		\
@@ -57,7 +60,7 @@ OBJ		=	$(SRC:.c=.o)
 DEP		=	$(OBJ:.o=.d)
 INC_DIR	=	includes
 
-CC		=	gcc -pedantic
+CC		=	gcc
 CFLAGS	=	-Wall -Wextra -Werror -I libft/includes -I $(INC_DIR)
 
 LIBFT	=	libft/libft.a
@@ -74,7 +77,9 @@ all: $(NAME)
 $(NAME): $(LIBFT) $(addprefix $(OBJ_DIR)/,$(OBJ))
 	$(CC) -lncurses -o $@ $^
 	$(MAKE) -C $(ASM_DIR)
+	$(MAKE) -C $(DASM_DIR)
 	mv src_asm/asm .
+	mv src_dasm/dasm .
 
 $(LIBFT):
 	@echo "\n$(UNDER)Compiling libft:$(END)\t\t$(YELLOW)$(CC) $(CFLAGS)$(WHITE)\n"
@@ -95,11 +100,13 @@ $(OBJ_DIR):
 clean:
 	$(MAKE) -C libft clean
 	$(MAKE) -C $(ASM_DIR) clean
+	$(MAKE) -C $(DASM_DIR) clean
 	/bin/rm -rf $(OBJ_DIR)
 
 fclean: clean
 	$(MAKE) -C libft fclean
 	/bin/rm -f $(ASM)
+	/bin/rm -f $(DASM)
 	/bin/rm -f $(NAME)
 
 re: fclean all
