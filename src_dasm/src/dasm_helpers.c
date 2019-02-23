@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 02:02:00 by wta               #+#    #+#             */
-/*   Updated: 2019/02/23 02:23:56 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/23 03:11:44 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,18 @@ int		manage_argv(t_data *data, t_op *op, uint8_t *byte)
 	uint8_t	encoding;
 	uint8_t	*ref;
 	uint8_t	pad;
+	int		idx;
 
 	ref = byte;
 	if (op->encoding == 1)
 	{
 		encoding = *byte++;
-		while (encoding > 0)
+		idx = -1;
+		while (encoding > 0 && ++idx < op->argc)
 		{
 			if ((pad = write_arg(data, byte, op, encoding)) == 0)
 				return (-1);
-			encoding <<= 2;
-			if (encoding > 0)
+			if ((encoding <<= 2) > 0)
 				write(data->fd, ", ", 2);
 			byte += pad;
 		}
