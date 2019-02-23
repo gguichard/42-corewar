@@ -6,7 +6,7 @@
 /*   By: rvalenti <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/15 20:19:44 by rvalenti          #+#    #+#             */
-/*   Updated: 2019/02/21 07:44:48 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/23 05:38:32 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int		check_arg(t_data *data, int i)
 	int			n;
 
 	n = -1;
-	while (++n < data->filter[i].op.argc)
+	while (++n < data->filter[i].op.argc && (i + 1 + n) < data->f_size)
 	{
 		arg = &data->filter[i + 1 + n];
 		id = arg->label;

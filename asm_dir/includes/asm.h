@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:25:14 by wta               #+#    #+#             */
-/*   Updated: 2019/02/22 04:46:56 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/23 05:36:36 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 typedef	enum	e_error
 {
 	ERR_NOERROR,
+	ERR_ARGNB,
 	ERR_ERRNO,
 	ERR_BADFMT,
 	ERR_NOINST,
@@ -123,7 +124,7 @@ t_error			fill_comment(t_data *data, int fd, char **str, char **line);
 char			*get_file_name(char *str);
 t_error			get_comment(t_data *data, int fd, char **line);
 void			fill_header(t_data *data, int fd);
-void			fill_instruction(t_data *data, int fd);
+t_error			fill_instruction(t_data *data, int fd);
 
 int				manage_filter(t_filter *elem, t_data *data, int fd);
 int				manage_inst(t_filter *inst, t_data *data, int fd);

@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 04:42:53 by wta               #+#    #+#             */
-/*   Updated: 2019/02/23 03:56:04 by vifonne          ###   ########.fr       */
+/*   Updated: 2019/02/23 05:40:53 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int			manage_inst(t_filter *inst, t_data *data, int fd)
 	write(fd, &inst->op.opcode, 1);
 	if (inst->op.encoding == 1)
 		write_encoding_byte(&inst->op, fd);
-	while (idx < inst->op.argc)
+	while (idx < inst->op.argc && arg < data->filter + data->f_size)
 	{
 		if ((label = is_label(arg->op.name, data->label_lst.head)) != NULL)
 			manage_label(inst, arg, label, fd);
@@ -91,6 +91,8 @@ int			manage_inst(t_filter *inst, t_data *data, int fd)
 		arg += 1;
 		idx += 1;
 	}
+	if (idx < inst->op.argc && arg >= data->filter + data->f_size)
+		return (0);
 	return (inst->op.argc);
 }
 

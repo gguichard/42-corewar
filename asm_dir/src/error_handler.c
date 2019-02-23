@@ -6,7 +6,7 @@
 /*   By: wta <marvin@42.fr>                         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:24:35 by wta               #+#    #+#             */
-/*   Updated: 2019/02/21 06:29:08 by rvalenti         ###   ########.fr       */
+/*   Updated: 2019/02/23 05:37:18 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	err_handler(t_error err_id)
 		ft_strcat(buf, "Duplicated label detected");
 	else if (err_id == ERR_NOLABEL)
 		ft_strcat(buf, "Label not found");
+	else if (err_id == ERR_ARGNB)
+		ft_strcat(buf, "Wrong argument number");
 	write(2, ft_strcat(buf, "\n"), ft_strlen(buf) + 1);
 }
 

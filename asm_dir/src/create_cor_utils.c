@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 04:41:40 by wta               #+#    #+#             */
-/*   Updated: 2019/02/18 05:09:05 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/23 05:36:14 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,19 @@ void		fill_header(t_data *data, int fd)
 	write(fd, "\0\0\0\0", 4);
 }
 
-void		fill_instruction(t_data *data, int fd)
+t_error		fill_instruction(t_data *data, int fd)
 {
 	t_filter	*elem;
+	int			offset;
 	int			idx;
 
 	idx = 0;
 	while (idx < data->f_size)
 	{
 		elem = &data->filter[idx];
-		idx += manage_filter(elem, data, fd);
+		if ((offset = manage_filter(elem, data, fd)) == 0)
+			return (ERR_ARGNB);
+		idx += offset;
 	}
+	return (ERR_NOERROR);
 }

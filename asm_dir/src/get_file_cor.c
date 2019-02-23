@@ -6,7 +6,7 @@
 /*   By: wta <wta@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 05:38:06 by wta               #+#    #+#             */
-/*   Updated: 2019/02/18 05:38:10 by wta              ###   ########.fr       */
+/*   Updated: 2019/02/23 05:35:29 by wta              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_error		create_cor(t_data *data, char *str)
 	if ((fd = open(data->file_name, O_TRUNC | O_WRONLY | O_CREAT, 0644)) < 0)
 		return (ERR_ERRNO);
 	fill_header(data, fd);
-	fill_instruction(data, fd);
+	err_id = fill_instruction(data, fd);
 	close(fd);
 	return (err_id);
 }
