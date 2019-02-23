@@ -6,7 +6,7 @@
 /*   By: vifonne <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 05:23:27 by vifonne           #+#    #+#             */
-/*   Updated: 2019/02/23 05:44:10 by gguichar         ###   ########.fr       */
+/*   Updated: 2019/02/23 06:19:06 by gguichar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ static int	read_name(const char *filename, int fd, t_champ *champ)
 	}
 	swap_bytes((uint8_t *)buf, 4);
 	champ->header.prog_size = *((unsigned int *)buf);
-	if (champ->header.prog_size > CHAMP_MAX_SIZE)
+	if (!(champ->header.prog_size) || champ->header.prog_size > CHAMP_MAX_SIZE)
 	{
-		ft_dprintf(2, "corewar: error: %s: Champ size %u is too long\n"
+		ft_dprintf(2, "corewar: error: %s: Champ size (%u bytes) is not valid\n"
 				, filename, champ->header.prog_size);
 		return (0);
 	}
